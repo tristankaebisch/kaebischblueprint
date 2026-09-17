@@ -136,7 +136,7 @@
       display: inline-block;
     }
 
-    /* Hero Section (Split Layout) */
+    /* Hero Section */
     .hero {
       padding-top: 8rem;
       padding-bottom: 5.5rem;
@@ -422,54 +422,22 @@
       line-height: 1.5;
     }
 
-    /* Form Section */
+    /* Form Container */
     .form-wrapper {
-      max-width: 650px;
+      max-width: 760px;
       margin: 0 auto;
-      background: var(--card-bg);
+      background: #FFFFFF;
       border: 1px solid var(--border);
-      padding: 2.75rem;
-      border-radius: 4px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03);
     }
 
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .form-group label {
+    .form-wrapper iframe {
+      width: 100%;
+      height: 3100px;
       display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      font-family: var(--font-main);
-      font-size: 0.95rem;
-      border-radius: 4px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-control:focus {
-      border-color: var(--accent);
-    }
-
-    textarea.form-control {
-      resize: vertical;
-      min-height: 95px;
-    }
-
-    .btn-block {
-      width: 100%;
       border: none;
-      cursor: pointer;
     }
 
     /* Footer */
@@ -675,36 +643,25 @@
     </div>
   </section>
 
-  <!-- Application Form -->
+  <!-- Embedded Google Form Assessment Section -->
   <section id="apply">
     <div class="container">
-      <div class="form-wrapper">
+      <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
         <div class="tag">[ Limited Coaching Roster ]</div>
-        <h2 style="margin-bottom: 0.5rem; font-size: 1.8rem; font-weight: 800;">Athlete Intake Form</h2>
-        <p style="color: var(--muted); margin-bottom: 2rem; font-size: 0.92rem;">
-          Applications are vetted personally. You will receive an assessment within 24–48 hours.
+        <h2 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em;">Athlete Intake Assessment</h2>
+        <p style="color: var(--muted); max-width: 600px; margin: 0.5rem auto 0; font-size: 0.95rem;">
+          Applications are vetted personally. Please complete the assessment below to determine if you are the right fit for the roster.
         </p>
+      </div>
 
-        <!-- Form Endpoint -->
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <div class="form-group">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" class="form-control" required placeholder="Marcus Vance">
-          </div>
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" class="form-control" required placeholder="marcus@example.com">
-          </div>
-          <div class="form-group">
-            <label for="experience">Lifting Experience (Years)</label>
-            <input type="text" id="experience" name="experience" class="form-control" placeholder="e.g., 3 years structured training">
-          </div>
-          <div class="form-group">
-            <label for="goal">Primary Physique Objective</label>
-            <textarea id="goal" name="goal" class="form-control" placeholder="Detail your primary 12-16 week goal, current bottlenecks, and expectations."></textarea>
-          </div>
-          <button type="submit" class="btn-primary btn-block">Submit Blueprint Application</button>
-        </form>
+      <div class="form-wrapper">
+        <iframe 
+          src="https://docs.google.com/forms/d/e/1FAIpQLScHBVS-tf5tzJNMpwOpKVFCyQt7gTAQqNzqun4-hpZxpO5J_Q/viewform?embedded=true" 
+          frameborder="0" 
+          marginheight="0" 
+          marginwidth="0">
+          Loading…
+        </iframe>
       </div>
     </div>
   </section>
