@@ -260,11 +260,19 @@
     }
 
     .gallery-card {
-      position: relative;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      background: #000;
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #0D0D11; /* Clean dark backdrop behind the full stage frame */
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 650px;
+  object-fit: contain;
+  display: block;
+}
     }
 
     .gallery-card img {
