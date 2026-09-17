@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kaebisch Blueprint | High-Performance Physique Coaching</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FBFBFB;
+      --card-bg: #FFFFFF;
+      --border: #E5E7EB;
+      --text: #111827;
+      --muted: #6B7280;
+      --accent: #FF5500;
+      --accent-hover: #E04B00;
+      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(251, 251, 251, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-accent {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .btn-sm {
+      background: var(--text);
+      color: #fff !important;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-sm:hover {
+      background: var(--accent) !important;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Monospace Tags */
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 10rem;
+      padding-bottom: 6rem;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      max-width: 650px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.85rem 1.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    /* 3-Column Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      border-radius: 4px;
+    }
+
+    .card-num {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Standard Checklist */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .split-box {
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 4px;
+    }
+
+    .split-box h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .check {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .cross {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    /* Form Section */
+    .form-wrapper {
+      max-width: 650px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 3rem;
+      border-radius: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-family: var(--font-main);
+      font-size: 1rem;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn-block {
+      width: 100%;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .disclaimer {
+      max-width: 700px;
+      margin: 1rem auto 0;
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .split-grid { grid-template-columns: 1fr; }
+      .nav-links a:not(.btn-sm) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        Kaebisch <span class="brand-accent">Blueprint</span>
+      </a>
+      <div class="nav-links">
+        <a href="#system">Protocol</a>
+        <a href="#standard">The Standard</a>
+        <a href="#apply" class="btn-sm">Apply for Roster</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="tag">[ Verified 1-on-1 Physique Architecture ]</div>
+        <h1>Physique Architecture Built on Precision, Not Guesswork.</h1>
+        <p>Periodized lifting splits, individual biomechanics, macronutrient design, and weekly bio-feedback audits for dedicated lifters.</p>
+        <a href="#apply" class="btn-primary">Begin Application</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Protocol / System -->
+  <section id="system">
+    <div class="container">
+      <div class="tag">[ The System ]</div>
+      <h2>Core Coaching Pillars</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-num">01 // MECHANICAL</div>
+          <h3>Biomechanical Programming</h3>
+          <p>Movement selections optimized for individual structural leverages, standardized execution, and progressive overload tracking.</p>
+        </div>
+        <div class="card">
+          <div class="card-num">02 // METABOLIC</div>
+          <h3>Precision Nutrition</h3>
+          <p>Macronutrient frameworks and flexible meal roadmaps tailored to adherence, body composition targets, and sustainable energy.</p>
+        </div>
+        <div class="card">
+          <div class="card-num">03 // ADAPTIVE</div>
+          <h3>Bio-Feedback Audits</h3>
+          <p>Weekly check-ins reviewing fasted weight trends, recovery, digestion, and video lifting execution with direct adjustments.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Standards -->
+  <section id="standard">
+    <div class="container">
+      <div class="tag">[ Qualification Matrix ]</div>
+      <h2>The Standard Expected</h2>
+      <div class="split-grid">
+        <div class="split-box">
+          <h3>Who This Is For</h3>
+          <div class="list-item"><span class="check">✓</span> Dedicated natural lifters who value data, logging, and objective metrics.</div>
+          <div class="list-item"><span class="check">✓</span> Athletes willing to record and submit lifting footage for execution analysis.</div>
+          <div class="list-item"><span class="check">✓</span> Individuals receptive to direct critique and long-term sustainable programming.</div>
+        </div>
+        <div class="split-box">
+          <h3>Who Should Look Elsewhere</h3>
+          <div class="list-item"><span class="cross">✕</span> Anyone searching for rapid crash diets or generic 30-day shred gimmicks.</div>
+          <div class="list-item"><span class="cross">✕</span> Inconsistent communicators who miss weekly check-in protocols.</div>
+          <div class="list-item"><span class="cross">✕</span> Those unwilling to track daily nutritional and lifestyle bio-markers.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Application Form -->
+  <section id="apply">
+    <div class="container">
+      <div class="form-wrapper">
+        <div class="tag">[ Limited Coaching Roster ]</div>
+        <h2 style="margin-bottom: 0.5rem;">Athlete Intake Form</h2>
+        <p style="color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem;">
+          Applications are vetted personally. You will receive an assessment within 24–48 hours.
+        </p>
+
+        <!-- Replace the action URL with your Formspree endpoint or embed a Google Form -->
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" class="form-control" required placeholder="Marcus Vance">
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" class="form-control" required placeholder="marcus@example.com">
+          </div>
+          <div class="form-group">
+            <label for="experience">Lifting Experience (Years)</label>
+            <input type="text" id="experience" name="experience" class="form-control" placeholder="e.g., 3 years structured training">
+          </div>
+          <div class="form-group">
+            <label for="goal">Primary Physique Objective</label>
+            <textarea id="goal" name="goal" class="form-control" placeholder="Detail your primary 16-week goal, current bottlenecks, and expectations."></textarea>
+          </div>
+          <button type="submit" class="btn-primary btn-block">Submit Blueprint Application</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Kaebisch Blueprint. All Rights Reserved.</p>
+      <p class="disclaimer">
+        Disclaimer: The information provided is for educational and physical conditioning guidance only and does not substitute for professional medical advice. Always consult a physician before beginning any strenuous training split or dietary adjustment.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
