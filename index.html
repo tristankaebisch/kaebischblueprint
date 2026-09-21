@@ -6,7 +6,7 @@
   <title>Kaebisch Blueprint | Natural Physique Coaching</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #F8F9FC;
@@ -35,6 +35,687 @@
     }
 
     /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(248, 249, 252, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-logo {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .btn-sm {
+      background: var(--text);
+      color: #fff !important;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-sm:hover {
+      background: var(--accent) !important;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-top: 0.25rem;
+    }
+
+    /* Monospace Tags */
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-block;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 8rem;
+      padding-bottom: 5.5rem;
+    }
+
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    .hero h1 {
+      font-size: 3.1rem;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 1rem 0 1.25rem;
+    }
+
+    .hero p {
+      font-size: 1.12rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-image-box {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #111322;
+      box-shadow: 0 12px 30px rgba(30, 32, 56, 0.08);
+    }
+
+    .hero-image-box img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+    }
+
+    .hero-image-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.75rem 1rem;
+      background: rgba(30, 32, 56, 0.88);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.85rem 1.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    /* 3-Column Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      border-radius: 4px;
+    }
+
+    .card-num {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    /* Coach Gallery / Standard Section */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem;
+    }
+
+    .gallery-card {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #111322;
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 680px;
+      object-fit: contain;
+      display: block;
+      background-color: #111322;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(to top, rgba(17, 19, 34, 0.95) 20%, rgba(17, 19, 34, 0.6) 70%, transparent);
+      color: #fff;
+    }
+
+    .gallery-overlay h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .gallery-overlay p {
+      font-size: 0.82rem;
+      color: #D1D5DB;
+      font-family: var(--font-mono);
+    }
+
+    /* Process Pipeline */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .process-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      border-radius: 4px;
+    }
+
+    .step-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .process-step h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .process-step p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Standard Checklist */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .split-box {
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      padding: 2.25rem;
+      border-radius: 4px;
+    }
+
+    .split-box h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      font-size: 0.92rem;
+    }
+
+    .check {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .cross {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    /* FAQ Details */
+    .faq-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    details {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    details[open] {
+      border-color: var(--accent);
+    }
+
+    summary {
+      font-weight: 700;
+      font-size: 1rem;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: '+';
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    details[open] summary::after {
+      content: '−';
+      color: var(--accent);
+    }
+
+    details p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 1rem;
+      line-height: 1.55;
+    }
+
+    /* Form Container */
+    .form-wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 25px rgba(30, 32, 56, 0.04);
+    }
+
+    .form-wrapper iframe {
+      width: 100%;
+      height: 3100px;
+      display: block;
+      border: none;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3.5rem 0 3rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .footer-logo {
+      height: 38px;
+      width: auto;
+      margin: 0 auto 1.25rem;
+      display: block;
+      opacity: 0.9;
+    }
+
+    .disclaimer {
+      max-width: 700px;
+      margin: 1rem auto 0;
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 860px) {
+      .hero-split { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.4rem; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .split-grid { grid-template-columns: 1fr; }
+      .nav-links a:not(.btn-sm) { display: none; }
+      .hero-image-box img { height: 420px; }
+      .gallery-card img { height: 500px; }
+      .nav-logo { height: 38px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="brand-link" aria-label="Kaebisch Blueprint Home">
+        <!-- Option 1 Architectural SVG Logo -->
+        <svg class="nav-logo" viewBox="0 0 600 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Monogram Box Mark -->
+          <g transform="translate(15, 20)">
+            <rect x="0" y="0" width="100" height="100" rx="14" fill="#1E2038"/>
+            <line x1="20" y1="20" x2="80" y2="20" stroke="#2D304D" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <line x1="20" y1="50" x2="80" y2="50" stroke="#2D304D" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <line x1="20" y1="80" x2="80" y2="80" stroke="#2D304D" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <line x1="50" y1="20" x2="50" y2="80" stroke="#2D304D" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <rect x="30" y="24" width="8" height="52" rx="4" fill="#FFFFFF"/>
+            <path d="M68 28 L44 50 L68 72" fill="none" stroke="#535891" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="44" cy="50" r="4" fill="#FFFFFF"/>
+          </g>
+          <!-- Typography -->
+          <text x="135" y="62" font-family="'Inter', -apple-system, sans-serif" font-size="34" font-weight="900" fill="#1E2038" letter-spacing="-0.03em">KAEBISCH <tspan fill="#535891">BLUEPRINT</tspan></text>
+          <text x="136" y="94" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#646882" letter-spacing="0.22em">PHYSIQUE ARCHITECTURE // NATURAL</text>
+        </svg>
+      </a>
+
+      <div class="nav-links">
+        <a href="#system">The Approach</a>
+        <a href="#standard-gallery">Results</a>
+        <a href="#process">How It Works</a>
+        <a href="#standard">Expectations</a>
+        <a href="#faq">FAQ</a>
+        <a href="#apply" class="btn-sm">Apply for Coaching</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-split">
+        <div class="hero-content">
+          <div class="tag">[ 1-on-1 Online Coaching ]</div>
+          <h1>Build Muscle With Serious Intent. No Bro-Science, No Guesswork.</h1>
+          <p>Custom training programs matched to your structure, real nutritional targets, and weekly video check-ins to make sure you actually progress.</p>
+          <a href="#apply" class="btn-primary">Apply for Coaching</a>
+        </div>
+        <div class="hero-image-box">
+          <img src="073A5404.JPG" alt="Kaebisch Blueprint Conditioning Standard">
+          <div class="hero-image-caption">
+            <span>Stage Conditioning</span>
+            <span>Natural Physique</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Approach -->
+  <section id="system">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">[ How We Train ]</div>
+        <h2>What You Get in the Blueprint</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-num">01 // TRAINING</div>
+          <h3>Lift for Your Structure</h3>
+          <p>We pick movements that actually fit your limbs, standardize your form, and track your weights week to week so you stop spinning your wheels.</p>
+        </div>
+        <div class="card">
+          <div class="card-num">02 // NUTRITION</div>
+          <h3>Real-World Macro Targets</h3>
+          <p>No starvation diets or cookie-cutter meal templates. You get clear protein and calorie goals built around meals you actually enjoy eating every day.</p>
+        </div>
+        <div class="card">
+          <div class="card-num">03 // ACCOUNTABILITY</div>
+          <h3>Weekly Video Check-Ins</h3>
+          <p>Every week we review your scale trend, energy, and training clips. You get a direct breakdown of what went well and what we're adjusting next.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Results -->
+  <section id="standard-gallery">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">[ The Proof ]</div>
+        <h2>Conditioning & Muscle Density</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-card">
+          <img src="IMG_0962.JPG" alt="Side Tricep Conditioning">
+          <div class="gallery-overlay">
+            <h4>Muscle Density & Balance</h4>
+            <p>Smart volume, high effort, and disciplined progression.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="IMG_0984.JPG" alt="Abdominal and Thigh Conditioning">
+          <div class="gallery-overlay">
+            <h4>True Stage Conditioning</h4>
+            <p>What happens when you execute the plan without cutting corners.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Process -->
+  <section id="process">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">[ The Step-by-Step ]</div>
+        <h2>How We Work Together</h2>
+      </div>
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="step-badge">STEP 01</div>
+          <h3>Intake & Audit</h3>
+          <p>You tell me where you're stuck, what your gym setup looks like, and what your daily schedule permits. We set an honest baseline.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-badge">STEP 02</div>
+          <h3>Your Custom Plan</h3>
+          <p>I build your lifting split, set your calories and protein, and set up your private tracking sheet so everything is clear on day one.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-badge">STEP 03</div>
+          <h3>Log & Film Your Lifts</h3>
+          <p>You hit the gym, track your weights, and send videos of your hardest sets so we can dial in your form and intensity.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-badge">STEP 04</div>
+          <h3>Adjust & Grow</h3>
+          <p>We make weekly updates to calories, volume, and recovery as your body adapts. You never have to wonder if what you're doing is working.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expectations Criteria -->
+  <section id="standard">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">[ Who This Is For ]</div>
+        <h2>Before You Apply</h2>
+      </div>
+      <div class="split-grid">
+        <div class="split-box">
+          <h3>This is for you if:</h3>
+          <div class="list-item"><span class="check">✓</span> You're serious about lifting and want to track your numbers consistently.</div>
+          <div class="list-item"><span class="check">✓</span> You're willing to set up your phone and film working sets for feedback.</div>
+          <div class="list-item"><span class="check">✓</span> You want honest coaching, real feedback, and long-term results.</div>
+        </div>
+        <div class="split-box">
+          <h3>This is not for you if:</h3>
+          <div class="list-item"><span class="cross">✕</span> You're looking for a quick 30-day gimmick or crash detox diet.</div>
+          <div class="list-item"><span class="cross">✕</span> You disappear for weeks at a time without checking in.</div>
+          <div class="list-item"><span class="cross">✕</span> You don't want to track your food or log your lifts.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <div class="tag">[ Questions ]</div>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-wrapper">
+        <details>
+          <summary>How do weekly check-ins work?</summary>
+          <p>Every Sunday morning, you log your weight average, sleep, hunger levels, and training videos into your sheet. I review everything and send back a detailed feedback video and plan updates within 24 hours.</p>
+        </details>
+        <details>
+          <summary>What kind of gym access do I need?</summary>
+          <p>A standard gym with barbells, dumbbells, cables, and a few good machines (like a leg press or hack squat) is ideal. If your setup is limited, I build the routine around whatever you have access to.</p>
+        </details>
+        <details>
+          <summary>What is the minimum commitment?</summary>
+          <p>Coaching requires a minimum 12-week commitment. Real muscle growth and safe, lean fat loss take time. Twelve weeks gives us enough runway to build serious momentum.</p>
+        </details>
+        <details>
+          <summary>Do you give rigid meal plans?</summary>
+          <p>No boring chicken-and-rice only diets. I give you daily calorie and macronutrient targets along with grocery guides and meal timing advice so your diet actually fits your life.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Embedded Google Form Assessment Section -->
+  <section id="apply">
+    <div class="container">
+      <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+        <div class="tag">[ Apply Now ]</div>
+        <h2 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em;">Athlete Intake Assessment</h2>
+        <p style="color: var(--muted); max-width: 600px; margin: 0.5rem auto 0; font-size: 0.95rem;">
+          Spots are limited to keep coaching quality high. Fill out the form below and I'll get back to you within 24–48 hours[cite: 1].
+        </p>
+      </div>
+
+      <div class="form-wrapper">
+        <iframe 
+          src="https://docs.google.com/forms/d/e/1FAIpQLScHBVS-tf5tzJNMpwOpKVFCyQt7gTAQqNzqun4-hpZxpO5J_Q/viewform?embedded=true" 
+          frameborder="0" 
+          marginheight="0" 
+          marginwidth="0">
+          Loading…
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <!-- Footer Logo -->
+      <svg class="footer-logo" viewBox="0 0 600 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(15, 20)">
+          <rect x="0" y="0" width="100" height="100" rx="14" fill="#1E2038"/>
+          <line x1="20" y1="20" x2="80" y2="20" stroke="#2D304D" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <line x1="20" y1="50" x2="80" y2="50" stroke="#2D304D" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <line x1="20" y1="80" x2="80" y2="80" stroke="#2D304D" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <line x1="50" y1="20" x2="50" y2="80" stroke="#2D304D" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <rect x="30" y="24" width="8" height="52" rx="4" fill="#FFFFFF"/>
+          <path d="M68 28 L44 50 L68 72" fill="none" stroke="#535891" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="44" cy="50" r="4" fill="#FFFFFF"/>
+        </g>
+        <text x="135" y="62" font-family="'Inter', -apple-system, sans-serif" font-size="34" font-weight="900" fill="#1E2038" letter-spacing="-0.03em">KAEBISCH <tspan fill="#535891">BLUEPRINT</tspan></text>
+        <text x="136" y="94" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#646882" letter-spacing="0.22em">PHYSIQUE ARCHITECTURE // NATURAL</text>
+      </svg>
+
+      <p>&copy; 2026 Kaebisch Blueprint. All Rights Reserved.</p>
+      <p class="disclaimer">
+        Disclaimer: The information provided is for educational and physical conditioning guidance only and does not substitute for medical advice. Always consult a physician before starting any intense training or diet regimen.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>    /* Navigation */
     nav {
       position: fixed;
       top: 0;
