@@ -1713,6 +1713,10 @@
   let adminMasterRoster = [];
   let isCoachAdminMode = false;
 
+  /**
+   * DUAL-PROTOCOL (POST + GET FALLBACK) BACKEND BRIDGE
+   * Attempt 1 uses POST; Attempt 2 automatically falls back to GET so Safari/Chrome 302 redirects never drop the payload!
+   */
   function callBlueprintBackend(action, payload, onSuccess, onFailure, attempt) {
     var tryNum = attempt || 1;
     if (payload && typeof payload === "object" && !payload.authPin) {
@@ -1731,20 +1735,28 @@
       return;
     }
 
-    fetch(APPS_SCRIPT_API_URL, {
-      method: "POST",
-      mode: "cors",
-      redirect: "follow",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ action: action, payload: payload })
-    })
+    var useGetFallback = (tryNum >= 2 && action !== "processBarcodeImageServerSide");
+    var fetchUrl = useGetFallback
+      ? (APPS_SCRIPT_API_URL + "?action=" + encodeURIComponent(action) + "&payload=" + encodeURIComponent(JSON.stringify(payload)))
+      : APPS_SCRIPT_API_URL;
+    var fetchOpts = useGetFallback
+      ? { method: "GET", mode: "cors", redirect: "follow" }
+      : {
+          method: "POST",
+          mode: "cors",
+          redirect: "follow",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: action, payload: payload })
+        };
+
+    fetch(fetchUrl, fetchOpts)
       .then(function(r) { return r.text(); })
       .then(function(text) {
         var data = JSON.parse(text);
         if (data && data.busy && tryNum < 3) {
           setTimeout(function() {
             callBlueprintBackend(action, payload, onSuccess, onFailure, tryNum + 1);
-          }, 1000 * tryNum);
+          }, 800 * tryNum);
           return;
         }
         if (onSuccess) onSuccess(data);
@@ -1753,7 +1765,7 @@
         if (tryNum < 2) {
           setTimeout(function() {
             callBlueprintBackend(action, payload, onSuccess, onFailure, tryNum + 1);
-          }, 1000);
+          }, 350);
         } else {
           enqueueOfflineAction(action, payload);
           if (onFailure) onFailure(err);
@@ -1962,6 +1974,7 @@
     if (e && e.preventDefault) e.preventDefault();
     document.getElementById("pin-field").value = "";
     document.getElementById("pin-error").textContent = "";
+    resetDeviceBinding();
   }
 
   function checkAutoUnlock(val) {
@@ -1981,9 +1994,8 @@
   }
 
   /**
-   * 100% ZERO-EXPOSURE SERVER-VERIFIED AUTHENTICATION
+   * ZERO-EXPOSURE SERVER-VERIFIED PIN AUTHENTICATION
    * - Zero PINs or client names are stored in this HTML file.
-   * - Returning devices unlock from their local encrypted storage cache while re-verifying with the server.
    */
   function processPin(entered) {
     if (!entered) return;
