@@ -6,29 +6,38 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="KB Portal" />
+  <meta name="theme-color" content="#0B0F19" />
   <title>KAEBISCH BLUEPRINT // ATHLETE PORTAL</title>
+
+  <!-- GOOGLE FONTS: SPACE GROTESK, INTER & JETBRAINS MONO -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+
   <!-- LIVE VIDEO + PHOTO 1D UPC/EAN BARCODE ENGINES -->
   <script src="https://cdn.jsdelivr.net/npm/@undecaf/zbar-wasm@0.9.15/dist/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@undecaf/barcode-detector-polyfill@0.9.20/dist/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2@1.8.4/dist/quagga.min.js"></script>
+
   <style>
     :root {
       --bg-void: #0B0F19;
       --bg-panel: #0E131F;
-      --bg-card: #141B2D;
-      --bg-elevated: #1B243B;
-      --header-navy: #1E2942;
-      --border-cad: #2E3B5B;
-      --bp-primary: #6C7BA8;
-      --bp-bright: #8E9ECF;
-      --bp-glow: rgba(108, 123, 168, 0.28);
+      --bg-card: #13192B;
+      --bg-elevated: #1A2238;
+      --header-navy: #1E2540;
+      --border-cad: #2D3559;
+      --bp-primary: #535891;
+      --bp-bright: #8E95D3;
+      --bp-glow: rgba(83, 88, 145, 0.38);
       --text-main: #FFFFFF;
       --text-muted: #94A3B8;
       --status-green: #10B981;
       --status-yellow: #F59E0B;
       --status-red: #EF4444;
-      --font-sans: "Inter", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, monospace;
+      --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -36,8 +45,8 @@
     body {
       background-color: var(--bg-void);
       background-image: 
-        linear-gradient(rgba(108, 123, 168, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(108, 123, 168, 0.05) 1px, transparent 1px);
+        linear-gradient(rgba(83, 88, 145, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(83, 88, 145, 0.06) 1px, transparent 1px);
       background-size: 24px 24px;
       color: var(--text-main);
       font-family: var(--font-sans);
@@ -54,7 +63,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: radial-gradient(circle at 50% 20%, rgba(108, 123, 168, 0.18), transparent 65%);
+      background: radial-gradient(circle at 50% 20%, rgba(83, 88, 145, 0.25), transparent 65%);
     }
 
     .cad-box {
@@ -62,10 +71,29 @@
       max-width: 390px;
       background: var(--bg-card);
       border: 1px solid var(--border-cad);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 26px 22px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.85);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.85), 0 0 24px var(--bp-glow);
     }
+
+    #lastname-wrap {
+      margin-top: 12px;
+    }
+
+    #lastname-field {
+      width: 100%;
+      text-align: center;
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 600;
+      padding: 10px 12px;
+      background: var(--bg-void);
+      border: 1px solid var(--border-cad);
+      border-radius: 10px;
+      color: #FFFFFF;
+      outline: none;
+    }
+    #lastname-field:focus { border-color: var(--bp-bright); }
 
     #pin-field {
       width: 100%;
@@ -74,7 +102,7 @@
       font-size: 28px;
       letter-spacing: 14px;
       padding: 10px 14px;
-      margin: 16px 0 10px;
+      margin: 12px 0 8px;
       background: var(--bg-void);
       border: 2px solid var(--bp-primary);
       border-radius: 10px;
@@ -82,7 +110,6 @@
       outline: none;
     }
 
-    /* ZERO-DELAY TOUCH KEYPAD */
     .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 8px; }
     .key-btn {
       background: var(--bg-elevated); border: 1px solid var(--border-cad);
@@ -94,7 +121,7 @@
 
     .unlock-submit-btn {
       width: 100%; margin-top: 12px; padding: 14px; border-radius: 10px;
-      border: 1px solid var(--bp-bright); background: linear-gradient(135deg, var(--bp-primary), #4A5985);
+      border: 1px solid var(--bp-bright); background: linear-gradient(135deg, var(--bp-primary), #393D6B);
       color: #FFFFFF; font-family: var(--font-mono); font-size: 13px; font-weight: 800; cursor: pointer;
       touch-action: manipulation;
     }
@@ -105,7 +132,7 @@
     header {
       position: sticky; top: 0; z-index: 100;
       background: rgba(14, 19, 31, 0.96);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-cad);
     }
 
@@ -116,11 +143,11 @@
 
     .brand-lockup { display: flex; align-items: center; gap: 12px; }
     .brand-wordmark {
-      font-family: var(--font-sans); font-weight: 900; font-size: 15px;
-      letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: var(--font-display); font-weight: 800; font-size: 16px;
+      letter-spacing: 0.06em; text-transform: uppercase;
     }
     .brand-wordmark .w-white { color: #FFFFFF; }
-    .brand-wordmark .w-blue { color: var(--bp-primary); margin-left: 5px; }
+    .brand-wordmark .w-blue { color: var(--bp-bright); margin-left: 5px; }
 
     .athlete-meta { font-size: 11px; color: var(--bp-bright); font-family: var(--font-mono); margin-top: 2px; }
 
@@ -130,7 +157,7 @@
       padding: 7px 12px; border-radius: 6px; cursor: pointer; touch-action: manipulation;
     }
     .ctrl-btn.active {
-      background: var(--bp-primary); border-color: #FFFFFF; color: #FFFFFF;
+      background: var(--bp-primary); border-color: var(--bp-bright); color: #FFFFFF;
     }
 
     .nav-pills {
@@ -140,15 +167,15 @@
     .nav-pills::-webkit-scrollbar { display: none; }
 
     .pill {
-      white-space: nowrap; padding: 7px 11px; border-radius: 6px;
+      white-space: nowrap; padding: 7px 12px; border-radius: 6px;
       font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.03em;
       background: var(--bg-card); color: var(--text-muted);
       border: 1px solid var(--border-cad); cursor: pointer; touch-action: manipulation;
     }
     .pill.active {
-      background: var(--header-navy); color: #fff;
+      background: var(--bp-primary); color: #fff;
       border-color: var(--bp-bright);
-      box-shadow: 0 0 12px var(--bp-glow);
+      box-shadow: 0 0 14px var(--bp-glow);
     }
 
     main { max-width: 740px; margin: 0 auto; padding: 14px; }
@@ -166,14 +193,14 @@
 
     .card {
       background: var(--bg-card); border: 1px solid var(--border-cad);
-      border-radius: 10px; padding: 14px; margin-bottom: 12px;
+      border-radius: 12px; padding: 14px; margin-bottom: 12px;
     }
 
     .card-header {
       display: flex; justify-content: space-between; align-items: center;
       background: var(--header-navy); margin: -14px -14px 12px -14px;
       padding: 10px 14px; border-bottom: 1px solid var(--border-cad);
-      border-radius: 9px 9px 0 0;
+      border-radius: 11px 11px 0 0;
       flex-wrap: wrap; gap: 8px;
     }
 
@@ -185,7 +212,7 @@
     .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px; }
     .kpi-card {
       background: var(--bg-card); border: 1px solid var(--border-cad);
-      border-radius: 8px; padding: 10px;
+      border-radius: 10px; padding: 10px;
     }
     .kpi-val { font-family: var(--font-mono); font-size: 18px; font-weight: 800; color: #fff; margin: 2px 0; }
     .kpi-sub { font-size: 11px; color: var(--text-muted); }
@@ -207,23 +234,28 @@
     }
     .rate-btn.active { background: var(--bp-primary); color: #fff; border-color: #fff; }
 
+    /* 16PX FONT SIZE PREVENTS IOS SAFARI AUTO-ZOOM ON TAP */
     input, select, textarea {
       width: 100%; background: var(--bg-void); border: 1px solid var(--border-cad);
-      color: #fff; padding: 9px 11px; border-radius: 6px; font-size: 13px; font-family: var(--font-sans);
+      color: #fff; padding: 9px 10px; border-radius: 7px; font-size: 16px; font-family: var(--font-sans);
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--bp-bright);
     }
 
     .btn-primary {
       width: 100%; padding: 13px; border-radius: 8px; border: 1px solid var(--bp-bright);
-      background: linear-gradient(135deg, var(--bp-primary), #4A5985);
+      background: linear-gradient(135deg, var(--bp-primary), #393D6B);
       color: #fff; font-family: var(--font-mono); font-weight: 800; font-size: 12px;
-      letter-spacing: 0.05em; cursor: pointer;
+      letter-spacing: 0.05em; cursor: pointer; touch-action: manipulation;
     }
 
     .btn-secondary {
       width: 100%; padding: 13px; border-radius: 8px; border: 1px solid var(--status-green);
       background: rgba(16, 185, 129, 0.14);
       color: var(--status-green); font-family: var(--font-mono); font-weight: 800; font-size: 12px;
-      letter-spacing: 0.05em; cursor: pointer;
+      letter-spacing: 0.05em; cursor: pointer; touch-action: manipulation;
     }
 
     .btn-whatsapp {
@@ -235,7 +267,7 @@
 
     .cam-label-btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      background: var(--bp-primary); border: 1px solid #FFFFFF;
+      background: var(--bp-primary); border: 1px solid var(--bp-bright);
       color: #FFFFFF; font-family: var(--font-mono); font-size: 11px; font-weight: 800;
       padding: 7px 11px; border-radius: 6px; cursor: pointer;
     }
@@ -247,19 +279,19 @@
     }
     .meal-row-wrap:last-child { border-bottom: none; }
     .meal-item {
-      display: grid; grid-template-columns: 1fr 74px 44px; gap: 8px;
+      display: grid; grid-template-columns: 1fr 82px 42px; gap: 8px;
       align-items: center;
     }
     .item-macro-strip {
-      display: flex; gap: 10px; overflow-x: auto; margin-top: 5px;
-      font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);
-      scrollbar-width: none;
+      display: flex; gap: 12px; overflow-x: auto; margin-top: 6px;
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
+      scrollbar-width: none; white-space: nowrap;
     }
     .item-macro-strip::-webkit-scrollbar { display: none; }
 
     /* DECLUTTERED TRAINING INPUT GRID */
     .train-set-grid {
-      display: grid; grid-template-columns: 68px 1fr 1fr 56px; gap: 6px;
+      display: grid; grid-template-columns: 68px 1fr 1fr 62px; gap: 6px;
       align-items: center; margin-top: 6px; font-family: var(--font-mono); font-size: 11px;
     }
     .ex-save-badge {
@@ -342,40 +374,32 @@
 
 <div id="barcode-reader"></div>
 
-<!-- VIEW 1: PIN SECURITY GATE -->
+<!-- VIEW 1: DEVICE-BOUND PIN SECURITY GATE -->
 <div id="login-view">
   <div class="cad-box">
     <div style="text-align:center;">
-      <svg width="92" height="92" viewBox="0 0 120 120" fill="none" style="margin-bottom:8px;">
-        <line x1="20" y1="8" x2="100" y2="8" stroke="#4B597E" stroke-width="1"/>
-        <line x1="20" y1="5" x2="20" y2="14" stroke="#4B597E" stroke-width="1"/>
-        <line x1="100" y1="5" x2="100" y2="14" stroke="#4B597E" stroke-width="1"/>
-        <line x1="8" y1="20" x2="8" y2="100" stroke="#4B597E" stroke-width="1"/>
-        <line x1="5" y1="20" x2="14" y2="20" stroke="#4B597E" stroke-width="1"/>
-        <line x1="5" y1="100" x2="14" y2="100" stroke="#4B597E" stroke-width="1"/>
-        <line x1="20" y1="112" x2="100" y2="112" stroke="#4B597E" stroke-width="1"/>
-        <line x1="20" y1="106" x2="20" y2="115" stroke="#4B597E" stroke-width="1"/>
-        <line x1="100" y1="106" x2="100" y2="115" stroke="#4B597E" stroke-width="1"/>
-        <rect x="18" y="18" width="84" height="84" rx="14" fill="#131B2E" stroke="#6C7BA8" stroke-width="2.5"/>
-        <rect x="22" y="22" width="76" height="76" rx="10" fill="none" stroke="#364366" stroke-width="1"/>
-        <line x1="38" y1="22" x2="38" y2="98" stroke="#25304D" stroke-width="0.8"/>
-        <line x1="60" y1="22" x2="60" y2="98" stroke="#2E3C61" stroke-width="1"/>
-        <line x1="82" y1="22" x2="82" y2="98" stroke="#25304D" stroke-width="0.8"/>
-        <line x1="22" y1="38" x2="98" y2="38" stroke="#25304D" stroke-width="0.8"/>
-        <line x1="22" y1="60" x2="98" y2="60" stroke="#2E3C61" stroke-width="1"/>
-        <line x1="22" y1="82" x2="98" y2="82" stroke="#25304D" stroke-width="0.8"/>
+      <svg width="88" height="88" viewBox="0 0 120 120" fill="none" style="margin-bottom:6px;">
+        <rect x="18" y="18" width="84" height="84" rx="16" fill="#13192B" stroke="#535891" stroke-width="3"/>
+        <rect x="22" y="22" width="76" height="76" rx="12" fill="none" stroke="#2D3559" stroke-width="1"/>
+        <line x1="60" y1="22" x2="60" y2="98" stroke="#232B47" stroke-width="1"/>
+        <line x1="22" y1="60" x2="98" y2="60" stroke="#232B47" stroke-width="1"/>
         <rect x="40" y="34" width="9" height="52" rx="4.5" fill="#FFFFFF"/>
-        <path d="M53 60 L78 40" stroke="#6C7BA8" stroke-width="9" stroke-linecap="round"/>
-        <path d="M53 60 L78 80" stroke="#6C7BA8" stroke-width="9" stroke-linecap="round"/>
+        <path d="M53 60 L78 40" stroke="#8E95D3" stroke-width="9" stroke-linecap="round"/>
+        <path d="M53 60 L78 80" stroke="#8E95D3" stroke-width="9" stroke-linecap="round"/>
         <circle cx="53" cy="60" r="3.8" fill="#FFFFFF"/>
       </svg>
 
-      <div class="brand-wordmark" style="font-size:18px;letter-spacing:0.1em;">
+      <div class="brand-wordmark" style="font-size:18px;">
         <span class="w-white">KAEBISCH</span><span class="w-blue">BLUEPRINT</span>
       </div>
-      <div style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);margin-top:4px;">
-        🔒 ENTER 4-DIGIT SECURITY PASSCODE
+      <div id="login-subtitle" style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);margin-top:4px;">
+        🔒 ATHLETE SECURITY GATE
       </div>
+    </div>
+
+    <!-- FIRST-TIME DEVICE PAIRING LAST NAME INPUT (HIDES ONCE DEVICE IS BOUND) -->
+    <div id="lastname-wrap">
+      <input type="text" id="lastname-field" placeholder="Last Name (1st login only)" autocomplete="family-name" />
     </div>
 
     <input type="password" id="pin-field" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off" oninput="checkAutoUnlock(this.value)" onkeydown="handlePinKeydown(event)" />
@@ -397,6 +421,9 @@
     </div>
 
     <button type="button" class="unlock-submit-btn" onclick="handlePinFormSubmit()">UNLOCK PORTAL →</button>
+    <div id="switch-athlete-link" style="display:none;text-align:center;margin-top:10px;">
+      <button type="button" style="background:none;border:none;color:var(--text-muted);font-family:var(--font-mono);font-size:10px;cursor:pointer;text-decoration:underline;" onclick="resetDeviceBinding()">Switch Athlete Profile</button>
+    </div>
   </div>
 </div>
 
@@ -405,13 +432,11 @@
   <header>
     <div class="header-top">
       <div class="brand-lockup">
-        <svg width="42" height="42" viewBox="0 0 120 120" fill="none">
-          <rect x="14" y="14" width="92" height="92" rx="16" fill="#131B2E" stroke="#6C7BA8" stroke-width="3.5"/>
-          <line x1="60" y1="18" x2="60" y2="102" stroke="#25304D" stroke-width="1.5"/>
-          <line x1="18" y1="60" x2="102" y2="60" stroke="#25304D" stroke-width="1.5"/>
+        <svg width="40" height="40" viewBox="0 0 120 120" fill="none">
+          <rect x="14" y="14" width="92" height="92" rx="16" fill="#13192B" stroke="#535891" stroke-width="3.5"/>
           <rect x="38" y="32" width="10" height="56" rx="5" fill="#FFFFFF"/>
-          <path d="M52 60 L80 38" stroke="#6C7BA8" stroke-width="10" stroke-linecap="round"/>
-          <path d="M52 60 L80 82" stroke="#6C7BA8" stroke-width="10" stroke-linecap="round"/>
+          <path d="M52 60 L80 38" stroke="#8E95D3" stroke-width="10" stroke-linecap="round"/>
+          <path d="M52 60 L80 82" stroke="#8E95D3" stroke-width="10" stroke-linecap="round"/>
           <circle cx="52" cy="60" r="4.2" fill="#FFFFFF"/>
         </svg>
         <div>
@@ -425,7 +450,6 @@
         <button type="button" class="ctrl-btn" onclick="lockPortal()">LOCK</button>
       </div>
     </div>
-    <!-- REORDERED & SHORTENED MOBILE-FIRST NAVIGATION TABS -->
     <nav class="nav-pills" id="nav-pills">
       <button type="button" class="pill active" onclick="switchPortalTab('training', this)">Training</button>
       <button type="button" class="pill" onclick="switchPortalTab('nutrition', this)">Meal Plan</button>
@@ -437,23 +461,23 @@
   </header>
 
   <main>
-    <!-- DEFAULT TAB 1: TRAINING BLUEPRINT (DECLUTTERED, DROPDOWN DAY SELECTOR, AUTO-SAVE INDICATOR) -->
+    <!-- TAB 1: TRAINING BLUEPRINT -->
     <section id="tab-training" class="tab-view active">
       <div class="card" style="padding:12px 14px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <span class="mono-label">SELECT WORKOUT DAY</span>
           <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">AUTO-SAVES TO SHEET</span>
         </div>
-        <select id="training-day-select" onchange="filterTrainingDay(this.value)" style="font-weight:700;font-size:13px;"></select>
+        <select id="training-day-select" onchange="filterTrainingDay(this.value)" style="font-weight:700;"></select>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
-          Protocol: <strong>1–2 Feeder Sets</strong> · <strong>0–2 RIR</strong> · <strong>Tempo 3-1-0-1 / 3-2-0-1</strong>
+          Standard Protocol: <strong>1–2 Feeder Sets</strong> · <strong>0–2 RIR</strong> · <strong>Tempo 3-1-0-1 / 3-2-0-1</strong>
         </div>
       </div>
 
       <div id="workout-split-container"></div>
     </section>
 
-    <!-- TAB 2: MEAL PLAN & NUTRITION (WITH PER-ITEM MACROS & CUSTOM FOOD MODAL) -->
+    <!-- TAB 2: MEAL PLAN & NUTRITION -->
     <section id="tab-nutrition" class="tab-view">
       <div class="section-banner">
         <span>MEAL PLAN</span>
@@ -486,10 +510,20 @@
         </div>
       </div>
 
+      <!-- AI MACRO SWAP ASSISTANT BAR -->
+      <div class="card" style="padding:12px 14px;">
+        <div class="mono-label" style="margin-bottom:6px;">🧠 AI MACRO SWAP ASSISTANT</div>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:8px;">
+          <input type="text" id="ai-swap-input" placeholder="e.g. Swap 80g dry Cream of Rice for potatoes..." style="font-size:14px;" onkeydown="if(event.key==='Enter'){event.preventDefault();askAiSwap();}">
+          <button type="button" class="ctrl-btn" style="padding:8px 12px;" onclick="askAiSwap()">ASK AI</button>
+        </div>
+        <div id="ai-swap-reply" style="font-size:12px;color:var(--status-green);margin-top:6px;display:none;"></div>
+      </div>
+
       <div id="meals-container"></div>
     </section>
 
-    <!-- TAB 3: DAILY TRACKER (CLEANED UP) -->
+    <!-- TAB 3: DAILY TRACKER (TWO-WAY SHEET SYNC WITH SECTION 3) -->
     <section id="tab-tracker" class="tab-view">
       <div class="kpi-grid">
         <div class="kpi-card">
@@ -507,6 +541,7 @@
       <div class="card">
         <div class="card-header">
           <span class="mono-label">7-DAY WEIGHT, STEPS & CARDIO LOG</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">2-WAY SHEET SYNC</span>
         </div>
         <div id="daily-rows-container"></div>
       </div>
@@ -643,18 +678,18 @@
     <section id="tab-scanner" class="tab-view">
       <div class="section-banner">
         <span>FOOD SCANNER & CALORIE TRACKER</span>
-        <span style="color:var(--status-green);">LIVE CAMERA + UPC</span>
+        <span style="color:var(--status-green);">LIVE CAMERA + AI VISION</span>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <span class="mono-label">1. SELECT MEAL & SCAN BARCODE</span>
+          <span class="mono-label">1. SELECT MEAL & SCAN BARCODE / LABEL</span>
           <div style="display:flex;gap:6px;">
-            <button type="button" class="cam-label-btn" id="live-cam-btn" style="background:var(--status-green);color:#041B0D;" onclick="toggleLiveVideoBarcodeScanner()">
+            <button type="button" class="cam-label-btn" id="live-cam-btn" style="background:var(--status-green);color:#041B0D;border-color:var(--status-green);" onclick="toggleLiveVideoBarcodeScanner()">
               🎥 LIVE SCAN
             </button>
             <label for="native-camera-input" class="cam-label-btn">
-              📷 PHOTO
+              📷 PHOTO / LABEL
             </label>
             <input type="file" id="native-camera-input" accept="image/*" capture="environment" style="display:none;" onchange="handleNativeBarcodePhoto(this)" />
           </div>
@@ -683,8 +718,8 @@
         </div>
 
         <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:10px;align-items:center;">
-          <input type="text" id="manual-barcode-input" inputmode="text" placeholder="Type UPC digits OR brand name (e.g. Fairlife, Oikos)..." style="font-size:12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();lookupManualBarcode();}">
-          <button type="button" class="ctrl-btn" style="padding:9px 12px;" onclick="lookupManualBarcode()">LOOKUP</button>
+          <input type="text" id="manual-barcode-input" inputmode="text" placeholder="Type UPC digits OR brand name (e.g. Fairlife, Oikos)..." onkeydown="if(event.key==='Enter'){event.preventDefault();lookupManualBarcode();}">
+          <button type="button" class="ctrl-btn" style="padding:11px 12px;" onclick="lookupManualBarcode()">LOOKUP</button>
         </div>
         <div id="barcode-status" style="font-size:11px;font-family:var(--font-mono);color:var(--status-green);margin-bottom:10px;"></div>
 
@@ -794,7 +829,7 @@
 <!-- CUSTOM FOOD MODAL FOR MEAL PLAN TAB -->
 <div class="modal-backdrop" id="custom-food-modal">
   <div class="cad-box">
-    <div class="mono-label" style="font-size:13px;margin-bottom:10px;" id="custom-food-modal-title">+ ADD CUSTOM FOOD TO MEAL</div>
+    <div class="mono-label" style="font-size:13px;margin-bottom:10px;">+ ADD CUSTOM FOOD TO MEAL</div>
     <input type="hidden" id="cf-meal-idx" value="0">
     <div style="margin-bottom:8px;">
       <label class="q-title" style="font-size:11px;">Food Name:</label>
@@ -845,12 +880,17 @@
 <script>
   const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbynQxTLUC78FS-hCu12r9pSXSvXQLPVpZrIokkD2PniD3cyQQ67W-mF0e8Zfzf054iE/exec";
 
-  function callBlueprintBackend(action, payload, onSuccess, onFailure) {
+  /**
+   * 50-Athlete Concurrency-Safe Backend Bridge with Automatic Retry
+   */
+  function callBlueprintBackend(action, payload, onSuccess, onFailure, attempt) {
+    var tryNum = attempt || 1;
+
     if (typeof google !== "undefined" && google.script && google.script.run && typeof google.script.run[action] === "function") {
       var runner = google.script.run;
       if (onSuccess) runner = runner.withSuccessHandler(onSuccess);
       if (onFailure) runner = runner.withFailureHandler(onFailure);
-      if (action === "authenticateClient") runner.authenticateClient(payload.pin);
+      if (action === "authenticateClient") runner.authenticateClient(payload.pin, payload.lastName);
       else if (action === "lookupBarcodeServerSide") runner.lookupBarcodeServerSide(payload.barcode);
       else if (action === "searchBrandedFoodServerSide") runner.searchBrandedFoodServerSide(payload.searchTerm);
       else if (action === "processBarcodeImageServerSide") runner.processBarcodeImageServerSide(payload.base64DataUrl);
@@ -865,10 +905,22 @@
     })
       .then(function(r) { return r.json(); })
       .then(function(data) {
+        if (data && data.busy && tryNum < 3) {
+          setTimeout(function() {
+            callBlueprintBackend(action, payload, onSuccess, onFailure, tryNum + 1);
+          }, 1000 * tryNum);
+          return;
+        }
         if (onSuccess) onSuccess(data);
       })
       .catch(function(err) {
-        if (onFailure) onFailure(err);
+        if (tryNum < 3) {
+          setTimeout(function() {
+            callBlueprintBackend(action, payload, onSuccess, onFailure, tryNum + 1);
+          }, 1000 * tryNum);
+        } else if (onFailure) {
+          onFailure(err);
+        }
       });
   }
 
@@ -1059,6 +1111,16 @@
     { day: "DAY 6: REST & NEURAL RECOVERY", isRest: true, exercises: [] }
   ];
 
+  const DEFAULT_TRACKER = [
+    { rowIdx: 25, day: "Monday", weight: "", steps: "", cardio: "" },
+    { rowIdx: 26, day: "Tuesday", weight: "", steps: "", cardio: "" },
+    { rowIdx: 27, day: "Wednesday", weight: "", steps: "", cardio: "" },
+    { rowIdx: 28, day: "Thursday", weight: "", steps: "", cardio: "" },
+    { rowIdx: 29, day: "Friday", weight: "", steps: "", cardio: "" },
+    { rowIdx: 30, day: "Saturday", weight: "", steps: "", cardio: "" },
+    { rowIdx: 31, day: "Sunday", weight: "", steps: "", cardio: "" }
+  ];
+
   const SUPPLEMENT_SECTIONS = [
     {
       title: "SECTION 1: BASE DAILY HEALTH, ORGAN & LONGEVITY FOUNDATION",
@@ -1107,15 +1169,39 @@
     selectedTrainDayIdx: 0,
     foodDb: DEFAULT_FOOD_DB,
     meals: DEFAULT_MEALS,
-    training: DEFAULT_TRAINING
+    training: DEFAULT_TRAINING,
+    dailyTracker: DEFAULT_TRACKER
   };
 
   let dailyCalorieLog = [];
   let currentScannedFood = null;
   let liveVideoStream = null;
   let liveVideoLoopTimer = null;
+  let setDebounceTimers = {};
+  let trackerDebounceTimers = {};
 
-  // --- ZERO-DELAY PIN KEYPAD & CACHED INSTANT LOGIN ---
+  // --- DEVICE-BOUND SECURITY & ZERO-DELAY KEYPAD ---
+  function initDeviceBindingUI() {
+    try {
+      var boundName = localStorage.getItem("kb_bound_lastname");
+      if (boundName) {
+        document.getElementById("lastname-field").value = boundName;
+        document.getElementById("lastname-wrap").style.display = "none";
+        document.getElementById("login-subtitle").textContent = "🔒 PAIRED: " + boundName.toUpperCase();
+        document.getElementById("switch-athlete-link").style.display = "block";
+      }
+    } catch (e) {}
+  }
+  window.addEventListener("DOMContentLoaded", initDeviceBindingUI);
+
+  function resetDeviceBinding() {
+    try { localStorage.removeItem("kb_bound_lastname"); } catch (e) {}
+    document.getElementById("lastname-field").value = "";
+    document.getElementById("lastname-wrap").style.display = "block";
+    document.getElementById("login-subtitle").textContent = "🔒 ATHLETE SECURITY GATE";
+    document.getElementById("switch-athlete-link").style.display = "none";
+  }
+
   function tapKey(digit, e) {
     if (e && e.preventDefault) e.preventDefault();
     var field = document.getElementById("pin-field");
@@ -1152,17 +1238,19 @@
 
   function processPin(entered) {
     if (!entered) return;
+    var enteredLastName = (document.getElementById("lastname-field").value || "").trim();
 
-    // 1. Check localStorage cache first for 0.0s instant unlock on returning logins
+    // 1. Check localStorage cache first for 0.0s instant unlock
     var cachedClient = null;
     try {
       var rawCache = localStorage.getItem("kb_auth_cache_" + entered);
       if (rawCache) cachedClient = JSON.parse(rawCache);
     } catch (e) {}
 
-    if (cachedClient) {
+    if (cachedClient && (!enteredLastName || cachedClient.name.toLowerCase().indexOf(enteredLastName.toLowerCase()) !== -1)) {
+      bindDeviceToLastName(cachedClient.name);
       openPortalFor(cachedClient);
-      callBlueprintBackend("authenticateClient", { pin: entered }, function(res) {
+      callBlueprintBackend("authenticateClient", { pin: entered, lastName: enteredLastName }, function(res) {
         if (res && res.success && res.client) {
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
           applyLiveSheetUpdates(res.client);
@@ -1173,8 +1261,16 @@
 
     // 2. Check built-in instant roster
     if (KNOWN_ROSTER[entered]) {
+      var knownName = KNOWN_ROSTER[entered].name;
+      if (enteredLastName && knownName.toLowerCase().indexOf(enteredLastName.toLowerCase()) === -1) {
+        document.getElementById("pin-error").style.color = "var(--status-red)";
+        document.getElementById("pin-error").textContent = "NAME & PIN MISMATCH";
+        document.getElementById("pin-field").value = "";
+        return;
+      }
+      bindDeviceToLastName(knownName);
       openPortalFor({
-        name: KNOWN_ROSTER[entered].name,
+        name: knownName,
         phase: KNOWN_ROSTER[entered].phase,
         targetSteps: KNOWN_ROSTER[entered].targetSteps,
         targetProtein: KNOWN_ROSTER[entered].targetProtein,
@@ -1182,9 +1278,10 @@
         targetFats: KNOWN_ROSTER[entered].targetFats,
         foodDb: DEFAULT_FOOD_DB,
         meals: DEFAULT_MEALS,
-        training: DEFAULT_TRAINING
+        training: DEFAULT_TRAINING,
+        dailyTracker: DEFAULT_TRACKER
       });
-      callBlueprintBackend("authenticateClient", { pin: entered }, function(res) {
+      callBlueprintBackend("authenticateClient", { pin: entered, lastName: enteredLastName }, function(res) {
         if (res && res.success && res.client) {
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
           applyLiveSheetUpdates(res.client);
@@ -1193,19 +1290,20 @@
       return;
     }
 
-    // 3. First-time login for a brand new client added to Clients_Roster
+    // 3. First-time login for a new client on Clients_Roster
     document.getElementById("pin-error").style.color = "var(--bp-bright)";
     document.getElementById("pin-error").textContent = "UNLOCKING...";
     callBlueprintBackend(
       "authenticateClient",
-      { pin: entered },
+      { pin: entered, lastName: enteredLastName },
       function(res) {
         if (res && res.success && res.client) {
+          bindDeviceToLastName(res.client.name);
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
           openPortalFor(res.client);
         } else {
           document.getElementById("pin-error").style.color = "var(--status-red)";
-          document.getElementById("pin-error").textContent = "INVALID PASSCODE";
+          document.getElementById("pin-error").textContent = (res && res.message) ? res.message.toUpperCase() : "INVALID PASSCODE";
           document.getElementById("pin-field").value = "";
         }
       },
@@ -1215,6 +1313,15 @@
         document.getElementById("pin-field").value = "";
       }
     );
+  }
+
+  function bindDeviceToLastName(fullName) {
+    try {
+      var parts = (fullName || "").trim().split(" ");
+      var last = parts[parts.length - 1] || fullName;
+      localStorage.setItem("kb_bound_lastname", last);
+      initDeviceBindingUI();
+    } catch (e) {}
   }
 
   function openPortalFor(client) {
@@ -1229,7 +1336,8 @@
       selectedTrainDayIdx: 0,
       foodDb: (client.foodDb && client.foodDb.protein && client.foodDb.protein.length) ? client.foodDb : DEFAULT_FOOD_DB,
       meals: (client.meals && client.meals.length) ? client.meals : JSON.parse(JSON.stringify(DEFAULT_MEALS)),
-      training: (client.training && client.training.length) ? client.training : JSON.parse(JSON.stringify(DEFAULT_TRAINING))
+      training: (client.training && client.training.length) ? client.training : JSON.parse(JSON.stringify(DEFAULT_TRAINING)),
+      dailyTracker: (client.dailyTracker && client.dailyTracker.length) ? client.dailyTracker : JSON.parse(JSON.stringify(DEFAULT_TRACKER))
     };
     document.getElementById("login-view").style.display = "none";
     document.getElementById("portal-view").style.display = "block";
@@ -1246,6 +1354,7 @@
   function applyLiveSheetUpdates(client) {
     if (client.meals && client.meals.length) activeAthlete.meals = client.meals;
     if (client.training && client.training.length) activeAthlete.training = client.training;
+    if (client.dailyTracker && client.dailyTracker.length) activeAthlete.dailyTracker = client.dailyTracker;
     if (client.foodDb && client.foodDb.protein && client.foodDb.protein.length) activeAthlete.foodDb = client.foodDb;
     if (client.targetProtein) activeAthlete.targetProtein = client.targetProtein;
     if (client.targetCarbs) activeAthlete.targetCarbs = client.targetCarbs;
@@ -1254,6 +1363,7 @@
     renderMeals();
     populateScannerDropdown();
     renderDailyCalorieLog();
+    renderDailyTracker();
   }
 
   function lockPortal() {
@@ -1302,7 +1412,22 @@
     renderDailyCalorieLog();
   }
 
-  // --- DECLUTTERED TRAINING BLUEPRINT WITH DROPDOWN & PER-CARD SAVE STATUS ---
+  // --- AI MACRO SWAP ASSISTANT ---
+  function askAiSwap() {
+    var q = (document.getElementById("ai-swap-input").value || "").trim();
+    if (!q) return;
+    var replyEl = document.getElementById("ai-swap-reply");
+    replyEl.style.display = "block";
+    replyEl.style.color = "var(--bp-bright)";
+    replyEl.textContent = "⏳ Calculating exact gram-for-gram swap...";
+
+    callBlueprintBackend("askAiMacroSwapServerSide", { query: q }, function(res) {
+      replyEl.style.color = "var(--status-green)";
+      replyEl.textContent = (res && res.answer) ? ("✓ " + res.answer) : "Could not calculate swap.";
+    });
+  }
+
+  // --- DECLUTTERED TRAINING BLUEPRINT WITH 900MS DEBOUNCE AUTO-SAVE ---
   function filterTrainingDay(val) {
     activeAthlete.selectedTrainDayIdx = parseInt(val, 10);
     renderWorkoutSplit();
@@ -1331,7 +1456,6 @@
       }
 
       var exHtml = dayObj.exercises.map(function(ex, eIdx) {
-        // Only display Tempo/RIR tag if it deviates from standard 3-1-0-1 / 3-2-0-1 & 0-2
         var customTempoTag = (ex.tempo && ex.tempo !== "3-1-0-1" && ex.tempo !== "3-2-0-1") ? (' · TEMPO: ' + ex.tempo) : '';
         var customRirTag = (ex.rir && ex.rir !== "0-2") ? (' · RIR: ' + ex.rir) : '';
         var lastTopBadge = (ex.topLoad || ex.topReps) ? ('Last: ' + (ex.topLoad || "—") + ' lbs × ' + (ex.topReps || "—")) : '';
@@ -1347,15 +1471,15 @@
             '</div>' +
             '<div class="train-set-grid">' +
               '<span style="color:var(--bp-bright);">TOP SET</span>' +
-              '<input type="number" placeholder="Load (lbs)" id="tl-' + dIdx + '-' + eIdx + '" value="' + (ex.topLoad || "") + '" onchange="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="Reps" id="tr-' + dIdx + '-' + eIdx + '" value="' + (ex.topReps || "") + '" onchange="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="RIR" id="trir-' + dIdx + '-' + eIdx + '" value="' + (ex.topRir || "") + '" onchange="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="Lbs" id="tl-' + dIdx + '-' + eIdx + '" value="' + (ex.topLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="Reps" id="tr-' + dIdx + '-' + eIdx + '" value="' + (ex.topReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="RIR" id="trir-' + dIdx + '-' + eIdx + '" value="' + (ex.topRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
             '</div>' +
             '<div class="train-set-grid">' +
               '<span style="color:var(--text-muted);">BACK-OFF</span>' +
-              '<input type="number" placeholder="Load (lbs)" id="bl-' + dIdx + '-' + eIdx + '" value="' + (ex.backLoad || "") + '" onchange="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="Reps" id="br-' + dIdx + '-' + eIdx + '" value="' + (ex.backReps || "") + '" onchange="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="RIR" id="brir-' + dIdx + '-' + eIdx + '" value="' + (ex.backRir || "") + '" onchange="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="Lbs" id="bl-' + dIdx + '-' + eIdx + '" value="' + (ex.backLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="Reps" id="br-' + dIdx + '-' + eIdx + '" value="' + (ex.backReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="RIR" id="brir-' + dIdx + '-' + eIdx + '" value="' + (ex.backRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
             '</div>' +
           '</div>'
         );
@@ -1381,26 +1505,31 @@
       statusBadge.classList.remove("saved");
     }
 
-    var payload = {
-      clientName: activeAthlete.name,
-      dayName: dayObj.day,
-      exerciseName: ex.name,
-      rowIdx: ex.rowIdx,
-      topLoad: ex.topLoad,
-      topReps: ex.topReps,
-      topRir: ex.topRir,
-      backLoad: ex.backLoad,
-      backReps: ex.backReps,
-      backRir: ex.backRir
-    };
+    var timerKey = dIdx + "_" + eIdx;
+    clearTimeout(setDebounceTimers[timerKey]);
 
-    callBlueprintBackend("saveTrainingSetToSheet", payload, function() {
-      if (statusBadge) {
-        statusBadge.textContent = "✓ Saved to Sheet";
-        statusBadge.classList.add("saved");
-      }
-      triggerSaveToast();
-    });
+    setDebounceTimers[timerKey] = setTimeout(function() {
+      var payload = {
+        clientName: activeAthlete.name,
+        dayName: dayObj.day,
+        exerciseName: ex.name,
+        rowIdx: ex.rowIdx,
+        topLoad: ex.topLoad,
+        topReps: ex.topReps,
+        topRir: ex.topRir,
+        backLoad: ex.backLoad,
+        backReps: ex.backReps,
+        backRir: ex.backRir
+      };
+
+      callBlueprintBackend("saveTrainingSetToSheet", payload, function() {
+        if (statusBadge) {
+          statusBadge.textContent = "✓ Saved to Sheet";
+          statusBadge.classList.add("saved");
+        }
+        triggerSaveToast();
+      });
+    }, 900);
   }
 
   // --- MEAL PLAN WITH PER-ITEM MACROS & CUSTOM FOOD ADDER ---
@@ -1419,7 +1548,6 @@
           return '<option value="' + f.name + '" ' + (f.name === item.food ? "selected" : "") + '>' + f.name + '</option>';
         }).join("");
 
-        // Calculate per-item macros
         var foodObj = list.find(function(x) { return x.name === item.food; });
         var ip = 0, ic = 0, ifat = 0, ical = 0;
         if (foodObj && item.grams > 0) {
@@ -1436,10 +1564,10 @@
         return (
           '<div class="meal-row-wrap">' +
             '<div class="meal-item">' +
-              '<select style="font-size:12px;padding:7px;" onchange="swapFood(' + mIdx + ', ' + iIdx + ', this.value)">' +
+              '<select onchange="swapFood(' + mIdx + ', ' + iIdx + ', this.value)">' +
                 options +
               '</select>' +
-              '<input type="number" step="1" style="text-align:right;font-family:var(--font-mono);padding:7px;" value="' + (item.grams || 0) + '" onchange="updateMealGrams(' + mIdx + ', ' + iIdx + ', this.value)">' +
+              '<input type="number" step="1" style="text-align:right;font-family:var(--font-mono);" value="' + (item.grams || 0) + '" onchange="updateMealGrams(' + mIdx + ', ' + iIdx + ', this.value)">' +
               '<div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center;">' + (item.unit || "g") + '</div>' +
             '</div>' +
             '<div class="item-macro-strip">' +
@@ -1602,21 +1730,58 @@
     document.getElementById("target-cal-sub").textContent = "Goal: " + targets.cal.toLocaleString();
   }
 
-  // --- CLEANER 7-DAY TRACKER (REMOVED REDUNDANT SUBTITLES) ---
+  // --- TWO-WAY 7-DAY DAILY TRACKER SYNC (SAVES TO SECTION 3 OF CLIENT SHEET) ---
   function renderDailyTracker() {
-    var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    document.getElementById("daily-rows-container").innerHTML = days.map(function(d) {
+    var rows = activeAthlete.dailyTracker || DEFAULT_TRACKER;
+    document.getElementById("daily-rows-container").innerHTML = rows.map(function(rObj, idx) {
       return (
         '<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
-          '<div style="margin-bottom:6px;"><strong style="font-family:var(--font-mono);font-size:12px;color:var(--bp-bright);">' + d + '</strong></div>' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
+            '<strong style="font-family:var(--font-mono);font-size:12px;color:var(--bp-bright);">' + rObj.day + '</strong>' +
+            '<span class="ex-save-badge" id="trk-save-' + idx + '">' + ((rObj.weight || rObj.steps) ? 'Synced ✓' : '') + '</span>' +
+          '</div>' +
           '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">' +
-            '<input type="number" step="0.1" class="wt-inp" placeholder="Weight (lbs)" oninput="recalcTracker()">' +
-            '<input type="number" class="step-inp" placeholder="Steps" oninput="recalcTracker()">' +
-            '<input type="number" class="cardio-inp" placeholder="Cardio kcal" oninput="recalcTracker()">' +
+            '<input type="number" step="0.1" class="wt-inp" id="trk-wt-' + idx + '" value="' + (rObj.weight || "") + '" placeholder="Weight (lbs)" oninput="syncDailyTrackerRow(' + idx + ')">' +
+            '<input type="number" class="step-inp" id="trk-st-' + idx + '" value="' + (rObj.steps || "") + '" placeholder="Steps" oninput="syncDailyTrackerRow(' + idx + ')">' +
+            '<input type="number" class="cardio-inp" id="trk-cd-' + idx + '" value="' + (rObj.cardio || "") + '" placeholder="Cardio kcal" oninput="syncDailyTrackerRow(' + idx + ')">' +
           '</div>' +
         '</div>'
       );
     }).join("");
+    recalcTracker();
+  }
+
+  function syncDailyTrackerRow(idx) {
+    var rows = activeAthlete.dailyTracker || DEFAULT_TRACKER;
+    var rObj = rows[idx];
+    rObj.weight = document.getElementById("trk-wt-" + idx).value;
+    rObj.steps = document.getElementById("trk-st-" + idx).value;
+    rObj.cardio = document.getElementById("trk-cd-" + idx).value;
+
+    recalcTracker();
+
+    var badge = document.getElementById("trk-save-" + idx);
+    if (badge) {
+      badge.textContent = "Saving...";
+      badge.classList.remove("saved");
+    }
+
+    clearTimeout(trackerDebounceTimers[idx]);
+    trackerDebounceTimers[idx] = setTimeout(function() {
+      callBlueprintBackend("saveDailyTrackerToSheet", {
+        clientName: activeAthlete.name,
+        rowIdx: rObj.rowIdx || (25 + idx),
+        weight: rObj.weight,
+        steps: rObj.steps,
+        cardio: rObj.cardio
+      }, function() {
+        if (badge) {
+          badge.textContent = "✓ Saved";
+          badge.classList.add("saved");
+        }
+        triggerSaveToast();
+      });
+    }, 900);
   }
 
   function recalcTracker() {
@@ -1627,14 +1792,18 @@
       var avgW = (weights.reduce(function(a, b) { return a + b; }, 0) / weights.length).toFixed(1);
       document.getElementById("kpi-weight").textContent = avgW + " lbs";
       document.getElementById("kpi-weighins").textContent = weights.length + " / 7 weigh-ins";
+    } else {
+      document.getElementById("kpi-weight").textContent = "—";
+      document.getElementById("kpi-weighins").textContent = "0 / 7 weigh-ins";
     }
     if (steps.length) {
       var avgS = Math.round(steps.reduce(function(a, b) { return a + b; }, 0) / steps.length);
       var miles = (avgS * 0.00047348).toFixed(2);
       document.getElementById("kpi-steps").textContent = avgS.toLocaleString();
       document.getElementById("kpi-miles").textContent = miles + " Est. Miles · Goal " + activeAthlete.targetSteps.toLocaleString();
+    } else {
+      document.getElementById("kpi-steps").textContent = "—";
     }
-    triggerSaveToast();
   }
 
   // --- WEEKLY CHECK-IN & WHATSAPP HANDOFF ---
@@ -1972,7 +2141,7 @@
     } catch (err) {
       stopLiveVideoCamera();
       statusEl.style.color = "var(--status-yellow)";
-      statusEl.textContent = "Allow camera access in Safari or tap 📷 PHOTO.";
+      statusEl.textContent = "Allow camera access in Safari or tap 📷 PHOTO / LABEL.";
     }
   }
 
@@ -2040,7 +2209,7 @@
     var rawFile = inputEl.files[0];
     var statusEl = document.getElementById("barcode-status");
     statusEl.style.color = "var(--bp-bright)";
-    statusEl.textContent = "⏳ Scanning barcode...";
+    statusEl.textContent = "⏳ Scanning barcode / nutrition label...";
 
     var objectUrl = URL.createObjectURL(rawFile);
     var previewWrap = document.getElementById("scan-photo-preview-wrap");
@@ -2059,7 +2228,7 @@
       for (var i = 0; i < passes.length; i++) {
         var canvas = buildBarcodeCanvas(img, passes[i].angle, passes[i].crop, passes[i].sharpen);
         var dataUrl = canvas.toDataURL("image/jpeg", 0.85);
-        if (i === 1) compactDataUrl = dataUrl;
+        if (i === 0) compactDataUrl = dataUrl;
         var zbarCode = await tryZbarWasmDecode(canvas);
         if (zbarCode) { URL.revokeObjectURL(objectUrl); inputEl.value = ""; onBarcodeSuccess(zbarCode); return; }
         var qCode = await tryQuaggaDecode(dataUrl);
