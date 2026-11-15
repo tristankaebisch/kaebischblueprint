@@ -153,7 +153,7 @@
 
     .header-top {
       display: grid;
-      grid-template-columns: 64px 1fr 64px;
+      grid-template-columns: 74px 1fr 74px;
       align-items: center;
       padding: 10px 14px 6px;
     }
@@ -164,6 +164,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+      cursor: pointer;
     }
 
     .brand-center-row {
@@ -731,6 +732,22 @@
       width: 18px; height: 18px; margin: 0; accent-color: var(--status-green); box-shadow: none;
     }
 
+    /* PLATE CALCULATOR PILLS */
+    .plate-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--bg-elevated);
+      border: 1px solid var(--bp-bright);
+      color: #FFFFFF;
+      margin: 3px;
+    }
+
     #live-video-scanner-box {
       display: none;
       position: relative;
@@ -803,46 +820,36 @@
 </head>
 <body>
 
-<!-- REUSABLE ARCHITECTURAL CAD "K" LOGO DEFINITION (MATCHES SCREENSHOT EXACTLY) -->
+<!-- REUSABLE ARCHITECTURAL CAD "K" LOGO DEFINITION -->
 <svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <pattern id="kb-cad-subgrid" width="7.2" height="7.2" patternUnits="userSpaceOnUse">
       <path d="M 7.2 0 L 0 0 0 7.2" fill="none" stroke="#263154" stroke-width="0.65"/>
     </pattern>
     <g id="kb-architectural-logo">
-      <!-- Outer Top Dimension Line & Extension Ticks -->
       <line x1="24" y1="9" x2="96" y2="9" stroke="#4A5682" stroke-width="0.9"/>
       <line x1="24" y1="5" x2="24" y2="14" stroke="#4A5682" stroke-width="0.9"/>
       <line x1="96" y1="5" x2="96" y2="14" stroke="#4A5682" stroke-width="0.9"/>
-      <!-- Outer Left Dimension Line & Extension Ticks -->
       <line x1="9" y1="24" x2="9" y2="96" stroke="#4A5682" stroke-width="0.9"/>
       <line x1="5" y1="24" x2="14" y2="24" stroke="#4A5682" stroke-width="0.9"/>
       <line x1="5" y1="96" x2="14" y2="96" stroke="#4A5682" stroke-width="0.9"/>
-      <!-- Outer Bottom Dimension Line & Extension Ticks -->
       <line x1="24" y1="111" x2="96" y2="111" stroke="#4A5682" stroke-width="0.9"/>
       <line x1="24" y1="106" x2="24" y2="115" stroke="#4A5682" stroke-width="0.9"/>
       <line x1="96" y1="106" x2="96" y2="115" stroke="#4A5682" stroke-width="0.9"/>
-      <!-- Corner Registration Crosshairs -->
       <path d="M15 18 H21 M18 15 V21 M99 18 H105 M102 15 V21 M15 102 H21 M18 99 V105 M99 102 H105 M102 99 V105" stroke="#4A5682" stroke-width="0.8"/>
-      <!-- Double-Border Rounded Blueprint Frame -->
       <rect x="20" y="20" width="80" height="80" rx="15" fill="#11172B" stroke="#6370A8" stroke-width="2.4"/>
       <rect x="24" y="24" width="72" height="72" rx="11" fill="url(#kb-cad-subgrid)" stroke="#3B4772" stroke-width="1"/>
-      <!-- Center Axis Hairlines -->
       <line x1="60" y1="24" x2="60" y2="96" stroke="#36436E" stroke-width="1"/>
       <line x1="24" y1="60" x2="96" y2="60" stroke="#36436E" stroke-width="1"/>
-      <!-- Internal Stem Height Callout & Top Span Callout -->
       <line x1="34" y1="36" x2="34" y2="84" stroke="#4E5B8B" stroke-width="0.8"/>
       <line x1="31" y1="36" x2="37" y2="36" stroke="#4E5B8B" stroke-width="0.8"/>
       <line x1="31" y1="84" x2="37" y2="84" stroke="#4E5B8B" stroke-width="0.8"/>
       <line x1="55" y1="30" x2="82" y2="30" stroke="#4E5B8B" stroke-width="0.8"/>
       <line x1="55" y1="28" x2="55" y2="32" stroke="#4E5B8B" stroke-width="0.8"/>
       <line x1="82" y1="28" x2="82" y2="32" stroke="#4E5B8B" stroke-width="0.8"/>
-      <!-- Bold White Vertical Pillar -->
       <rect x="41" y="36" width="9.5" height="48" rx="4.75" fill="#FFFFFF"/>
-      <!-- Periwinkle Chevron Arms -->
       <path d="M55 60 L80 40" stroke="#6E7BB4" stroke-width="9.5" stroke-linecap="round"/>
       <path d="M55 60 L80 80" stroke="#6E7BB4" stroke-width="9.5" stroke-linecap="round"/>
-      <!-- Glowing White Vertex Node -->
       <circle cx="55.5" cy="60" r="4.2" fill="#FFFFFF"/>
     </g>
   </defs>
@@ -904,10 +911,11 @@
   <header>
     <div class="header-top">
       <div>
-        <button type="button" class="ctrl-btn" style="padding:5px 8px;font-size:10px;" onclick="jumpToTab('overview')">START HERE</button>
+        <!-- REPLACED DUPLICATE START HERE WITH LIVE SHEET SYNC BUTTON -->
+        <button type="button" class="ctrl-btn" id="live-sync-btn" style="padding:5px 9px;font-size:10px;color:var(--bp-bright);" onclick="refreshLiveSheetData()" title="Pull latest coach updates from Google Sheet">↻ SYNC</button>
       </div>
-      <!-- CENTERED ARCHITECTURAL CAD LOGO LOCKUP -->
-      <div class="brand-center-lockup">
+      <!-- CENTERED ARCHITECTURAL CAD LOGO LOCKUP (TAPPING LOGO OPENS START HERE) -->
+      <div class="brand-center-lockup" onclick="jumpToTab('overview')" title="Open Program Overview">
         <div class="brand-center-row">
           <svg width="34" height="34" viewBox="0 0 120 120">
             <use href="#kb-architectural-logo"></use>
@@ -1062,9 +1070,14 @@
           </div>
         </div>
       </div>
+
+      <!-- DIRECT WHATSAPP COACH MESSAGE BUTTON -->
+      <a href="https://wa.me/16085015750" target="_blank" class="btn-whatsapp" style="margin-top:14px;">
+        💬 MESSAGE COACH TRISTAN ON WHATSAPP →
+      </a>
     </section>
 
-    <!-- TAB 1: TRAINING BLUEPRINT (WITH 6-RULE "READ BEFORE YOU TRAIN" GATE & PROGRESSION BADGES) -->
+    <!-- TAB 1: TRAINING BLUEPRINT -->
     <section id="tab-training" class="tab-view active">
       <!-- "READ BEFORE YOU TRAIN" 6-RULE CHECKLIST GATE -->
       <div class="rules-gate-card">
@@ -1134,7 +1147,7 @@
         </div>
       </div>
 
-      <!-- LOCKED STATUS BAR (HIDES ONCE 6 OF 6 RULES ARE CHECKED) -->
+      <!-- LOCKED STATUS BAR -->
       <div id="training-lock-banner" class="locked-banner-bar">
         🔒 LOCKED · CHECK OFF ALL 6 RULES ABOVE TO START LOGGING
       </div>
@@ -1143,7 +1156,10 @@
         <div class="card" style="padding:12px 14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
             <span class="mono-label">SELECT WORKOUT DAY</span>
-            <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">AUTO-SAVES TO SHEET</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button type="button" class="ctrl-btn" style="padding:4px 9px;font-size:10px;border-color:var(--bp-bright);" onclick="openPlateCalcModal()">🏋️ PLATE CALC</button>
+              <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">AUTO-SAVES</span>
+            </div>
           </div>
           <select id="training-day-select" onchange="filterTrainingDay(this.value)"></select>
         </div>
@@ -1522,11 +1538,11 @@
       </div>
     </section>
 
-    <!-- TAB 6: SUPPLEMENTS (LIVE SYNCED FROM COACH'S CHECKED BOXES ON CLIENT SHEET) -->
+    <!-- TAB 6: SUPPLEMENTS (WITH DAILY COMPLIANCE PROGRESS BAR) -->
     <section id="tab-supplements" class="tab-view">
       <div class="section-banner">
         <span>PRESCRIBED SUPPLEMENT PROTOCOL</span>
-        <span style="color:var(--status-green);font-family:var(--font-mono);font-size:10px;">COACH-SELECTED</span>
+        <span id="supp-compliance-pill" style="color:var(--status-green);font-family:var(--font-mono);font-size:11px;font-weight:800;">0 / 0 TAKEN TODAY</span>
       </div>
       <div id="supplements-container"></div>
     </section>
@@ -1534,6 +1550,25 @@
 </div>
 
 <div id="save-toast">Synced ✓</div>
+
+<!-- BARBELL PLATE CALCULATOR MODAL -->
+<div class="modal-backdrop" id="plate-calc-modal">
+  <div class="cad-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span class="mono-label" style="font-size:13px;">🏋️ BARBELL PLATE CALCULATOR</span>
+      <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">45 LB BAR</span>
+    </div>
+    <div style="margin-bottom:10px;">
+      <label class="q-title" style="font-size:11px;">Enter Target Total Barbell Weight (lbs):</label>
+      <input type="number" id="plate-target-weight" value="225" step="5" oninput="calculateBarbellPlates()">
+    </div>
+    <div style="background:var(--bg-input);border:1px solid var(--border-cad);border-radius:8px;padding:12px;margin-bottom:12px;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-bottom:6px;">LOAD ON EACH SIDE OF THE BAR:</div>
+      <div id="plate-results-box"></div>
+    </div>
+    <button type="button" class="ctrl-btn" style="width:100%;padding:10px;" onclick="document.getElementById('plate-calc-modal').classList.remove('open')">CLOSE CALCULATOR</button>
+  </div>
+</div>
 
 <!-- CUSTOM FOOD MODAL FOR MEAL PLAN TAB -->
 <div class="modal-backdrop" id="custom-food-modal">
@@ -1589,8 +1624,8 @@
 <script>
   const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbynQxTLUC78FS-hCu12r9pSXSvXQLPVpZrIokkD2PniD3cyQQ67W-mF0e8Zfzf054iE/exec";
 
-  // Generate Architectural CAD Apple Touch Home Screen Icon
-  (function generatePwaAppIcon() {
+  // Generate Architectural CAD Browser Tab Favicon & iPhone Home Screen Icon
+  (function generateBrowserTabFaviconAndPwaIcon() {
     try {
       var c = document.createElement("canvas");
       c.width = 180; c.height = 180;
@@ -1604,25 +1639,36 @@
         ctx.beginPath(); ctx.moveTo(24, g); ctx.lineTo(156, g); ctx.stroke();
       }
       ctx.strokeStyle = "#6370A8";
-      ctx.lineWidth = 5;
-      ctx.strokeRect(24, 24, 132, 132);
+      ctx.lineWidth = 6;
+      ctx.strokeRect(20, 20, 140, 140);
       ctx.fillStyle = "#FFFFFF";
-      ctx.fillRect(58, 50, 15, 80);
+      ctx.fillRect(54, 46, 17, 88);
       ctx.strokeStyle = "#6E7BB4";
-      ctx.lineWidth = 15;
+      ctx.lineWidth = 17;
       ctx.lineCap = "round";
       ctx.beginPath();
-      ctx.moveTo(82, 90); ctx.lineTo(124, 56);
-      ctx.moveTo(82, 90); ctx.lineTo(124, 124);
+      ctx.moveTo(80, 90); ctx.lineTo(126, 52);
+      ctx.moveTo(80, 90); ctx.lineTo(126, 128);
       ctx.stroke();
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
-      ctx.arc(82, 90, 6.5, 0, Math.PI * 2);
+      ctx.arc(80, 90, 7, 0, Math.PI * 2);
       ctx.fill();
-      var link = document.createElement("link");
-      link.rel = "apple-touch-icon";
-      link.href = c.toDataURL("image/png");
-      document.head.appendChild(link);
+
+      var pngDataUrl = c.toDataURL("image/png");
+
+      // 1. Desktop Browser Tab Favicon
+      var fav = document.createElement("link");
+      fav.rel = "icon";
+      fav.type = "image/png";
+      fav.href = pngDataUrl;
+      document.head.appendChild(fav);
+
+      // 2. iOS / Android Home Screen App Icon
+      var appleTouch = document.createElement("link");
+      appleTouch.rel = "apple-touch-icon";
+      appleTouch.href = pngDataUrl;
+      document.head.appendChild(appleTouch);
     } catch (e) {}
   })();
 
@@ -1875,6 +1921,7 @@
 
   let activeAthlete = {
     name: "Tristan Kaebisch",
+    pin: "1234",
     phase: "Lean Hypertrophy",
     targetSteps: 10000,
     targetProtein: 220,
@@ -1928,6 +1975,49 @@
       var pill = document.getElementById("checkin-countdown-pill");
       if (pill && pill.textContent.indexOf("SUBMITTED") === -1) pill.textContent = label;
     } catch (e) {}
+  }
+
+  // --- LIVE 1-TAP SHEET REFRESH BUTTON (TOP LEFT HEADER) ---
+  function refreshLiveSheetData() {
+    var btn = document.getElementById("live-sync-btn");
+    if (!activeAthlete.pin) return;
+    if (btn) btn.textContent = "⏳...";
+    callBlueprintBackend("authenticateClient", { pin: activeAthlete.pin, lastName: "" }, function(res) {
+      if (btn) btn.textContent = "↻ SYNC";
+      if (res && res.success && res.client) {
+        try { localStorage.setItem("kb_auth_cache_" + activeAthlete.pin, JSON.stringify(res.client)); } catch (e) {}
+        applyLiveSheetUpdates(res.client);
+        triggerSaveToast("✓ Latest Coach Plan Synced!");
+      }
+    }, function() {
+      if (btn) btn.textContent = "↻ SYNC";
+    });
+  }
+
+  // --- BARBELL PLATE CALCULATOR MODAL ---
+  function openPlateCalcModal() {
+    document.getElementById("plate-calc-modal").classList.add("open");
+    calculateBarbellPlates();
+  }
+
+  function calculateBarbellPlates() {
+    var total = parseFloat(document.getElementById("plate-target-weight").value) || 45;
+    var box = document.getElementById("plate-results-box");
+    if (total <= 45) {
+      box.innerHTML = '<span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);">Empty 45 lb Barbell</span>';
+      return;
+    }
+    var perSide = (total - 45) / 2;
+    var plates = [45, 35, 25, 10, 5, 2.5];
+    var out = [];
+    plates.forEach(function(p) {
+      var count = Math.floor((perSide + 0.001) / p);
+      if (count > 0) {
+        out.push('<span class="plate-pill">' + count + ' × ' + p + ' lb</span>');
+        perSide -= count * p;
+      }
+    });
+    box.innerHTML = out.length ? out.join("") : '<span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);">Empty 45 lb Barbell</span>';
   }
 
   // --- "READ BEFORE YOU TRAIN" 6-RULE LOCK GATE ---
@@ -2025,6 +2115,7 @@
 
   function processPin(entered) {
     if (!entered) return;
+    activeAthlete.pin = entered;
 
     var cachedClient = null;
     try {
@@ -2034,7 +2125,7 @@
 
     if (cachedClient) {
       bindDeviceToLastName(cachedClient.name);
-      openPortalFor(cachedClient);
+      openPortalFor(cachedClient, entered);
       callBlueprintBackend("authenticateClient", { pin: entered, lastName: "" }, function(res) {
         if (res && res.success && res.client) {
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
@@ -2060,7 +2151,7 @@
         training: DEFAULT_TRAINING,
         dailyTracker: DEFAULT_TRACKER,
         supplements: SUPPLEMENT_SECTIONS
-      });
+      }, entered);
       callBlueprintBackend("authenticateClient", { pin: entered, lastName: "" }, function(res) {
         if (res && res.success && res.client) {
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
@@ -2079,7 +2170,7 @@
         if (res && res.success && res.client) {
           bindDeviceToLastName(res.client.name);
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
-          openPortalFor(res.client);
+          openPortalFor(res.client, entered);
         } else {
           document.getElementById("pin-error").style.color = "var(--status-red)";
           document.getElementById("pin-error").textContent = "INVALID PASSCODE";
@@ -2122,9 +2213,10 @@
     document.getElementById("ov-steps-summary").textContent = activeAthlete.targetSteps.toLocaleString() + " Daily Steps · 160 oz Water";
   }
 
-  function openPortalFor(client) {
+  function openPortalFor(client, usedPin) {
     activeAthlete = {
       name: client.name || "Tristan Kaebisch",
+      pin: usedPin || activeAthlete.pin || "1234",
       phase: client.phase || "Lean Hypertrophy",
       targetSteps: client.targetSteps || 10000,
       targetProtein: client.targetProtein || 220,
@@ -3255,7 +3347,7 @@
       });
   }
 
-  // --- LIVE SUPPLEMENTS ---
+  // --- LIVE SUPPLEMENTS WITH DAILY COMPLIANCE COUNTER ---
   function renderSupplements() {
     var suppSections = (activeAthlete.supplements && activeAthlete.supplements.length)
       ? activeAthlete.supplements
@@ -3270,12 +3362,21 @@
               '<div style="font-size:11px;color:var(--bp-bright);font-family:var(--font-mono);margin-top:2px;">' + s.timing + '</div>' +
               '<div style="font-size:11px;color:var(--text-muted);margin-top:1px;">' + s.purpose + '</div>' +
             '</div>' +
-            '<input type="checkbox" checked style="width:20px;height:20px;margin-top:4px;accent-color:var(--status-green);box-shadow:none;" onchange="triggerSaveToast(\'Supplement Checked ✓\')">' +
+            '<input type="checkbox" class="supp-daily-cb" checked style="width:20px;height:20px;margin-top:4px;accent-color:var(--status-green);box-shadow:none;" onchange="updateSuppComplianceCount()">' +
           '</label>'
         );
       }).join("");
       return '<div class="card"><div class="card-header"><span class="mono-label">' + sec.title + '</span></div>' + itemsHtml + '</div>';
     }).join("");
+    updateSuppComplianceCount(true);
+  }
+
+  function updateSuppComplianceCount(silent) {
+    var cbs = [].slice.call(document.querySelectorAll(".supp-daily-cb"));
+    var checked = cbs.filter(function(c) { return c.checked; }).length;
+    var pill = document.getElementById("supp-compliance-pill");
+    if (pill) pill.textContent = checked + " / " + cbs.length + " TAKEN TODAY";
+    if (!silent) triggerSaveToast("Supplement Checked ✓");
   }
 </script>
 </body>
