@@ -151,7 +151,6 @@
       border-bottom: 1px solid var(--border-cad);
     }
 
-    /* CENTERED LOGO HEADER BAR */
     .header-top {
       display: grid;
       grid-template-columns: 64px 1fr 64px;
@@ -170,7 +169,7 @@
     .brand-center-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
     }
 
     .brand-wordmark {
@@ -356,6 +355,155 @@
       cursor: pointer;
     }
 
+    /* ============================================================================
+       "READ BEFORE YOU TRAIN" 6-RULE CHECKLIST & LOCK OVERLAY
+       ============================================================================ */
+    .rules-gate-card {
+      background: #080C17;
+      border: 1px solid var(--border-cad);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .rules-gate-header {
+      background: #04070E;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-cad);
+    }
+    .rules-count-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: var(--bp-primary);
+      color: #FFFFFF;
+      border: 1px solid var(--bp-bright);
+    }
+    .rules-count-pill.complete {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--status-green);
+      border-color: var(--status-green);
+    }
+    .rule-item-row {
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      cursor: pointer;
+    }
+    .rule-item-row:last-child { border-bottom: none; }
+    .rule-num {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--bp-bright);
+    }
+    .rule-got-it {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .rule-got-it input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: var(--status-green);
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    .program-structure-box {
+      background: #050811;
+      border: 1px solid var(--border-cad);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: #CBD5E1;
+      line-height: 1.5;
+    }
+    .prog-legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .prog-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .prog-badge.up {
+      background: rgba(16, 185, 129, 0.16);
+      color: var(--status-green);
+      border: 1px solid var(--status-green);
+    }
+    .prog-badge.same {
+      background: rgba(245, 158, 11, 0.16);
+      color: var(--status-yellow);
+      border: 1px solid var(--status-yellow);
+    }
+    .prog-badge.down {
+      background: rgba(239, 68, 68, 0.16);
+      color: var(--status-red);
+      border: 1px solid var(--status-red);
+    }
+
+    .role-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-cad);
+      color: var(--bp-bright);
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .locked-banner-bar {
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid var(--status-yellow);
+      color: var(--status-yellow);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+      padding: 9px 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .workout-locked {
+      opacity: 0.42;
+      pointer-events: none;
+      filter: grayscale(35%);
+      user-select: none;
+    }
+
     /* COACH'S WEEKLY DIRECTIVE BANNER */
     .coach-directive-box {
       background: linear-gradient(135deg, rgba(83, 88, 145, 0.24), rgba(19, 25, 43, 0.95));
@@ -522,7 +670,7 @@
     }
     .item-macro-strip::-webkit-scrollbar { display: none; }
 
-    /* TRAINING INPUT GRID, PR BADGE & VIDEO CHECK BADGE */
+    /* TRAINING INPUT GRID & PR BADGE */
     .train-set-grid {
       display: grid; grid-template-columns: 68px 1fr 1fr 64px; gap: 6px;
       align-items: center; margin-top: 6px; font-family: var(--font-mono); font-size: 11px;
@@ -655,21 +803,59 @@
 </head>
 <body>
 
+<!-- REUSABLE ARCHITECTURAL CAD "K" LOGO DEFINITION (MATCHES SCREENSHOT EXACTLY) -->
+<svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="kb-cad-subgrid" width="7.2" height="7.2" patternUnits="userSpaceOnUse">
+      <path d="M 7.2 0 L 0 0 0 7.2" fill="none" stroke="#263154" stroke-width="0.65"/>
+    </pattern>
+    <g id="kb-architectural-logo">
+      <!-- Outer Top Dimension Line & Extension Ticks -->
+      <line x1="24" y1="9" x2="96" y2="9" stroke="#4A5682" stroke-width="0.9"/>
+      <line x1="24" y1="5" x2="24" y2="14" stroke="#4A5682" stroke-width="0.9"/>
+      <line x1="96" y1="5" x2="96" y2="14" stroke="#4A5682" stroke-width="0.9"/>
+      <!-- Outer Left Dimension Line & Extension Ticks -->
+      <line x1="9" y1="24" x2="9" y2="96" stroke="#4A5682" stroke-width="0.9"/>
+      <line x1="5" y1="24" x2="14" y2="24" stroke="#4A5682" stroke-width="0.9"/>
+      <line x1="5" y1="96" x2="14" y2="96" stroke="#4A5682" stroke-width="0.9"/>
+      <!-- Outer Bottom Dimension Line & Extension Ticks -->
+      <line x1="24" y1="111" x2="96" y2="111" stroke="#4A5682" stroke-width="0.9"/>
+      <line x1="24" y1="106" x2="24" y2="115" stroke="#4A5682" stroke-width="0.9"/>
+      <line x1="96" y1="106" x2="96" y2="115" stroke="#4A5682" stroke-width="0.9"/>
+      <!-- Corner Registration Crosshairs -->
+      <path d="M15 18 H21 M18 15 V21 M99 18 H105 M102 15 V21 M15 102 H21 M18 99 V105 M99 102 H105 M102 99 V105" stroke="#4A5682" stroke-width="0.8"/>
+      <!-- Double-Border Rounded Blueprint Frame -->
+      <rect x="20" y="20" width="80" height="80" rx="15" fill="#11172B" stroke="#6370A8" stroke-width="2.4"/>
+      <rect x="24" y="24" width="72" height="72" rx="11" fill="url(#kb-cad-subgrid)" stroke="#3B4772" stroke-width="1"/>
+      <!-- Center Axis Hairlines -->
+      <line x1="60" y1="24" x2="60" y2="96" stroke="#36436E" stroke-width="1"/>
+      <line x1="24" y1="60" x2="96" y2="60" stroke="#36436E" stroke-width="1"/>
+      <!-- Internal Stem Height Callout & Top Span Callout -->
+      <line x1="34" y1="36" x2="34" y2="84" stroke="#4E5B8B" stroke-width="0.8"/>
+      <line x1="31" y1="36" x2="37" y2="36" stroke="#4E5B8B" stroke-width="0.8"/>
+      <line x1="31" y1="84" x2="37" y2="84" stroke="#4E5B8B" stroke-width="0.8"/>
+      <line x1="55" y1="30" x2="82" y2="30" stroke="#4E5B8B" stroke-width="0.8"/>
+      <line x1="55" y1="28" x2="55" y2="32" stroke="#4E5B8B" stroke-width="0.8"/>
+      <line x1="82" y1="28" x2="82" y2="32" stroke="#4E5B8B" stroke-width="0.8"/>
+      <!-- Bold White Vertical Pillar -->
+      <rect x="41" y="36" width="9.5" height="48" rx="4.75" fill="#FFFFFF"/>
+      <!-- Periwinkle Chevron Arms -->
+      <path d="M55 60 L80 40" stroke="#6E7BB4" stroke-width="9.5" stroke-linecap="round"/>
+      <path d="M55 60 L80 80" stroke="#6E7BB4" stroke-width="9.5" stroke-linecap="round"/>
+      <!-- Glowing White Vertex Node -->
+      <circle cx="55.5" cy="60" r="4.2" fill="#FFFFFF"/>
+    </g>
+  </defs>
+</svg>
+
 <div id="barcode-reader"></div>
 
 <!-- VIEW 1: LIVE GOOGLE SHEET PIN SECURITY GATE -->
 <div id="login-view">
   <div class="cad-box">
     <div style="text-align:center;">
-      <svg width="88" height="88" viewBox="0 0 120 120" fill="none" style="margin-bottom:6px;">
-        <rect x="18" y="18" width="84" height="84" rx="16" fill="#13192B" stroke="#535891" stroke-width="3"/>
-        <rect x="22" y="22" width="76" height="76" rx="12" fill="none" stroke="#2D3559" stroke-width="1"/>
-        <line x1="60" y1="22" x2="60" y2="98" stroke="#232B47" stroke-width="1"/>
-        <line x1="22" y1="60" x2="98" y2="60" stroke="#232B47" stroke-width="1"/>
-        <rect x="40" y="34" width="9" height="52" rx="4.5" fill="#FFFFFF"/>
-        <path d="M53 60 L78 40" stroke="#8E95D3" stroke-width="9" stroke-linecap="round"/>
-        <path d="M53 60 L78 80" stroke="#8E95D3" stroke-width="9" stroke-linecap="round"/>
-        <circle cx="53" cy="60" r="3.8" fill="#FFFFFF"/>
+      <svg width="96" height="96" viewBox="0 0 120 120" style="margin-bottom:6px;">
+        <use href="#kb-architectural-logo"></use>
       </svg>
 
       <div class="brand-wordmark" style="font-size:18px;">
@@ -718,17 +904,13 @@
   <header>
     <div class="header-top">
       <div>
-        <button type="button" class="ctrl-btn" style="padding:5px 8px;font-size:10px;" onclick="jumpToTab('overview')">INFO</button>
+        <button type="button" class="ctrl-btn" style="padding:5px 8px;font-size:10px;" onclick="jumpToTab('overview')">START HERE</button>
       </div>
-      <!-- CENTERED BRAND LOCKUP -->
+      <!-- CENTERED ARCHITECTURAL CAD LOGO LOCKUP -->
       <div class="brand-center-lockup">
         <div class="brand-center-row">
-          <svg width="28" height="28" viewBox="0 0 120 120" fill="none">
-            <rect x="14" y="14" width="92" height="92" rx="16" fill="#13192B" stroke="#535891" stroke-width="4"/>
-            <rect x="38" y="32" width="10" height="56" rx="5" fill="#FFFFFF"/>
-            <path d="M52 60 L80 38" stroke="#8E95D3" stroke-width="10" stroke-linecap="round"/>
-            <path d="M52 60 L80 82" stroke="#8E95D3" stroke-width="10" stroke-linecap="round"/>
-            <circle cx="52" cy="60" r="4.2" fill="#FFFFFF"/>
+          <svg width="34" height="34" viewBox="0 0 120 120">
+            <use href="#kb-architectural-logo"></use>
           </svg>
           <div class="brand-wordmark">
             <span class="w-white">KAEBISCH</span><span class="w-blue">BLUEPRINT</span>
@@ -767,14 +949,8 @@
     <section id="tab-overview" class="tab-view">
       <div class="hero-brand-card">
         <div class="hero-brand-top">
-          <svg width="64" height="64" viewBox="0 0 120 120" fill="none" style="margin-bottom:10px;">
-            <rect x="14" y="14" width="92" height="92" rx="18" fill="#13192B" stroke="#535891" stroke-width="3.5"/>
-            <line x1="60" y1="18" x2="60" y2="102" stroke="#232B47" stroke-width="1.2"/>
-            <line x1="18" y1="60" x2="102" y2="60" stroke="#232B47" stroke-width="1.2"/>
-            <rect x="38" y="32" width="10" height="56" rx="5" fill="#FFFFFF"/>
-            <path d="M52 60 L80 38" stroke="#8E95D3" stroke-width="10" stroke-linecap="round"/>
-            <path d="M52 60 L80 82" stroke="#8E95D3" stroke-width="10" stroke-linecap="round"/>
-            <circle cx="52" cy="60" r="4.2" fill="#FFFFFF"/>
+          <svg width="86" height="86" viewBox="0 0 120 120" style="margin-bottom:10px;">
+            <use href="#kb-architectural-logo"></use>
           </svg>
           <div class="brand-wordmark" style="font-size:22px;letter-spacing:0.12em;">
             <span class="w-white">KAEBISCH</span><span class="w-blue">BLUEPRINT</span>
@@ -831,7 +1007,7 @@
         </div>
       </div>
 
-      <!-- HOW YOUR WEEK FLOWS (5 STEPS WITH INTERACTIVE TAB JUMP PILLS) -->
+      <!-- HOW YOUR WEEK FLOWS -->
       <div class="section-banner">
         <span>HOW YOUR WEEK FLOWS</span>
         <span style="font-family:var(--font-mono);font-size:10px;color:var(--bp-bright);">TAP ANY PILL TO OPEN</span>
@@ -888,20 +1064,92 @@
       </div>
     </section>
 
-    <!-- TAB 1: TRAINING BLUEPRINT -->
+    <!-- TAB 1: TRAINING BLUEPRINT (WITH 6-RULE "READ BEFORE YOU TRAIN" GATE & PROGRESSION BADGES) -->
     <section id="tab-training" class="tab-view active">
-      <div class="card" style="padding:12px 14px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <span class="mono-label">SELECT WORKOUT DAY</span>
-          <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">AUTO-SAVES + PR TRACKER</span>
+      <!-- "READ BEFORE YOU TRAIN" 6-RULE CHECKLIST GATE -->
+      <div class="rules-gate-card">
+        <div class="rules-gate-header" onclick="toggleRulesBody()" style="cursor:pointer;">
+          <span class="mono-label" style="color:#FFFFFF;" id="rules-header-title">READ BEFORE YOU TRAIN</span>
+          <span class="rules-count-pill" id="rules-count-pill">0 of 6</span>
         </div>
-        <select id="training-day-select" onchange="filterTrainingDay(this.value)"></select>
-        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
-          Standard Protocol: <strong>1–2 Feeder Sets</strong> · <strong>0–2 RIR</strong> · <strong>Tempo 3-1-0-1 / 3-2-0-1</strong> · <strong>Back-Off: -15% Load</strong>
+        <div id="rules-gate-body">
+          <label class="rule-item-row">
+            <span class="rule-num">1</span>
+            <div>
+              <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">TOP SET</strong>
+              <div style="font-size:11px;color:var(--text-muted);">One all-out working set at the reps and RIR in the Target column. Use the heaviest weight you can handle with strict form.</div>
+            </div>
+            <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
+          </label>
+          <label class="rule-item-row">
+            <span class="rule-num">2</span>
+            <div>
+              <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">BACK-OFF SET</strong>
+              <div style="font-size:11px;color:var(--text-muted);">Right after the top set, drop the weight by ~15% and push for 10–15 reps with the same proximity to failure (0–2 RIR).</div>
+            </div>
+            <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
+          </label>
+          <label class="rule-item-row">
+            <span class="rule-num">3</span>
+            <div>
+              <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">WARM-UPS & FEEDER SETS</strong>
+              <div style="font-size:11px;color:var(--text-muted);">Ramp up with 1–3 feeder sets, keeping reps low (no more than 6–8, and your last 1–2 warm-ups at 1–3 reps). Never tire yourself out before the top set.</div>
+            </div>
+            <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
+          </label>
+          <label class="rule-item-row">
+            <span class="rule-num">4</span>
+            <div>
+              <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">LOG EVERY SET</strong>
+              <div style="font-size:11px;color:var(--text-muted);">Write load and reps every week, plus RIR (how many more reps you could have done). This is non-negotiable.</div>
+            </div>
+            <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
+          </label>
+          <label class="rule-item-row">
+            <span class="rule-num">5</span>
+            <div>
+              <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">BEAT LAST WEEK</strong>
+              <div style="font-size:11px;color:var(--text-muted);">Your goal each week is to beat your previous numbers. Once you pass the top of the rep range, add weight next session. Green ▲ means you progressed.</div>
+            </div>
+            <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
+          </label>
+          <label class="rule-item-row">
+            <span class="rule-num">6</span>
+            <div>
+              <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">REST, GEAR & VIDEO</strong>
+              <div style="font-size:11px;color:var(--text-muted);">Rest as long as you need between working sets. Use wrist straps on all pulls. Film 4–6 working sets weekly (especially exercises flagged 📹 FILM SET).</div>
+            </div>
+            <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
+          </label>
         </div>
       </div>
 
-      <div id="workout-split-container"></div>
+      <!-- "HOW THIS PROGRAM IS STRUCTURED" + PROGRESSION LEGEND -->
+      <div class="program-structure-box">
+        <strong style="color:#FFFFFF;font-family:var(--font-display);">HOW THIS PROGRAM IS STRUCTURED —</strong> Every session starts with an isolation or first movement to lubricate the joints and switch on the target muscle. Perform 1–3 quick ramping feeder sets (not logged), then <strong style="color:#FFFFFF;">ONE TOP SET</strong> at the prescribed effort and <strong style="color:#FFFFFF;">ONE BACK-OFF SET</strong> at ~15% reduced load (or straight working sets where listed). Last week's numbers sit above each exercise—that's the number to beat.
+        <div class="prog-legend-row">
+          <span><span class="prog-badge up">▲ Progress</span> More weight, or same weight + more reps</span>
+          <span><span class="prog-badge same">= Matched</span> Matched last week</span>
+          <span><span class="prog-badge down">▼ Dropped</span> Under last week</span>
+        </div>
+      </div>
+
+      <!-- LOCKED STATUS BAR (HIDES ONCE 6 OF 6 RULES ARE CHECKED) -->
+      <div id="training-lock-banner" class="locked-banner-bar">
+        🔒 LOCKED · CHECK OFF ALL 6 RULES ABOVE TO START LOGGING
+      </div>
+
+      <div id="training-interactive-zone" class="workout-locked">
+        <div class="card" style="padding:12px 14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span class="mono-label">SELECT WORKOUT DAY</span>
+            <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">AUTO-SAVES TO SHEET</span>
+          </div>
+          <select id="training-day-select" onchange="filterTrainingDay(this.value)"></select>
+        </div>
+
+        <div id="workout-split-container"></div>
+      </div>
     </section>
 
     <!-- TAB 2: MEAL PLAN & NUTRITION -->
@@ -1341,7 +1589,7 @@
 <script>
   const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbynQxTLUC78FS-hCu12r9pSXSvXQLPVpZrIokkD2PniD3cyQQ67W-mF0e8Zfzf054iE/exec";
 
-  // Generate Custom Apple Touch Home Screen Icon via Canvas so "Add to Home Screen" shows the KB Emblem
+  // Generate Architectural CAD Apple Touch Home Screen Icon
   (function generatePwaAppIcon() {
     try {
       var c = document.createElement("canvas");
@@ -1349,18 +1597,28 @@
       var ctx = c.getContext("2d");
       ctx.fillStyle = "#0B0F19";
       ctx.fillRect(0, 0, 180, 180);
-      ctx.strokeStyle = "#535891";
-      ctx.lineWidth = 8;
-      ctx.strokeRect(18, 18, 144, 144);
+      ctx.strokeStyle = "#263154";
+      ctx.lineWidth = 1;
+      for (var g = 24; g <= 156; g += 12) {
+        ctx.beginPath(); ctx.moveTo(g, 24); ctx.lineTo(g, 156); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(24, g); ctx.lineTo(156, g); ctx.stroke();
+      }
+      ctx.strokeStyle = "#6370A8";
+      ctx.lineWidth = 5;
+      ctx.strokeRect(24, 24, 132, 132);
       ctx.fillStyle = "#FFFFFF";
-      ctx.fillRect(54, 46, 16, 88);
-      ctx.strokeStyle = "#8E95D3";
-      ctx.lineWidth = 16;
+      ctx.fillRect(58, 50, 15, 80);
+      ctx.strokeStyle = "#6E7BB4";
+      ctx.lineWidth = 15;
       ctx.lineCap = "round";
       ctx.beginPath();
-      ctx.moveTo(76, 90); ctx.lineTo(122, 54);
-      ctx.moveTo(76, 90); ctx.lineTo(122, 126);
+      ctx.moveTo(82, 90); ctx.lineTo(124, 56);
+      ctx.moveTo(82, 90); ctx.lineTo(124, 124);
       ctx.stroke();
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.arc(82, 90, 6.5, 0, Math.PI * 2);
+      ctx.fill();
       var link = document.createElement("link");
       link.rel = "apple-touch-icon";
       link.href = c.toDataURL("image/png");
@@ -1672,6 +1930,57 @@
     } catch (e) {}
   }
 
+  // --- "READ BEFORE YOU TRAIN" 6-RULE LOCK GATE ---
+  function getRulesGateKey() {
+    return "kb_rules_ack_" + (activeAthlete.name || "default");
+  }
+
+  function loadTrainingRulesGate() {
+    var cbs = document.querySelectorAll(".train-rule-cb");
+    var alreadyUnlocked = false;
+    try {
+      alreadyUnlocked = localStorage.getItem(getRulesGateKey()) === "6";
+    } catch (e) {}
+
+    cbs.forEach(function(cb) { cb.checked = alreadyUnlocked; });
+    updateTrainingRulesGate(alreadyUnlocked);
+  }
+
+  function updateTrainingRulesGate(collapseImmediately) {
+    var cbs = [].slice.call(document.querySelectorAll(".train-rule-cb"));
+    var checkedCount = cbs.filter(function(c) { return c.checked; }).length;
+    var pill = document.getElementById("rules-count-pill");
+    var lockBanner = document.getElementById("training-lock-banner");
+    var zone = document.getElementById("training-interactive-zone");
+    var body = document.getElementById("rules-gate-body");
+    var title = document.getElementById("rules-header-title");
+
+    pill.textContent = checkedCount + " of 6";
+
+    if (checkedCount === 6) {
+      pill.classList.add("complete");
+      lockBanner.style.display = "none";
+      zone.classList.remove("workout-locked");
+      title.textContent = "✅ 6 OF 6 TRAINING RULES ACKNOWLEDGED (TAP TO REVIEW)";
+      if (collapseImmediately) {
+        body.style.display = "none";
+      }
+      try { localStorage.setItem(getRulesGateKey(), "6"); } catch (e) {}
+    } else {
+      pill.classList.remove("complete");
+      lockBanner.style.display = "block";
+      zone.classList.add("workout-locked");
+      body.style.display = "block";
+      title.textContent = "READ BEFORE YOU TRAIN";
+      try { localStorage.removeItem(getRulesGateKey()); } catch (e) {}
+    }
+  }
+
+  function toggleRulesBody() {
+    var body = document.getElementById("rules-gate-body");
+    body.style.display = (body.style.display === "none") ? "block" : "none";
+  }
+
   function resetDeviceBinding() {
     try { localStorage.removeItem("kb_bound_lastname"); } catch (e) {}
     document.getElementById("lastname-field").value = "";
@@ -1834,6 +2143,7 @@
     document.getElementById("login-view").style.display = "none";
     document.getElementById("portal-view").style.display = "block";
     populateOverviewMetadata();
+    loadTrainingRulesGate();
     loadPersistentDailyLog();
     loadPersistentWater();
     renderWorkoutSplit();
@@ -1918,10 +2228,28 @@
     renderDailyCalorieLog();
   }
 
-  // --- TRAINING BLUEPRINT + PR DETECTOR + VIDEO CHECK BADGE + -15% BACK-OFF CALCULATOR ---
+  // --- TRAINING BLUEPRINT + PROGRESSION BADGES (▲ / = / ▼) ---
   function filterTrainingDay(val) {
     activeAthlete.selectedTrainDayIdx = parseInt(val, 10);
     renderWorkoutSplit();
+  }
+
+  function getProgressionBadgeHtml(ex) {
+    var curLoad = parseFloat(ex.topLoad) || 0;
+    var curReps = parseFloat(ex.topReps) || 0;
+    var baseLoad = parseFloat(ex.prevLoad) || 0;
+    var baseReps = parseFloat(ex.prevReps) || 0;
+
+    if (!curLoad || !baseLoad) {
+      return (baseLoad || baseReps) ? ('Last wk: ' + (baseLoad || "—") + ' lbs × ' + (baseReps || "—")) : 'Auto-saves';
+    }
+    if (curLoad > baseLoad || (curLoad === baseLoad && curReps > baseReps)) {
+      return '<span class="prog-badge up">▲ Progress</span>';
+    }
+    if (curLoad === baseLoad && curReps === baseReps) {
+      return '<span class="prog-badge same">= Matched</span>';
+    }
+    return '<span class="prog-badge down">▼ Dropped</span>';
   }
 
   function renderWorkoutSplit() {
@@ -1947,24 +2275,29 @@
       }
 
       var exHtml = dayObj.exercises.map(function(ex, eIdx) {
-        var customTempoTag = (ex.tempo && ex.tempo !== "3-1-0-1" && ex.tempo !== "3-2-0-1") ? (' · TEMPO: ' + ex.tempo) : '';
-        var customRirTag = (ex.rir && ex.rir !== "0-2") ? (' · RIR: ' + ex.rir) : '';
-        var lastTopBadge = (ex.prevLoad || ex.prevReps) ? ('Last: ' + (ex.prevLoad || "—") + ' lbs × ' + (ex.prevReps || "—")) : '';
+        var hasBackoff = ex.backoff && ex.backoff !== "-";
+        var roleLabel = hasBackoff ? "TOP + BACK-OFF" : "ACCESSORY";
         var videoBadge = ex.videoCheck ? '<span class="video-check-pill">📹 FILM SET</span>' : '';
         var suggestedBackoff = ex.topLoad ? ('~' + Math.round(parseFloat(ex.topLoad) * 0.85) + ' lbs') : 'Lbs (-15%)';
+        var lastRefText = (ex.prevLoad || ex.prevReps) ? (' · Last wk: ' + (ex.prevLoad || "—") + ' lbs × ' + (ex.prevReps || "—")) : '';
 
         return (
           '<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
             '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">' +
-              '<div><strong style="font-size:14px;color:#fff;font-family:var(--font-display);">' + ex.name + '</strong>' + videoBadge + '</div>' +
-              '<span class="ex-save-badge" id="save-status-' + dIdx + '-' + eIdx + '">' + (lastTopBadge || 'Auto-saves') + '</span>' +
+              '<div>' +
+                '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-right:6px;">' + (eIdx + 1) + '.</span>' +
+                '<strong style="font-size:14px;color:#fff;font-family:var(--font-display);">' + ex.name + '</strong>' +
+                '<span class="role-tag">' + roleLabel + '</span>' +
+                videoBadge +
+              '</div>' +
+              '<span class="ex-save-badge" id="save-status-' + dIdx + '-' + eIdx + '">' + getProgressionBadgeHtml(ex) + '</span>' +
             '</div>' +
             '<div style="font-family:var(--font-mono);font-size:11px;color:var(--status-yellow);margin:4px 0 6px;">' +
-              ex.working + ' Sets (' + ex.reps + ')' + (ex.backoff && ex.backoff !== "-" ? ' · Back-Off: ' + ex.backoff : '') + customTempoTag + customRirTag +
+              'Target: ' + ex.working + ' × ' + ex.reps + (hasBackoff ? ' (Back-Off: ' + ex.backoff + ')' : '') + ' · tempo ' + (ex.tempo || "3-1-0-1") + ' · ' + (ex.rir || "0-2") + ' RIR' + lastRefText +
             '</div>' +
             '<div class="train-set-grid">' +
               '<span style="color:var(--bp-bright);font-weight:700;">TOP SET</span>' +
-              '<input type="number" placeholder="Lbs" id="tl-' + dIdx + '-' + eIdx + '" value="' + (ex.topLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="Load (lbs)" id="tl-' + dIdx + '-' + eIdx + '" value="' + (ex.topLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
               '<input type="number" placeholder="Reps" id="tr-' + dIdx + '-' + eIdx + '" value="' + (ex.topReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
               '<input type="number" placeholder="RIR" id="trir-' + dIdx + '-' + eIdx + '" value="' + (ex.topRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
             '</div>' +
@@ -1992,17 +2325,11 @@
     ex.backReps = document.getElementById("br-" + dIdx + "-" + eIdx).value;
     ex.backRir = document.getElementById("brir-" + dIdx + "-" + eIdx).value;
 
-    // Auto-update Back-Off Load placeholder to -15% of Top Set Load
     var backLoadInput = document.getElementById("bl-" + dIdx + "-" + eIdx);
     var curLoad = parseFloat(ex.topLoad) || 0;
     if (backLoadInput && curLoad > 0) {
       backLoadInput.placeholder = "~" + Math.round(curLoad * 0.85) + " lbs";
     }
-
-    var curReps = parseFloat(ex.topReps) || 0;
-    var baseLoad = parseFloat(ex.prevLoad) || 0;
-    var baseReps = parseFloat(ex.prevReps) || 0;
-    var isPr = (baseLoad > 0 && curLoad > 0 && ((curLoad > baseLoad && curReps >= Math.max(1, baseReps - 1)) || (curLoad === baseLoad && curReps > baseReps)));
 
     var statusBadge = document.getElementById("save-status-" + dIdx + "-" + eIdx);
     if (statusBadge) {
@@ -2029,15 +2356,15 @@
 
       callBlueprintBackend("saveTrainingSetToSheet", payload, function() {
         if (statusBadge) {
-          if (isPr) {
-            statusBadge.textContent = "🔥 PR! ✓ Saved";
-            statusBadge.classList.add("pr-hit");
+          var badgeHtml = getProgressionBadgeHtml(ex);
+          if (badgeHtml.indexOf("prog-badge") !== -1) {
+            statusBadge.innerHTML = badgeHtml + ' <span style="color:var(--status-green);margin-left:4px;">✓</span>';
           } else {
             statusBadge.textContent = "✓ Saved to Sheet";
             statusBadge.classList.add("saved");
           }
         }
-        triggerSaveToast(isPr ? "🔥 New PR Logged!" : "Synced ✓");
+        triggerSaveToast("Saved ✓");
       });
     }, 900);
   }
