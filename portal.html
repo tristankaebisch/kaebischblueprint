@@ -12,7 +12,7 @@
   <!-- GOOGLE FONTS: SPACE GROTESK, INTER & JETBRAINS MONO -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 
   <!-- LIVE VIDEO + PHOTO 1D UPC/EAN BARCODE ENGINES -->
   <script src="https://cdn.jsdelivr.net/npm/@undecaf/zbar-wasm@0.9.15/dist/index.js"></script>
@@ -22,6 +22,7 @@
   <style>
     :root {
       --bg-void: #0B0F19;
+      --bg-input: #070A12;
       --bg-panel: #0E131F;
       --bg-card: #13192B;
       --bg-elevated: #1A2238;
@@ -32,6 +33,7 @@
       --bp-glow: rgba(83, 88, 145, 0.38);
       --text-main: #FFFFFF;
       --text-muted: #94A3B8;
+      --text-placeholder: #4E5D78;
       --status-green: #10B981;
       --status-yellow: #F59E0B;
       --status-red: #EF4444;
@@ -53,6 +55,7 @@
       font-size: 14px;
       line-height: 1.45;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* PIN LOGIN SCREEN */
@@ -76,34 +79,33 @@
       box-shadow: 0 24px 60px rgba(0,0,0,0.85), 0 0 24px var(--bp-glow);
     }
 
-    #lastname-wrap {
-      margin-top: 12px;
-    }
+    #lastname-wrap { margin-top: 12px; }
 
     #lastname-field {
       width: 100%;
       text-align: center;
-      font-family: var(--font-sans);
+      font-family: var(--font-display);
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 0.03em;
       padding: 10px 12px;
-      background: var(--bg-void);
+      background: var(--bg-input);
       border: 1px solid var(--border-cad);
       border-radius: 10px;
       color: #FFFFFF;
       outline: none;
     }
-    #lastname-field:focus { border-color: var(--bp-bright); }
 
     #pin-field {
       width: 100%;
       text-align: center;
       font-family: var(--font-mono);
       font-size: 28px;
+      font-weight: 800;
       letter-spacing: 14px;
       padding: 10px 14px;
       margin: 12px 0 8px;
-      background: var(--bg-void);
+      background: var(--bg-input);
       border: 2px solid var(--bp-primary);
       border-radius: 10px;
       color: #FFFFFF;
@@ -168,7 +170,7 @@
 
     .pill {
       white-space: nowrap; padding: 7px 12px; border-radius: 6px;
-      font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.03em;
+      font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: 0.03em;
       background: var(--bg-card); color: var(--text-muted);
       border: 1px solid var(--border-cad); cursor: pointer; touch-action: manipulation;
     }
@@ -187,7 +189,7 @@
       border: 1px solid var(--border-cad);
       border-left: 4px solid var(--bp-bright);
       padding: 10px 14px; border-radius: 6px; margin-bottom: 12px;
-      font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+      font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
       display: flex; justify-content: space-between; align-items: center; gap: 8px;
     }
 
@@ -229,19 +231,72 @@
     .rate-row { display: flex; gap: 6px; margin-bottom: 8px; }
     .rate-btn {
       flex: 1; padding: 8px 0; text-align: center; border-radius: 6px;
-      background: var(--bg-void); border: 1px solid var(--border-cad);
+      background: var(--bg-input); border: 1px solid var(--border-cad);
       color: var(--text-muted); font-family: var(--font-mono); font-weight: 700; cursor: pointer;
     }
     .rate-btn.active { background: var(--bp-primary); color: #fff; border-color: #fff; }
 
-    /* 16PX FONT SIZE PREVENTS IOS SAFARI AUTO-ZOOM ON TAP */
+    /* ============================================================================
+       UPGRADED INPUT TYPOGRAPHY (CRISP MONO NUMBERS + SMOOTH SANS TEXTAREAS)
+       ============================================================================ */
     input, select, textarea {
-      width: 100%; background: var(--bg-void); border: 1px solid var(--border-cad);
-      color: #fff; padding: 9px 10px; border-radius: 7px; font-size: 16px; font-family: var(--font-sans);
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-cad);
+      color: #FFFFFF;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 16px; /* Prevents iOS Safari zoom on tap */
+      font-family: var(--font-sans);
+      font-weight: 600;
+      letter-spacing: 0.01em;
       outline: none;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.45);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
     }
+
+    /* All numeric inputs (Weights, Reps, RIR, Grams, Steps) use bold athletic monospace */
+    input[type="number"] {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #FFFFFF;
+    }
+
+    /* Select dropdowns use clean Space Grotesk / Inter bold styling */
+    select {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      color: #F8FAFC;
+    }
+
+    /* Check-in textareas use smooth readable Inter medium with generous line spacing */
+    textarea {
+      font-family: var(--font-sans);
+      font-weight: 500;
+      line-height: 1.5;
+      color: #F1F5F9;
+      resize: vertical;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: var(--text-placeholder);
+      font-weight: 500;
+      font-family: var(--font-sans);
+      letter-spacing: 0;
+    }
+
+    input[type="number"]::placeholder {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-placeholder);
+    }
+
     input:focus, select:focus, textarea:focus {
       border-color: var(--bp-bright);
+      background: #0B1020;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(83, 88, 145, 0.28);
     }
 
     .btn-primary {
@@ -279,7 +334,7 @@
     }
     .meal-row-wrap:last-child { border-bottom: none; }
     .meal-item {
-      display: grid; grid-template-columns: 1fr 82px 42px; gap: 8px;
+      display: grid; grid-template-columns: 1fr 84px 40px; gap: 8px;
       align-items: center;
     }
     .item-macro-strip {
@@ -291,8 +346,12 @@
 
     /* DECLUTTERED TRAINING INPUT GRID */
     .train-set-grid {
-      display: grid; grid-template-columns: 68px 1fr 1fr 62px; gap: 6px;
+      display: grid; grid-template-columns: 68px 1fr 1fr 64px; gap: 6px;
       align-items: center; margin-top: 6px; font-family: var(--font-mono); font-size: 11px;
+    }
+    .train-set-grid input {
+      text-align: center;
+      padding: 8px 6px;
     }
     .ex-save-badge {
       font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);
@@ -342,7 +401,7 @@
       display: none;
       margin-bottom: 10px;
       padding: 8px;
-      background: var(--bg-void);
+      background: var(--bg-input);
       border: 1px solid var(--border-cad);
       border-radius: 8px;
       text-align: center;
@@ -397,7 +456,6 @@
       </div>
     </div>
 
-    <!-- FIRST-TIME DEVICE PAIRING LAST NAME INPUT (HIDES ONCE DEVICE IS BOUND) -->
     <div id="lastname-wrap">
       <input type="text" id="lastname-field" placeholder="Last Name (1st login only)" autocomplete="family-name" />
     </div>
@@ -468,7 +526,7 @@
           <span class="mono-label">SELECT WORKOUT DAY</span>
           <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">AUTO-SAVES TO SHEET</span>
         </div>
-        <select id="training-day-select" onchange="filterTrainingDay(this.value)" style="font-weight:700;"></select>
+        <select id="training-day-select" onchange="filterTrainingDay(this.value)"></select>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
           Standard Protocol: <strong>1–2 Feeder Sets</strong> · <strong>0–2 RIR</strong> · <strong>Tempo 3-1-0-1 / 3-2-0-1</strong>
         </div>
@@ -508,16 +566,6 @@
           <div class="kpi-val" style="font-size:16px;color:var(--bp-bright);" id="tot-cal">0</div>
           <div class="kpi-sub" id="target-cal-sub">Goal: 2,745</div>
         </div>
-      </div>
-
-      <!-- AI MACRO SWAP ASSISTANT BAR -->
-      <div class="card" style="padding:12px 14px;">
-        <div class="mono-label" style="margin-bottom:6px;">🧠 AI MACRO SWAP ASSISTANT</div>
-        <div style="display:grid;grid-template-columns:1fr auto;gap:8px;">
-          <input type="text" id="ai-swap-input" placeholder="e.g. Swap 80g dry Cream of Rice for potatoes..." style="font-size:14px;" onkeydown="if(event.key==='Enter'){event.preventDefault();askAiSwap();}">
-          <button type="button" class="ctrl-btn" style="padding:8px 12px;" onclick="askAiSwap()">ASK AI</button>
-        </div>
-        <div id="ai-swap-reply" style="font-size:12px;color:var(--status-green);margin-top:6px;display:none;"></div>
       </div>
 
       <div id="meals-container"></div>
@@ -678,7 +726,7 @@
     <section id="tab-scanner" class="tab-view">
       <div class="section-banner">
         <span>FOOD SCANNER & CALORIE TRACKER</span>
-        <span style="color:var(--status-green);">LIVE CAMERA + AI VISION</span>
+        <span style="color:var(--status-green);">LIVE CAMERA + UPC</span>
       </div>
 
       <div class="card">
@@ -702,7 +750,7 @@
 
         <div class="q-card" style="border-left: 3px solid var(--bp-bright);">
           <label class="q-title" style="color:var(--bp-bright);">Target Meal:</label>
-          <select id="scan-target-meal" style="font-weight:700;">
+          <select id="scan-target-meal">
             <option value="MEAL 1">MEAL 1</option>
             <option value="MEAL 2">MEAL 2</option>
             <option value="MEAL 3">MEAL 3 (Pre-Workout)</option>
@@ -750,7 +798,7 @@
           </div>
         </div>
 
-        <div id="scanner-preview-box" style="background:var(--bg-void);border:1px solid var(--border-cad);border-radius:8px;padding:12px;margin-bottom:12px;">
+        <div id="scanner-preview-box" style="background:var(--bg-input);border:1px solid var(--border-cad);border-radius:8px;padding:12px;margin-bottom:12px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
             <strong id="scan-preview-name" style="font-size:13px;color:#fff;">Select a food above</strong>
             <span id="scan-preview-serving" style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">Base: 100g</span>
@@ -880,9 +928,6 @@
 <script>
   const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbynQxTLUC78FS-hCu12r9pSXSvXQLPVpZrIokkD2PniD3cyQQ67W-mF0e8Zfzf054iE/exec";
 
-  /**
-   * 50-Athlete Concurrency-Safe Backend Bridge with Automatic Retry
-   */
   function callBlueprintBackend(action, payload, onSuccess, onFailure, attempt) {
     var tryNum = attempt || 1;
 
@@ -1180,7 +1225,6 @@
   let setDebounceTimers = {};
   let trackerDebounceTimers = {};
 
-  // --- DEVICE-BOUND SECURITY & ZERO-DELAY KEYPAD ---
   function initDeviceBindingUI() {
     try {
       var boundName = localStorage.getItem("kb_bound_lastname");
@@ -1240,7 +1284,6 @@
     if (!entered) return;
     var enteredLastName = (document.getElementById("lastname-field").value || "").trim();
 
-    // 1. Check localStorage cache first for 0.0s instant unlock
     var cachedClient = null;
     try {
       var rawCache = localStorage.getItem("kb_auth_cache_" + entered);
@@ -1259,7 +1302,6 @@
       return;
     }
 
-    // 2. Check built-in instant roster
     if (KNOWN_ROSTER[entered]) {
       var knownName = KNOWN_ROSTER[entered].name;
       if (enteredLastName && knownName.toLowerCase().indexOf(enteredLastName.toLowerCase()) === -1) {
@@ -1290,7 +1332,6 @@
       return;
     }
 
-    // 3. First-time login for a new client on Clients_Roster
     document.getElementById("pin-error").style.color = "var(--bp-bright)";
     document.getElementById("pin-error").textContent = "UNLOCKING...";
     callBlueprintBackend(
@@ -1412,21 +1453,6 @@
     renderDailyCalorieLog();
   }
 
-  // --- AI MACRO SWAP ASSISTANT ---
-  function askAiSwap() {
-    var q = (document.getElementById("ai-swap-input").value || "").trim();
-    if (!q) return;
-    var replyEl = document.getElementById("ai-swap-reply");
-    replyEl.style.display = "block";
-    replyEl.style.color = "var(--bp-bright)";
-    replyEl.textContent = "⏳ Calculating exact gram-for-gram swap...";
-
-    callBlueprintBackend("askAiMacroSwapServerSide", { query: q }, function(res) {
-      replyEl.style.color = "var(--status-green)";
-      replyEl.textContent = (res && res.answer) ? ("✓ " + res.answer) : "Could not calculate swap.";
-    });
-  }
-
   // --- DECLUTTERED TRAINING BLUEPRINT WITH 900MS DEBOUNCE AUTO-SAVE ---
   function filterTrainingDay(val) {
     activeAthlete.selectedTrainDayIdx = parseInt(val, 10);
@@ -1463,20 +1489,20 @@
         return (
           '<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
             '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">' +
-              '<strong style="font-size:14px;color:#fff;">' + ex.name + '</strong>' +
+              '<strong style="font-size:14px;color:#fff;font-family:var(--font-display);">' + ex.name + '</strong>' +
               '<span class="ex-save-badge" id="save-status-' + dIdx + '-' + eIdx + '">' + (lastTopBadge || 'Auto-saves') + '</span>' +
             '</div>' +
             '<div style="font-family:var(--font-mono);font-size:11px;color:var(--status-yellow);margin:4px 0 6px;">' +
               ex.working + ' Sets (' + ex.reps + ')' + (ex.backoff && ex.backoff !== "-" ? ' · Back-Off: ' + ex.backoff : '') + customTempoTag + customRirTag +
             '</div>' +
             '<div class="train-set-grid">' +
-              '<span style="color:var(--bp-bright);">TOP SET</span>' +
+              '<span style="color:var(--bp-bright);font-weight:700;">TOP SET</span>' +
               '<input type="number" placeholder="Lbs" id="tl-' + dIdx + '-' + eIdx + '" value="' + (ex.topLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
               '<input type="number" placeholder="Reps" id="tr-' + dIdx + '-' + eIdx + '" value="' + (ex.topReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
               '<input type="number" placeholder="RIR" id="trir-' + dIdx + '-' + eIdx + '" value="' + (ex.topRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
             '</div>' +
             '<div class="train-set-grid">' +
-              '<span style="color:var(--text-muted);">BACK-OFF</span>' +
+              '<span style="color:var(--text-muted);font-weight:600;">BACK-OFF</span>' +
               '<input type="number" placeholder="Lbs" id="bl-' + dIdx + '-' + eIdx + '" value="' + (ex.backLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
               '<input type="number" placeholder="Reps" id="br-' + dIdx + '-' + eIdx + '" value="' + (ex.backReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
               '<input type="number" placeholder="RIR" id="brir-' + dIdx + '-' + eIdx + '" value="' + (ex.backRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
@@ -1567,11 +1593,11 @@
               '<select onchange="swapFood(' + mIdx + ', ' + iIdx + ', this.value)">' +
                 options +
               '</select>' +
-              '<input type="number" step="1" style="text-align:right;font-family:var(--font-mono);" value="' + (item.grams || 0) + '" onchange="updateMealGrams(' + mIdx + ', ' + iIdx + ', this.value)">' +
+              '<input type="number" step="1" style="text-align:right;" value="' + (item.grams || 0) + '" onchange="updateMealGrams(' + mIdx + ', ' + iIdx + ', this.value)">' +
               '<div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center;">' + (item.unit || "g") + '</div>' +
             '</div>' +
             '<div class="item-macro-strip">' +
-              '<span style="color:var(--status-yellow);">' + ical + ' kcal</span>' +
+              '<span style="color:var(--status-yellow);font-weight:700;">' + ical + ' kcal</span>' +
               '<span>Protein: <strong style="color:#fff;">' + ip + 'g</strong></span>' +
               '<span>Carbs: <strong style="color:#fff;">' + ic + 'g</strong></span>' +
               '<span>Fat: <strong style="color:#fff;">' + ifat + 'g</strong></span>' +
@@ -1730,14 +1756,14 @@
     document.getElementById("target-cal-sub").textContent = "Goal: " + targets.cal.toLocaleString();
   }
 
-  // --- TWO-WAY 7-DAY DAILY TRACKER SYNC (SAVES TO SECTION 3 OF CLIENT SHEET) ---
+  // --- TWO-WAY 7-DAY DAILY TRACKER SYNC ---
   function renderDailyTracker() {
     var rows = activeAthlete.dailyTracker || DEFAULT_TRACKER;
     document.getElementById("daily-rows-container").innerHTML = rows.map(function(rObj, idx) {
       return (
         '<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
-            '<strong style="font-family:var(--font-mono);font-size:12px;color:var(--bp-bright);">' + rObj.day + '</strong>' +
+            '<strong style="font-family:var(--font-display);font-size:13px;color:var(--bp-bright);">' + rObj.day + '</strong>' +
             '<span class="ex-save-badge" id="trk-save-' + idx + '">' + ((rObj.weight || rObj.steps) ? 'Synced ✓' : '') + '</span>' +
           '</div>' +
           '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">' +
