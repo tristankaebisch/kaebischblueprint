@@ -911,7 +911,6 @@
   <header>
     <div class="header-top">
       <div>
-        <!-- REPLACED DUPLICATE START HERE WITH LIVE SHEET SYNC BUTTON -->
         <button type="button" class="ctrl-btn" id="live-sync-btn" style="padding:5px 9px;font-size:10px;color:var(--bp-bright);" onclick="refreshLiveSheetData()" title="Pull latest coach updates from Google Sheet">↻ SYNC</button>
       </div>
       <!-- CENTERED ARCHITECTURAL CAD LOGO LOCKUP (TAPPING LOGO OPENS START HERE) -->
@@ -1071,7 +1070,6 @@
         </div>
       </div>
 
-      <!-- DIRECT WHATSAPP COACH MESSAGE BUTTON -->
       <a href="https://wa.me/16085015750" target="_blank" class="btn-whatsapp" style="margin-top:14px;">
         💬 MESSAGE COACH TRISTAN ON WHATSAPP →
       </a>
@@ -1265,10 +1263,10 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" oninput="saveCheckInDraft()">
         <div class="card-header">
           <span class="mono-label">WEEKLY CHECK-IN QUESTIONNAIRE</span>
-          <span style="font-size:11px;font-family:var(--font-mono);color:var(--text-muted);">REQUIRED</span>
+          <span style="font-size:10px;font-family:var(--font-mono);color:var(--status-green);">AUTO-SAVES DRAFT</span>
         </div>
 
         <div class="q-card">
@@ -1657,20 +1655,44 @@
 
       var pngDataUrl = c.toDataURL("image/png");
 
-      // 1. Desktop Browser Tab Favicon
       var fav = document.createElement("link");
       fav.rel = "icon";
       fav.type = "image/png";
       fav.href = pngDataUrl;
       document.head.appendChild(fav);
 
-      // 2. iOS / Android Home Screen App Icon
       var appleTouch = document.createElement("link");
       appleTouch.rel = "apple-touch-icon";
       appleTouch.href = pngDataUrl;
       document.head.appendChild(appleTouch);
     } catch (e) {}
   })();
+
+  // --- OFFLINE GYM BASEMENT QUEUE (ZERO LOST SETS) ---
+  function enqueueOfflineAction(action, payload) {
+    var queueable = ["saveTrainingSetToSheet", "saveDailyTrackerToSheet", "saveMealItemToSheet", "submitWeeklyCheckIn"];
+    if (queueable.indexOf(action) === -1) return;
+    try {
+      var q = JSON.parse(localStorage.getItem("kb_offline_queue") || "[]");
+      q.push({ action: action, payload: payload, ts: Date.now() });
+      localStorage.setItem("kb_offline_queue", JSON.stringify(q));
+      triggerSaveToast("⚡ Saved Offline — Will Auto-Sync");
+    } catch (e) {}
+  }
+
+  function flushOfflineQueue() {
+    try {
+      var q = JSON.parse(localStorage.getItem("kb_offline_queue") || "[]");
+      if (!q.length) return;
+      localStorage.removeItem("kb_offline_queue");
+      q.forEach(function(item) {
+        callBlueprintBackend(item.action, item.payload, function() {
+          triggerSaveToast("✓ Offline Logs Synced to Sheet!");
+        });
+      });
+    } catch (e) {}
+  }
+  window.addEventListener("online", flushOfflineQueue);
 
   function callBlueprintBackend(action, payload, onSuccess, onFailure, attempt) {
     var tryNum = attempt || 1;
@@ -1710,8 +1732,9 @@
           setTimeout(function() {
             callBlueprintBackend(action, payload, onSuccess, onFailure, tryNum + 1);
           }, 1000);
-        } else if (onFailure) {
-          onFailure(err);
+        } else {
+          enqueueOfflineAction(action, payload);
+          if (onFailure) onFailure(err);
         }
       });
   }
@@ -1826,32 +1849,32 @@
     {
       day: "DAY 1: PUSH (CHEST, DELTS & TRICEPS)", isRest: false,
       exercises: [
-        { rowIdx: 1, name: "DB Lateral Raises", working: "3", reps: "8-12", backoff: "-", rir: "0-2", tempo: "3-1-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false },
-        { rowIdx: 2, name: "Incline DB Chest Press", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true },
-        { rowIdx: 3, name: "Low-to-High Cable Fly", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false },
-        { rowIdx: 4, name: "Flat DB / Machine Chest Press", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false },
-        { rowIdx: 5, name: "Cable Tricep Extension", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false },
-        { rowIdx: 6, name: "Overhead Cable Tricep Extension", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false }
+        { rowIdx: 1, name: "DB Lateral Raises", working: "3", reps: "8-12", backoff: "-", rir: "0-2", tempo: "3-1-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Lead with elbows, control eccentric" },
+        { rowIdx: 2, name: "Incline DB Chest Press", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Pin scapulae, deep stretch at bottom" },
+        { rowIdx: 3, name: "Low-to-High Cable Fly", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Squeeze upper pecs at midline" },
+        { rowIdx: 4, name: "Flat DB / Machine Chest Press", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Drive elbows inward" },
+        { rowIdx: 5, name: "Cable Tricep Extension", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Lock elbows at sides" },
+        { rowIdx: 6, name: "Overhead Cable Tricep Extension", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Full long-head stretch" }
       ]
     },
     {
       day: "DAY 2: PULL (BACK WIDTH, THICKNESS & BICEPS)", isRest: false,
       exercises: [
-        { rowIdx: 7, name: "Chest-Supported T-Bar Row", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true },
-        { rowIdx: 8, name: "Single Arm Cable Pulldown", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false },
-        { rowIdx: 9, name: "Barbell / DB Row", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false },
-        { rowIdx: 10, name: "Straight-Arm Lat Pulldown", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false },
-        { rowIdx: 11, name: "Reverse Pec Deck (Rear Delts)", working: "3", reps: "10-15", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false }
+        { rowIdx: 7, name: "Chest-Supported T-Bar Row", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Use straps, protract at bottom" },
+        { rowIdx: 8, name: "Single Arm Cable Pulldown", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Drive elbow straight into hip" },
+        { rowIdx: 9, name: "Barbell / DB Row", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Strict torso angle" },
+        { rowIdx: 10, name: "Straight-Arm Lat Pulldown", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Keep arms nearly straight" },
+        { rowIdx: 11, name: "Reverse Pec Deck (Rear Delts)", working: "3", reps: "10-15", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Sweep wide, don't pinch traps" }
       ]
     },
     { day: "DAY 3: REST & NEURAL RECOVERY", isRest: true, exercises: [] },
     {
       day: "DAY 4: LEGS (QUADS, HAMSTRINGS, GLUTES & CALVES)", isRest: false,
       exercises: [
-        { rowIdx: 12, name: "Hip Adduction Machine", working: "3", reps: "10-15", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false },
-        { rowIdx: 13, name: "Seated / Lying Hamstring Curl", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false },
-        { rowIdx: 14, name: "Hack Squat / Pendulum Squat", working: "2", reps: "1x 6-8", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true },
-        { rowIdx: 15, name: "Romanian Deadlift (RDL)", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true }
+        { rowIdx: 12, name: "Hip Adduction Machine", working: "3", reps: "10-15", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Pause 2 sec in stretched position" },
+        { rowIdx: 13, name: "Seated / Lying Hamstring Curl", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Lock hips down into pad" },
+        { rowIdx: 14, name: "Hack Squat / Pendulum Squat", working: "2", reps: "1x 6-8", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Full depth, knees over toes" },
+        { rowIdx: 15, name: "Romanian Deadlift (RDL)", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Hinge hips back, neutral spine" }
       ]
     }
   ];
@@ -1977,11 +2000,12 @@
     } catch (e) {}
   }
 
-  // --- LIVE 1-TAP SHEET REFRESH BUTTON (TOP LEFT HEADER) ---
+  // --- LIVE 1-TAP SHEET REFRESH BUTTON ---
   function refreshLiveSheetData() {
     var btn = document.getElementById("live-sync-btn");
     if (!activeAthlete.pin) return;
     if (btn) btn.textContent = "⏳...";
+    flushOfflineQueue();
     callBlueprintBackend("authenticateClient", { pin: activeAthlete.pin, lastName: "" }, function(res) {
       if (btn) btn.textContent = "↻ SYNC";
       if (res && res.success && res.client) {
@@ -2213,7 +2237,17 @@
     document.getElementById("ov-steps-summary").textContent = activeAthlete.targetSteps.toLocaleString() + " Daily Steps · 160 oz Water";
   }
 
+  function getSavedTrainDayKey() {
+    return "kb_last_train_day_" + (activeAthlete.name || "default");
+  }
+
   function openPortalFor(client, usedPin) {
+    var savedDayIdx = 0;
+    try {
+      var rawDay = localStorage.getItem("kb_last_train_day_" + (client.name || "default"));
+      if (rawDay !== null) savedDayIdx = parseInt(rawDay, 10) || 0;
+    } catch (e) {}
+
     activeAthlete = {
       name: client.name || "Tristan Kaebisch",
       pin: usedPin || activeAthlete.pin || "1234",
@@ -2224,13 +2258,17 @@
       targetFats: client.targetFats || 65,
       coachDirective: client.coachDirective || "Execute every working set to true 0–1 RIR with strict tempo, hit 10,000 steps daily, and keep hydration at 128–200 oz.",
       dayMode: "TD",
-      selectedTrainDayIdx: 0,
+      selectedTrainDayIdx: savedDayIdx,
       foodDb: (client.foodDb && client.foodDb.protein && client.foodDb.protein.length) ? client.foodDb : DEFAULT_FOOD_DB,
       meals: (client.meals && client.meals.length) ? client.meals : JSON.parse(JSON.stringify(DEFAULT_MEALS)),
       training: (client.training && client.training.length) ? client.training : JSON.parse(JSON.stringify(DEFAULT_TRAINING)),
       dailyTracker: (client.dailyTracker && client.dailyTracker.length) ? client.dailyTracker : JSON.parse(JSON.stringify(DEFAULT_TRACKER)),
       supplements: (client.supplements && client.supplements.length) ? client.supplements : JSON.parse(JSON.stringify(SUPPLEMENT_SECTIONS))
     };
+    if (activeAthlete.selectedTrainDayIdx >= activeAthlete.training.length) {
+      activeAthlete.selectedTrainDayIdx = 0;
+    }
+
     snapshotPreviousLifts(activeAthlete.training);
     document.getElementById("login-view").style.display = "none";
     document.getElementById("portal-view").style.display = "block";
@@ -2244,6 +2282,8 @@
     renderDailyCalorieLog();
     renderDailyTracker();
     renderSupplements();
+    loadCheckInDraftAndAutoWeight();
+    flushOfflineQueue();
   }
 
   function applyLiveSheetUpdates(client) {
@@ -2266,6 +2306,7 @@
     renderDailyCalorieLog();
     renderDailyTracker();
     renderSupplements();
+    loadCheckInDraftAndAutoWeight();
   }
 
   function lockPortal() {
@@ -2287,6 +2328,7 @@
     document.querySelectorAll(".tab-view").forEach(function(v) {
       v.classList.toggle("active", v.id === "tab-" + tabId);
     });
+    if (tabId === "checkin") loadCheckInDraftAndAutoWeight();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -2294,6 +2336,7 @@
     document.getElementById(inputId).value = val;
     btn.parentElement.querySelectorAll(".rate-btn").forEach(function(b) { b.classList.remove("active"); });
     btn.classList.add("active");
+    saveCheckInDraft();
   }
 
   function triggerSaveToast(customMsg) {
@@ -2320,9 +2363,10 @@
     renderDailyCalorieLog();
   }
 
-  // --- TRAINING BLUEPRINT + PROGRESSION BADGES (▲ / = / ▼) ---
+  // --- TRAINING BLUEPRINT + PERSISTENT WORKOUT DAY + BIOMECHANICAL CUES ---
   function filterTrainingDay(val) {
     activeAthlete.selectedTrainDayIdx = parseInt(val, 10);
+    try { localStorage.setItem(getSavedTrainDayKey(), activeAthlete.selectedTrainDayIdx); } catch (e) {}
     renderWorkoutSplit();
   }
 
@@ -2372,6 +2416,7 @@
         var videoBadge = ex.videoCheck ? '<span class="video-check-pill">📹 FILM SET</span>' : '';
         var suggestedBackoff = ex.topLoad ? ('~' + Math.round(parseFloat(ex.topLoad) * 0.85) + ' lbs') : 'Lbs (-15%)';
         var lastRefText = (ex.prevLoad || ex.prevReps) ? (' · Last wk: ' + (ex.prevLoad || "—") + ' lbs × ' + (ex.prevReps || "—")) : '';
+        var cueHtml = ex.cue ? ('<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">💡 ' + ex.cue + '</div>') : '';
 
         return (
           '<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
@@ -2384,9 +2429,10 @@
               '</div>' +
               '<span class="ex-save-badge" id="save-status-' + dIdx + '-' + eIdx + '">' + getProgressionBadgeHtml(ex) + '</span>' +
             '</div>' +
-            '<div style="font-family:var(--font-mono);font-size:11px;color:var(--status-yellow);margin:4px 0 6px;">' +
+            '<div style="font-family:var(--font-mono);font-size:11px;color:var(--status-yellow);margin:4px 0 4px;">' +
               'Target: ' + ex.working + ' × ' + ex.reps + (hasBackoff ? ' (Back-Off: ' + ex.backoff + ')' : '') + ' · tempo ' + (ex.tempo || "3-1-0-1") + ' · ' + (ex.rir || "0-2") + ' RIR' + lastRefText +
             '</div>' +
+            cueHtml +
             '<div class="train-set-grid">' +
               '<span style="color:var(--bp-bright);font-weight:700;">TOP SET</span>' +
               '<input type="number" placeholder="Load (lbs)" id="tl-' + dIdx + '-' + eIdx + '" value="' + (ex.topLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
@@ -2801,7 +2847,47 @@
     }
   }
 
-  // --- WEEKLY CHECK-IN & WHATSAPP HANDOFF ---
+  // --- WEEKLY CHECK-IN DRAFT AUTO-SAVER + AUTO-WEIGHT PREFILL ---
+  function getCheckInDraftKey() {
+    return "kb_ci_draft_" + (activeAthlete.name || "default");
+  }
+
+  function saveCheckInDraft() {
+    try {
+      var ids = ["ci-weight","ci-nut-rate","ci-nut-ans","ci-trn-rate","ci-trn-ans","ci-hng-rate","ci-hng-ans","ci-bloat-ans","ci-sleep-hrs","ci-slp-rate","ci-slp-ans","ci-water-ans","ci-focus-ans","ci-perf-ans","ci-breakdown-ans","ci-rec-ans","ci-vol-ans","ci-mot-rate","ci-mot-ans","ci-joint-ans","ci-eng-rate","ci-eng-ans","ci-bg","ci-bp","ci-win-ans","ci-notes-ans"];
+      var draft = {};
+      ids.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) draft[id] = el.value;
+      });
+      localStorage.setItem(getCheckInDraftKey(), JSON.stringify(draft));
+    } catch (e) {}
+  }
+
+  function loadCheckInDraftAndAutoWeight() {
+    try {
+      var raw = localStorage.getItem(getCheckInDraftKey());
+      if (raw) {
+        var draft = JSON.parse(raw);
+        Object.keys(draft).forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el && draft[id] !== undefined && draft[id] !== "") el.value = draft[id];
+        });
+      }
+      // Auto-fill Current Weight from latest 7-Day Tracker weigh-in if still empty
+      var wtEl = document.getElementById("ci-weight");
+      if (wtEl && !wtEl.value) {
+        var rows = activeAthlete.dailyTracker || [];
+        for (var i = rows.length - 1; i >= 0; i--) {
+          if (rows[i].weight) {
+            wtEl.value = rows[i].weight;
+            break;
+          }
+        }
+      }
+    } catch (e) {}
+  }
+
   function handleCheckInSubmit() {
     var payload = {
       clientName: activeAthlete.name,
@@ -2832,6 +2918,8 @@
       bigWin: document.getElementById("ci-win-ans").value,
       coachNotes: document.getElementById("ci-notes-ans").value
     };
+
+    try { localStorage.removeItem(getCheckInDraftKey()); } catch (e) {}
 
     var pill = document.getElementById("checkin-countdown-pill");
     if (pill) {
