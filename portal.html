@@ -1635,7 +1635,7 @@
 </div>
 
 <script>
-  const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbyq5K00uyNCJWOnGHA2HRVS81-CmCxf8F3v_N8w_RNEuFbJHhCr8TMhF-7vV-fXnPYp/exec";
+  const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbynQxTLUC78FS-hCu12r9pSXSvXQLPVpZrIokkD2PniD3cyQQ67W-mF0e8Zfzf054iE/exec";
 
   function escapeHtml(str) {
     return String(str === undefined || str === null ? "" : str)
@@ -1715,7 +1715,6 @@
 
   /**
    * DUAL-PROTOCOL (POST + GET FALLBACK) BACKEND BRIDGE
-   * Attempt 1 uses POST; Attempt 2 automatically falls back to GET so Safari/Chrome 302 redirects never drop the payload!
    */
   function callBlueprintBackend(action, payload, onSuccess, onFailure, attempt) {
     var tryNum = attempt || 1;
@@ -1824,6 +1823,9 @@
       }
     } catch (e) {}
     updateSundayCountdownBadge();
+
+    // Pre-warm Google Apps Script container on page load so PIN verification is fast
+    fetch(APPS_SCRIPT_API_URL + "?action=ping", { method: "GET", mode: "no-cors" }).catch(function() {});
   }
   window.addEventListener("DOMContentLoaded", initDeviceBindingUI);
 
@@ -1854,6 +1856,7 @@
     callBlueprintBackend("authenticateClient", { pin: pinToUse, lastName: "" }, function(res) {
       if (btn) btn.textContent = "↻ SYNC";
       if (res && res.success && res.isAdmin && res.roster) {
+        try { localStorage.setItem("kb_admin_cache_" + pinToUse, JSON.stringify(res.roster)); } catch (e) {}
         activateCoachAdminPortal(res.roster);
         triggerSaveToast("👑 Live Roster Synced!");
       } else if (res && res.success && res.client) {
@@ -1994,8 +1997,7 @@
   }
 
   /**
-   * ZERO-EXPOSURE SERVER-VERIFIED PIN AUTHENTICATION
-   * - Zero PINs or client names are stored in this HTML file.
+   * ZERO-EXPOSURE SERVER-VERIFIED PIN AUTHENTICATION + 0.0s INSTANT CACHE UNLOCK
    */
   function processPin(entered) {
     if (!entered) return;
@@ -2003,6 +2005,28 @@
     var nameWrapVisible = document.getElementById("lastname-wrap").style.display !== "none";
     var enteredLastName = nameWrapVisible ? (document.getElementById("lastname-field").value || "").trim() : "";
 
+    // 1. Check local Coach Admin cache for 0.0s instant unlock
+    try {
+      var cachedAdmin = localStorage.getItem("kb_admin_cache_" + entered);
+      if (cachedAdmin) {
+        var parsedRoster = JSON.parse(cachedAdmin);
+        if (parsedRoster && parsedRoster.length) {
+          isCoachAdminMode = true;
+          activateCoachAdminPortal(parsedRoster);
+          callBlueprintBackend("authenticateClient", { pin: entered, lastName: "" }, function(res) {
+            if (res && res.success && res.isAdmin && res.roster) {
+              try { localStorage.setItem("kb_admin_cache_" + entered, JSON.stringify(res.roster)); } catch (e) {}
+              adminMasterRoster = res.roster;
+              renderAdminRosterCards(0);
+              applyLiveSheetUpdates(res.roster[0]);
+            }
+          });
+          return;
+        }
+      }
+    } catch (e) {}
+
+    // 2. Check local Athlete cache for 0.0s instant unlock
     var cachedClient = null;
     try {
       var rawCache = localStorage.getItem("kb_auth_cache_" + entered);
@@ -2018,6 +2042,7 @@
 
       callBlueprintBackend("authenticateClient", { pin: entered, lastName: "" }, function(res) {
         if (res && res.success && res.isAdmin && res.roster) {
+          try { localStorage.setItem("kb_admin_cache_" + entered, JSON.stringify(res.roster)); } catch (e) {}
           activateCoachAdminPortal(res.roster);
         } else if (res && res.success && res.client) {
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
@@ -2032,14 +2057,16 @@
       return;
     }
 
+    // 3. First-time login on a new device (Server Verification)
     document.getElementById("pin-error").style.color = "var(--bp-bright)";
-    document.getElementById("pin-error").textContent = "VERIFYING PIN...";
+    document.getElementById("pin-error").textContent = "UNLOCKING...";
     callBlueprintBackend(
       "authenticateClient",
       { pin: entered, lastName: enteredLastName },
       function(res) {
         if (res && res.success && res.isAdmin && res.roster && res.roster.length) {
           isCoachAdminMode = true;
+          try { localStorage.setItem("kb_admin_cache_" + entered, JSON.stringify(res.roster)); } catch (e) {}
           activateCoachAdminPortal(res.roster);
           triggerSaveToast("👑 Coach Admin Unlocked (" + res.roster.length + " Clients)");
         } else if (res && res.success && res.client) {
@@ -2057,7 +2084,7 @@
       },
       function() {
         document.getElementById("pin-error").style.color = "var(--status-red)";
-        document.getElementById("pin-error").textContent = "DEPLOY NEW VERSION IN APPS SCRIPT";
+        document.getElementById("pin-error").textContent = "NETWORK TIMEOUT — TAP ENT AGAIN";
         document.getElementById("pin-field").value = "";
       }
     );
