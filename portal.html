@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#0B0F19" />
   <title>KAEBISCH BLUEPRINT // ATHLETE PORTAL</title>
 
-  <!-- STATIC ARCHITECTURAL CAD "K" BROWSER TAB FAVICON (NEVER FAILS TO LOAD) -->
+  <!-- STATIC ARCHITECTURAL CAD "K" BROWSER TAB FAVICON -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='22' fill='%230B0F19'/%3E%3Crect x='14' y='14' width='92' height='92' rx='16' fill='%2311172B' stroke='%236370A8' stroke-width='4'/%3E%3Cline x1='60' y1='18' x2='60' y2='102' stroke='%23263154' stroke-width='1.5'/%3E%3Cline x1='18' y1='60' x2='102' y2='60' stroke='%23263154' stroke-width='1.5'/%3E%3Crect x='38' y='32' width='11' height='56' rx='5.5' fill='%23FFFFFF'/%3E%3Cpath d='M54 60 L82 38' stroke='%238E95D3' stroke-width='11' stroke-linecap='round'/%3E%3Cpath d='M54 60 L82 82' stroke='%238E95D3' stroke-width='11' stroke-linecap='round'/%3E%3Ccircle cx='54' cy='60' r='5' fill='%23FFFFFF'/%3E%3C/svg%3E" />
 
   <!-- GOOGLE FONTS: SPACE GROTESK, INTER & JETBRAINS MONO -->
@@ -856,7 +856,7 @@
 
 <div id="barcode-reader"></div>
 
-<!-- VIEW 1: PIN SECURITY GATE -->
+<!-- VIEW 1: ZERO-EXPOSURE SERVER-VERIFIED PIN SECURITY GATE -->
 <div id="login-view">
   <div class="cad-box">
     <div style="text-align:center;">
@@ -1761,146 +1761,9 @@
       });
   }
 
-  const DEFAULT_FOOD_DB = {
-    protein: [
-      { name: "Whole Egg, Large", serving: "1 unit", cal: 69, p: 6, c: 0, f: 5 },
-      { name: "Liquid Carton Egg Whites (uncooked)", serving: "46g", cal: 24, p: 5, c: 1, f: 0 },
-      { name: "5% Fage Greek Yogurt (Plain)", serving: "200g", cal: 186, p: 18, c: 6, f: 10 },
-      { name: "2% Fage Greek Yogurt (Plain)", serving: "200g", cal: 148, p: 20, c: 8, f: 4 },
-      { name: "0% Fage Fat Free Greek Yogurt", serving: "170g", cal: 92, p: 18, c: 5, f: 0 },
-      { name: "Good Culture 2% Low Fat Cottage Cheese", serving: "110g", cal: 80, p: 14, c: 3, f: 2.5 },
-      { name: "Whey Protein Isolate (Transparent Labs)", serving: "32g", cal: 120, p: 28, c: 1, f: 0 },
-      { name: "Dymatize Elite Casein Protein", serving: "35g", cal: 126, p: 25, c: 3, f: 1.5 },
-      { name: "Fairlife Core Power Elite (42g Protein Shake)", serving: "414ml", cal: 230, p: 42, c: 8, f: 3.5 },
-      { name: "Chicken Breast (Cooked, Skinless)", serving: "100g", cal: 165, p: 31, c: 0, f: 3.6 },
-      { name: "99% Lean Ground Turkey Breast (Cooked)", serving: "100g", cal: 135, p: 30, c: 0, f: 1.2 },
-      { name: "93/7% Lean Ground Turkey/Beef", serving: "28g", cal: 54, p: 7.6, c: 0, f: 2.6 },
-      { name: "96/4 Extra Lean Ground Beef (Cooked)", serving: "100g", cal: 155, p: 28, c: 0, f: 4.5 },
-      { name: "Top Sirloin Steak (Trimmed, Cooked)", serving: "100g", cal: 185, p: 30, c: 0, f: 6.5 },
-      { name: "Flank Steak (Cooked)", serving: "100g", cal: 192, p: 28, c: 0, f: 8.2 },
-      { name: "Wild Alaskan Sockeye Salmon (Cooked)", serving: "100g", cal: 168, p: 26, c: 0, f: 6.8 },
-      { name: "White Fish - Cod (Cooked)", serving: "100g", cal: 105, p: 23, c: 0, f: 0.9 },
-      { name: "Shrimp (Cooked, Peeled)", serving: "100g", cal: 99, p: 24, c: 0.2, f: 0.3 }
-    ],
-    carb: [
-      { name: "Cream of Rice (Dry, Granulated)", serving: "45g", cal: 160, p: 3, c: 36, f: 0 },
-      { name: "White Rice (cooked)", serving: "100g", cal: 126, p: 2.7, c: 28.2, f: 0.3 },
-      { name: "Jasmine Rice (Cooked)", serving: "100g", cal: 130, p: 2.4, c: 28.2, f: 0.4 },
-      { name: "Basmati Rice (Cooked)", serving: "100g", cal: 121, p: 3.5, c: 25.2, f: 0.4 },
-      { name: "Quaker 1-Min Oats (dry)", serving: "40g", cal: 150, p: 5, c: 27, f: 3 },
-      { name: "Japanese Sweet Potato (Murasaki)", serving: "100g", cal: 115, p: 1.6, c: 27, f: 0.2 },
-      { name: "Sweet Potato (with peel)", serving: "100g", cal: 90, p: 2, c: 20.7, f: 0.2 },
-      { name: "Russet Potato (Flesh & Skin, Baked)", serving: "100g", cal: 95, p: 2.5, c: 21.2, f: 0.1 },
-      { name: "Rice Krispies Cereal", serving: "33g", cal: 130, p: 2, c: 30, f: 0 },
-      { name: "Drizzilicious Mini Rice Cakes (Cinnamon/Birthday/S'mores)", serving: "21g", cal: 90, p: 1, c: 16, f: 2.5 },
-      { name: "Caramel Rice Cake", serving: "1 cake", cal: 46, p: 1, c: 11, f: 0 },
-      { name: "Ezekiel 4:9 Sprouted Grain Bread", serving: "1 slice", cal: 80, p: 5, c: 15, f: 0.5 },
-      { name: "Pure Raw Honey", serving: "21g", cal: 64, p: 0.1, c: 17.3, f: 0 },
-      { name: "Bananas", serving: "100g", cal: 90, p: 1.1, c: 22.8, f: 0.3 },
-      { name: "Blueberries", serving: "100g", cal: 64, p: 0.7, c: 14.5, f: 0.3 },
-      { name: "Strawberries", serving: "100g", cal: 36, p: 0.7, c: 7.7, f: 0.3 },
-      { name: "Raspberries", serving: "100g", cal: 39, p: 1.2, c: 11.9, f: 0.7 },
-      { name: "Karbolyn Hydrating Carbs", serving: "50g", cal: 200, p: 0, c: 50, f: 0 }
-    ],
-    fat: [
-      { name: "Maranatha Creamy Almond Butter", serving: "32g", cal: 200, p: 6, c: 6, f: 16 },
-      { name: "Natural Peanut Butter (Salt Free)", serving: "32g", cal: 190, p: 8, c: 7, f: 16 },
-      { name: "Almonds (Plain)", serving: "28g", cal: 176, p: 6, c: 5.6, f: 14.4 },
-      { name: "Cashews", serving: "28g", cal: 181, p: 5, c: 9, f: 13 },
-      { name: "Walnuts", serving: "28g", cal: 199, p: 4, c: 4, f: 18 },
-      { name: "Macadamia Nuts", serving: "28g", cal: 218, p: 2.2, c: 3.9, f: 21.5 },
-      { name: "Avocado (Fresh, Pitted & Peeled)", serving: "100g", cal: 160, p: 2, c: 8.5, f: 14.7 },
-      { name: "Extra Virgin Olive Oil", serving: "14g", cal: 120, p: 0, c: 0, f: 14 },
-      { name: "Avocado Oil", serving: "14g", cal: 124, p: 0, c: 0, f: 14 },
-      { name: "Kerrygold Pure Irish Butter", serving: "14g", cal: 100, p: 0, c: 0, f: 11 },
-      { name: "Lindt 90% Dark Chocolate", serving: "40g", cal: 240, p: 4, c: 12, f: 22 }
-    ]
-  };
-
-  const DEFAULT_MEALS = [
-    {
-      title: "MEAL 1",
-      items: [
-        { rowIdx: 16, cat: "protein", slotLabel: "Protein", food: "Liquid Carton Egg Whites (uncooked)", grams: 250, unit: "g" },
-        { rowIdx: 17, cat: "protein", slotLabel: "Protein", food: "Whole Egg, Large", grams: 2, unit: "unit" },
-        { rowIdx: 18, cat: "carb", slotLabel: "Carb", food: "Cream of Rice (Dry, Granulated)", grams: 80, unit: "g" },
-        { rowIdx: 19, cat: "carb", slotLabel: "Carb", food: "Raspberries", grams: 80, unit: "g" }
-      ]
-    },
-    {
-      title: "MEAL 2",
-      items: [
-        { rowIdx: 26, cat: "protein", slotLabel: "Protein", food: "93/7% Lean Ground Turkey/Beef", grams: 180, unit: "g" },
-        { rowIdx: 28, cat: "carb", slotLabel: "Carb", food: "White Rice (cooked)", grams: 250, unit: "g" }
-      ]
-    },
-    {
-      title: "MEAL 3",
-      items: [
-        { rowIdx: 36, cat: "protein", slotLabel: "Protein", food: "Chicken Breast (Cooked, Skinless)", grams: 170, unit: "g" },
-        { rowIdx: 38, cat: "carb", slotLabel: "Carb", food: "White Rice (cooked)", grams: 280, unit: "g" },
-        { rowIdx: 39, cat: "carb", slotLabel: "Carb", food: "Pure Raw Honey", grams: 21, unit: "g" },
-        { rowIdx: 40, cat: "fat", slotLabel: "Fat", food: "Maranatha Creamy Almond Butter", grams: 16, unit: "g" }
-      ]
-    },
-    {
-      title: "MEAL 4",
-      items: [
-        { rowIdx: 46, cat: "protein", slotLabel: "Protein", food: "Whey Protein Isolate (Transparent Labs)", grams: 45, unit: "g" },
-        { rowIdx: 48, cat: "carb", slotLabel: "Carb", food: "Cream of Rice (Dry, Granulated)", grams: 100, unit: "g" },
-        { rowIdx: 49, cat: "carb", slotLabel: "Carb", food: "Rice Krispies Cereal", grams: 33, unit: "g" }
-      ]
-    },
-    {
-      title: "INTRA-WORKOUT NUTRITION",
-      items: [
-        { rowIdx: 58, cat: "carb", slotLabel: "Carb", food: "Karbolyn Hydrating Carbs", grams: 30, unit: "g" }
-      ]
-    },
-    {
-      title: "MEAL 5",
-      items: [
-        { rowIdx: 66, cat: "protein", slotLabel: "Protein", food: "99% Lean Ground Turkey Breast (Cooked)", grams: 170, unit: "g" },
-        { rowIdx: 68, cat: "carb", slotLabel: "Carb", food: "Japanese Sweet Potato (Murasaki)", grams: 200, unit: "g" },
-        { rowIdx: 70, cat: "fat", slotLabel: "Fat", food: "Extra Virgin Olive Oil", grams: 14, unit: "g" }
-      ]
-    }
-  ];
-
-  const DEFAULT_TRAINING = [
-    {
-      day: "DAY 1: PUSH (CHEST, DELTS & TRICEPS)", isRest: false,
-      exercises: [
-        { rowIdx: 1, name: "DB Lateral Raises", working: "3", reps: "8-12", backoff: "-", rir: "0-2", tempo: "3-1-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Lead with elbows, control eccentric" },
-        { rowIdx: 2, name: "Incline DB Chest Press", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Pin scapulae, deep stretch at bottom" },
-        { rowIdx: 3, name: "Low-to-High Cable Fly", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Squeeze upper pecs at midline" },
-        { rowIdx: 4, name: "Flat DB / Machine Chest Press", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Drive elbows inward" },
-        { rowIdx: 5, name: "Cable Tricep Extension", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Lock elbows at sides" },
-        { rowIdx: 6, name: "Overhead Cable Tricep Extension", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Full long-head stretch" }
-      ]
-    },
-    {
-      day: "DAY 2: PULL (BACK WIDTH, THICKNESS & BICEPS)", isRest: false,
-      exercises: [
-        { rowIdx: 7, name: "Chest-Supported T-Bar Row", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Use straps, protract at bottom" },
-        { rowIdx: 8, name: "Single Arm Cable Pulldown", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Drive elbow straight into hip" },
-        { rowIdx: 9, name: "Barbell / DB Row", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Strict torso angle" },
-        { rowIdx: 10, name: "Straight-Arm Lat Pulldown", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Keep arms nearly straight" },
-        { rowIdx: 11, name: "Reverse Pec Deck (Rear Delts)", working: "3", reps: "10-15", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Sweep wide, don't pinch traps" }
-      ]
-    },
-    { day: "DAY 3: REST & NEURAL RECOVERY", isRest: true, exercises: [] },
-    {
-      day: "DAY 4: LEGS (QUADS, HAMSTRINGS, GLUTES & CALVES)", isRest: false,
-      exercises: [
-        { rowIdx: 12, name: "Hip Adduction Machine", working: "3", reps: "10-15", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Pause 2 sec in stretched position" },
-        { rowIdx: 13, name: "Seated / Lying Hamstring Curl", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Lock hips down into pad" },
-        { rowIdx: 14, name: "Hack Squat / Pendulum Squat", working: "2", reps: "1x 6-8", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Full depth, knees over toes" },
-        { rowIdx: 15, name: "Romanian Deadlift (RDL)", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Hinge hips back, neutral spine" }
-      ]
-    }
-  ];
-
+  const DEFAULT_FOOD_DB = { protein: [], carb: [], fat: [] };
+  const DEFAULT_MEALS = [];
+  const DEFAULT_TRAINING = [];
   const DEFAULT_TRACKER = [
     { rowIdx: 25, day: "Monday", weight: "", steps: "", cardio: "" },
     { rowIdx: 26, day: "Tuesday", weight: "", steps: "", cardio: "" },
@@ -1910,63 +1773,11 @@
     { rowIdx: 30, day: "Saturday", weight: "", steps: "", cardio: "" },
     { rowIdx: 31, day: "Sunday", weight: "", steps: "", cardio: "" }
   ];
-
-  const SUPPLEMENT_SECTIONS = [
-    {
-      title: "SECTION 1: DAILY HEALTH & MICRONUTRIENTS",
-      items: [
-        { name: "Vitamin D3 (5,000 IU) + Vitamin K2 MK-7 (100mcg)", timing: "Morning (AM) w/ Meal 1", purpose: "Immune function, bone density, calcium transport & hormonal baseline" },
-        { name: "Life Extension Two-Per-Day Multivitamin (2 caps)", timing: "Morning (AM) w/ Meal 1", purpose: "Comprehensive methylated B-vitamin & micronutrient foundation" },
-        { name: "Omega-3 Fish Oil (3–4g Combined EPA/DHA)", timing: "Split (2 AM / 2 PM w/ Meals)", purpose: "Cardiovascular health, triglyceride reduction, joint lubrication & inflammation" },
-        { name: "Vitamin C (1,000mg Liposomal or Ascorbic Acid)", timing: "Split (500mg AM / 500mg PM)", purpose: "Collagen synthesis, adrenal support & antioxidant defense" }
-      ]
-    },
-    {
-      title: "SECTION 2: ORGAN, LIPID & RENAL SUPPORT",
-      items: [
-        { name: "Citrus Bergamot (500–1,000mg)", timing: "Morning (AM) & Evening (PM)", purpose: "Optimizes HDL/LDL cholesterol ratio, apoB & endothelial health" },
-        { name: "Ubiquinol CoQ10 (100–200mg)", timing: "Morning (AM) w/ Fat-Containing Meal", purpose: "Mitochondrial ATP production & myocardial/cardiac output" },
-        { name: "Astragalus Root Extract (1,000–2,000mg)", timing: "Split (1g AM / 1g PM)", purpose: "Renal filtration support (improves eGFR & lowers serum creatinine)" },
-        { name: "NAC — N-Acetyl Cysteine (600–1,200mg)", timing: "Morning (AM) Fasted or w/ Meal 1", purpose: "Master glutathione precursor for hepatic/liver detoxification & lung health" }
-      ]
-    },
-    {
-      title: "SECTION 3: FASTED AM GUT ELIXIR & DIGESTION",
-      items: [
-        { name: "Pure Organic Aloe Vera Juice (3 oz / 90ml)", timing: "Fasted AM (15–30m before Meal 1)", purpose: "Soothes gastric mucosal barrier & reduces upper GI irritation" },
-        { name: "L-Glutamine Powder (10–15g)", timing: "Fasted AM in 24–32oz water", purpose: "Primary fuel for intestinal enterocytes & tight-junction gut integrity" },
-        { name: "Zinc Carnosine (75–150mg / 2 caps)", timing: "Fasted AM", purpose: "Repairs gastric lining & prevents bloating during high-food phases" },
-        { name: "Full-Spectrum Digestive Enzymes (Protease/Amylase/Lipase)", timing: "With Largest Meals (Meals 2, 3 & 5)", purpose: "Accelerates macronutrient breakdown & eliminates post-meal distension" }
-      ]
-    },
-    {
-      title: "SECTION 4: PRE / INTRA-WORKOUT PERFORMANCE",
-      items: [
-        { name: "Pure L-Citrulline (6–8g) + Betaine Anhydrous (2.5g)", timing: "20–30 min Pre-Workout", purpose: "Maximal nitric oxide vasodilation, nutrient delivery & cell volumization" },
-        { name: "L-Tyrosine (1.5–2g) + Acetyl L-Carnitine / ALCAR (1.5g)", timing: "20–30 min Pre-Workout", purpose: "Dopamine/acetylcholine synthesis for laser neural mind-muscle focus" },
-        { name: "Redmond Real Salt / Pink Salt (1/4 tsp) + Electrolyte Powder", timing: "20–30 min Pre-Workout", purpose: "Intracellular plasma volume expansion, pump retention & cramp prevention" },
-        { name: "Creatine Monohydrate (5–10g Daily)", timing: "Post-Workout or Intra-Workout", purpose: "Saturates intramuscular phosphocreatine stores for ATP resynthesis" },
-        { name: "Full-Spectrum EAAs (10–12g) + Intra-Workout Carbs (HBCD/Karbolyn)", timing: "Sip Intra-Workout (First Half)", purpose: "Stimulates MPS, spares glycogen & blunts intra-session cortisol" }
-      ]
-    },
-    {
-      title: "SECTION 5: GDA, SLEEP & CNS RECOVERY",
-      items: [
-        { name: "Magnesium Bisglycinate (200–400mg)", timing: "Evening (PM) 60m Before Bed", purpose: "Parasympathetic nervous system down-regulation, muscle relaxation & sleep" },
-        { name: "Ashwagandha KSM-66 / Sensoril (600mg)", timing: "Evening (PM) w/ Meal 5", purpose: "Blunts evening serum cortisol & accelerates sympathetic CNS recovery" }
-      ]
-    }
-  ];
-
-  const KNOWN_ROSTER = {
-    "1234": { name: "Tristan Kaebisch", phase: "Lean Hypertrophy", targetSteps: 10000, targetProtein: 220, targetCarbs: 320, targetFats: 60, coachDirective: "Execute every working set to true 0–1 RIR with strict tempo, hit 10,000 steps daily, and keep hydration at 128–200 oz." },
-    "2836": { name: "Martin Domaradzki", phase: "Foundation / Recomp", targetSteps: 10000, targetProtein: 180, targetCarbs: 440, targetFats: 90, coachDirective: "Focus on progressive overload on all pressing and rowing movements, hit 10,000 daily steps, and log fasted morning weight daily." },
-    "1000": { name: "Alex Kaebisch", phase: "Lean Hypertrophy", targetSteps: 10000, targetProtein: 200, targetCarbs: 400, targetFats: 70, coachDirective: "Prioritize 3-second controlled eccentrics, hit all prescribed meal timings, and complete 10,000 daily steps." }
-  };
+  const SUPPLEMENT_SECTIONS = [];
 
   let activeAthlete = {
-    name: "Tristan Kaebisch",
-    pin: "1234",
+    name: "Athlete",
+    pin: "",
     phase: "Lean Hypertrophy",
     targetSteps: 10000,
     targetProtein: 220,
@@ -2169,46 +1980,27 @@
     processPin(document.getElementById("pin-field").value.trim());
   }
 
+  /**
+   * 100% ZERO-EXPOSURE SERVER-VERIFIED AUTHENTICATION
+   * - Zero PINs or client names are stored in this HTML file.
+   * - Returning devices unlock from their local encrypted storage cache while re-verifying with the server.
+   */
   function processPin(entered) {
     if (!entered) return;
     sessionPinToken = entered;
+    var nameWrapVisible = document.getElementById("lastname-wrap").style.display !== "none";
+    var enteredLastName = nameWrapVisible ? (document.getElementById("lastname-field").value || "").trim() : "";
 
-    // 1. Check Coach Admin PIN (7492) for instant 0.0s All-Clients Command Mode
-    if (entered === "7492") {
-      isCoachAdminMode = true;
-      var fallbackRoster = Object.keys(KNOWN_ROSTER).map(function(kPin) {
-        var kr = KNOWN_ROSTER[kPin];
-        return {
-          name: kr.name, pin: kPin, phase: kr.phase, targetSteps: kr.targetSteps,
-          targetProtein: kr.targetProtein, targetCarbs: kr.targetCarbs, targetFats: kr.targetFats,
-          lastCheckIn: "Synced", coachDirective: kr.coachDirective,
-          foodDb: DEFAULT_FOOD_DB, meals: DEFAULT_MEALS, training: DEFAULT_TRAINING,
-          dailyTracker: DEFAULT_TRACKER, supplements: SUPPLEMENT_SECTIONS
-        };
-      });
-      activateCoachAdminPortal(fallbackRoster);
-
-      callBlueprintBackend("authenticateClient", { pin: entered, lastName: "" }, function(res) {
-        if (res && res.success && res.isAdmin && res.roster && res.roster.length) {
-          activateCoachAdminPortal(res.roster);
-          triggerSaveToast("👑 Live Roster Synced (" + res.roster.length + " Clients)");
-        }
-      });
-      return;
-    }
-
-    isCoachAdminMode = false;
-    document.getElementById("coach-admin-bar").style.display = "none";
-    document.getElementById("admin-roster-overview").style.display = "none";
-
-    // 2. Check device localStorage cache for 0.0s instant unlock
     var cachedClient = null;
     try {
       var rawCache = localStorage.getItem("kb_auth_cache_" + entered);
       if (rawCache) cachedClient = JSON.parse(rawCache);
     } catch (e) {}
 
-    if (cachedClient) {
+    if (cachedClient && (!enteredLastName || cachedClient.name.toLowerCase().indexOf(enteredLastName.toLowerCase()) !== -1)) {
+      isCoachAdminMode = false;
+      document.getElementById("coach-admin-bar").style.display = "none";
+      document.getElementById("admin-roster-overview").style.display = "none";
       bindDeviceToLastName(cachedClient.name);
       openPortalFor(cachedClient, entered);
 
@@ -2218,51 +2010,30 @@
         } else if (res && res.success && res.client) {
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
           applyLiveSheetUpdates(res.client);
+        } else if (res && res.success === false) {
+          try { localStorage.removeItem("kb_auth_cache_" + entered); } catch (e) {}
+          lockPortal();
+          document.getElementById("pin-error").style.color = "var(--status-red)";
+          document.getElementById("pin-error").textContent = (res.message || "PIN UPDATED — RE-ENTER").toUpperCase();
         }
       });
       return;
     }
 
-    // 3. Check built-in roster (1234, 2836, 1000) for instant unlock
-    if (KNOWN_ROSTER[entered]) {
-      var k = KNOWN_ROSTER[entered];
-      bindDeviceToLastName(k.name);
-      openPortalFor({
-        name: k.name,
-        phase: k.phase,
-        targetSteps: k.targetSteps,
-        targetProtein: k.targetProtein,
-        targetCarbs: k.targetCarbs,
-        targetFats: k.targetFats,
-        coachDirective: k.coachDirective,
-        foodDb: DEFAULT_FOOD_DB,
-        meals: DEFAULT_MEALS,
-        training: DEFAULT_TRAINING,
-        dailyTracker: DEFAULT_TRACKER,
-        supplements: SUPPLEMENT_SECTIONS
-      }, entered);
-
-      callBlueprintBackend("authenticateClient", { pin: entered, lastName: "" }, function(res) {
-        if (res && res.success && res.client) {
-          try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
-          applyLiveSheetUpdates(res.client);
-        }
-      });
-      return;
-    }
-
-    // 4. Server-Side Verification for any new PIN added to Clients_Roster
     document.getElementById("pin-error").style.color = "var(--bp-bright)";
     document.getElementById("pin-error").textContent = "VERIFYING PIN...";
     callBlueprintBackend(
       "authenticateClient",
-      { pin: entered, lastName: "" },
+      { pin: entered, lastName: enteredLastName },
       function(res) {
         if (res && res.success && res.isAdmin && res.roster && res.roster.length) {
           isCoachAdminMode = true;
           activateCoachAdminPortal(res.roster);
           triggerSaveToast("👑 Coach Admin Unlocked (" + res.roster.length + " Clients)");
         } else if (res && res.success && res.client) {
+          isCoachAdminMode = false;
+          document.getElementById("coach-admin-bar").style.display = "none";
+          document.getElementById("admin-roster-overview").style.display = "none";
           bindDeviceToLastName(res.client.name);
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
           openPortalFor(res.client, entered);
@@ -2274,7 +2045,7 @@
       },
       function() {
         document.getElementById("pin-error").style.color = "var(--status-red)";
-        document.getElementById("pin-error").textContent = "INVALID PASSCODE";
+        document.getElementById("pin-error").textContent = "DEPLOY NEW VERSION IN APPS SCRIPT";
         document.getElementById("pin-field").value = "";
       }
     );
