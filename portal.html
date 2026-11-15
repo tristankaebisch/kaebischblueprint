@@ -61,7 +61,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* PIN LOGIN SCREEN */
     #login-view {
       min-height: 100vh;
       display: flex;
@@ -144,7 +143,6 @@
       line-height: 1.4;
     }
 
-    /* MAIN PORTAL VIEW */
     #portal-view { display: none; padding-bottom: 84px; }
 
     header {
@@ -217,7 +215,6 @@
     .tab-view { display: none; }
     .tab-view.active { display: block; }
 
-    /* "START HERE" CENTERED HERO BANNER, 2x2 META GRID & WEEKLY FLOW ROADMAP */
     .hero-brand-card {
       background: #060911;
       border: 1px solid var(--border-cad);
@@ -357,7 +354,6 @@
       cursor: pointer;
     }
 
-    /* "READ BEFORE YOU TRAIN" 6-RULE CHECKLIST & LOCK OVERLAY */
     .rules-gate-card {
       background: #080C17;
       border: 1px solid var(--border-cad);
@@ -504,7 +500,6 @@
       user-select: none;
     }
 
-    /* COACH'S WEEKLY DIRECTIVE BANNER */
     .coach-directive-box {
       background: linear-gradient(135deg, rgba(83, 88, 145, 0.24), rgba(19, 25, 43, 0.95));
       border: 1px solid var(--bp-primary);
@@ -567,7 +562,6 @@
     }
     .rate-btn.active { background: var(--bp-primary); color: #fff; border-color: #fff; }
 
-    /* UPGRADED INPUT TYPOGRAPHY */
     input, select, textarea {
       width: 100%;
       background: var(--bg-input);
@@ -653,7 +647,6 @@
       padding: 7px 11px; border-radius: 6px; cursor: pointer;
     }
 
-    /* MEAL PLAN ROWS */
     .meal-row-wrap {
       padding: 10px 0;
       border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -670,7 +663,6 @@
     }
     .item-macro-strip::-webkit-scrollbar { display: none; }
 
-    /* TRAINING INPUT GRID & PR BADGE */
     .train-set-grid {
       display: grid; grid-template-columns: 68px 1fr 1fr 64px; gap: 6px;
       align-items: center; margin-top: 6px; font-family: var(--font-mono); font-size: 11px;
@@ -706,7 +698,6 @@
       vertical-align: middle;
     }
 
-    /* WATER HYDRATION BAR */
     .water-bar-bg {
       width: 100%; height: 10px; background: var(--bg-input);
       border: 1px solid var(--border-cad); border-radius: 99px; overflow: hidden; margin: 8px 0;
@@ -717,7 +708,6 @@
       transition: width 0.25s ease;
     }
 
-    /* CHECK-IN POSE CHECKLIST */
     .pose-grid {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px;
     }
@@ -731,7 +721,6 @@
       width: 18px; height: 18px; margin: 0; accent-color: var(--status-green); box-shadow: none;
     }
 
-    /* PLATE CALCULATOR PILLS */
     .plate-pill {
       display: inline-flex;
       align-items: center;
@@ -880,18 +869,18 @@
     <div id="pin-error" style="text-align:center;color:var(--status-red);font-size:12px;min-height:18px;margin-bottom:4px;font-family:var(--font-mono);"></div>
 
     <div class="keypad">
-      <button type="button" class="key-btn" onpointerdown="tapKey('1', event)">1</button>
-      <button type="button" class="key-btn" onpointerdown="tapKey('2', event)">2</button>
-      <button type="button" class="key-btn" onpointerdown="tapKey('3', event)">3</button>
-      <button type="button" class="key-btn" onpointerdown="tapKey('4', event)">4</button>
-      <button type="button" class="key-btn" onpointerdown="tapKey('5', event)">5</button>
-      <button type="button" class="key-btn" onpointerdown="tapKey('6', event)">6</button>
-      <button type="button" class="key-btn" onpointerdown="tapKey('7', event)">7</button>
-      <button type="button" class="key-btn" onpointerdown="tapKey('8', event)">8</button>
-      <button type="button" class="key-btn" onpointerdown="tapKey('9', event)">9</button>
-      <button type="button" class="key-btn" style="font-size:13px;color:var(--text-muted);" onpointerdown="clearKey(event)">CLR</button>
-      <button type="button" class="key-btn" onpointerdown="tapKey('0', event)">0</button>
-      <button type="button" class="key-btn" style="font-size:13px;color:var(--bp-bright);" onpointerdown="handlePinFormSubmit(event)">ENT</button>
+      <button type="button" class="key-btn" onclick="tapKey('1')">1</button>
+      <button type="button" class="key-btn" onclick="tapKey('2')">2</button>
+      <button type="button" class="key-btn" onclick="tapKey('3')">3</button>
+      <button type="button" class="key-btn" onclick="tapKey('4')">4</button>
+      <button type="button" class="key-btn" onclick="tapKey('5')">5</button>
+      <button type="button" class="key-btn" onclick="tapKey('6')">6</button>
+      <button type="button" class="key-btn" onclick="tapKey('7')">7</button>
+      <button type="button" class="key-btn" onclick="tapKey('8')">8</button>
+      <button type="button" class="key-btn" onclick="tapKey('9')">9</button>
+      <button type="button" class="key-btn" style="font-size:13px;color:var(--text-muted);" onclick="clearKey()">CLR</button>
+      <button type="button" class="key-btn" onclick="tapKey('0')">0</button>
+      <button type="button" class="key-btn" style="font-size:13px;color:var(--bp-bright);" onclick="handlePinFormSubmit()">ENT</button>
     </div>
 
     <button type="button" class="unlock-submit-btn" onclick="handlePinFormSubmit()">UNLOCK PORTAL →</button>
@@ -1634,7 +1623,7 @@
   </div>
 </div>
 
-<>
+<script>
   const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbyq5K00uyNCJWOnGHA2HRVS81-CmCxf8F3v_N8w_RNEuFbJHhCr8TMhF-7vV-fXnPYp/exec";
 
   function escapeHtml(str) {
@@ -1961,8 +1950,7 @@
     document.getElementById("switch-athlete-link").style.display = "none";
   }
 
-  function tapKey(digit, e) {
-    if (e && e.preventDefault) e.preventDefault();
+  function tapKey(digit) {
     var field = document.getElementById("pin-field");
     if (field.value.length < 4) {
       field.value += digit;
@@ -1973,8 +1961,7 @@
     }
   }
 
-  function clearKey(e) {
-    if (e && e.preventDefault) e.preventDefault();
+  function clearKey() {
     document.getElementById("pin-field").value = "";
     document.getElementById("pin-error").textContent = "";
     resetDeviceBinding();
@@ -1991,8 +1978,7 @@
     }
   }
 
-  function handlePinFormSubmit(e) {
-    if (e && e.preventDefault) e.preventDefault();
+  function handlePinFormSubmit() {
     processPin(document.getElementById("pin-field").value.trim());
   }
 
