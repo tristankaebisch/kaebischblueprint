@@ -214,9 +214,7 @@
     .tab-view { display: none; }
     .tab-view.active { display: block; }
 
-    /* ============================================================================
-       "START HERE" CENTERED HERO BANNER, 2x2 META GRID & WEEKLY FLOW ROADMAP
-       ============================================================================ */
+    /* "START HERE" CENTERED HERO BANNER, 2x2 META GRID & WEEKLY FLOW ROADMAP */
     .hero-brand-card {
       background: #060911;
       border: 1px solid var(--border-cad);
@@ -356,9 +354,7 @@
       cursor: pointer;
     }
 
-    /* ============================================================================
-       "READ BEFORE YOU TRAIN" 6-RULE CHECKLIST & LOCK OVERLAY
-       ============================================================================ */
+    /* "READ BEFORE YOU TRAIN" 6-RULE CHECKLIST & LOCK OVERLAY */
     .rules-gate-card {
       background: #080C17;
       border: 1px solid var(--border-cad);
@@ -857,7 +853,7 @@
 
 <div id="barcode-reader"></div>
 
-<!-- VIEW 1: LIVE GOOGLE SHEET PIN SECURITY GATE -->
+<!-- VIEW 1: ZERO-EXPOSURE SERVER-VERIFIED PIN SECURITY GATE -->
 <div id="login-view">
   <div class="cad-box">
     <div style="text-align:center;">
@@ -909,11 +905,24 @@
 <!-- VIEW 2: MAIN PORTAL -->
 <div id="portal-view">
   <header>
+    <!-- COACH ADMIN MASTER SWITCHER BAR (ONLY UNLOCKED BY SERVER-VERIFIED SECRET COACH PIN) -->
+    <div id="coach-admin-bar" style="display:none;background:linear-gradient(90deg,#1E1B4B,#312E81);border-bottom:1px solid var(--status-yellow);padding:8px 14px;">
+      <div style="max-width:740px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-family:var(--font-mono);font-size:10px;font-weight:800;background:var(--status-yellow);color:#041B0D;padding:2px 7px;border-radius:4px;">👑 COACH ADMIN</span>
+          <button type="button" class="ctrl-btn" style="padding:4px 8px;font-size:10px;border-color:var(--status-yellow);color:var(--status-yellow);" onclick="toggleAdminRosterGrid()">👥 ALL CLIENTS GRID</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex:1;max-width:290px;">
+          <span style="font-family:var(--font-mono);font-size:10px;color:#E2E8F0;white-space:nowrap;">VIEWING:</span>
+          <select id="admin-client-select" onchange="switchAdminActiveClient(this.value)" style="padding:5px 8px;font-size:13px;border-color:var(--status-yellow);"></select>
+        </div>
+      </div>
+    </div>
+
     <div class="header-top">
       <div>
         <button type="button" class="ctrl-btn" id="live-sync-btn" style="padding:5px 9px;font-size:10px;color:var(--bp-bright);" onclick="refreshLiveSheetData()" title="Pull latest coach updates from Google Sheet">↻ SYNC</button>
       </div>
-      <!-- CENTERED ARCHITECTURAL CAD LOGO LOCKUP (TAPPING LOGO OPENS START HERE) -->
       <div class="brand-center-lockup" onclick="jumpToTab('overview')" title="Open Program Overview">
         <div class="brand-center-row">
           <svg width="34" height="34" viewBox="0 0 120 120">
@@ -923,7 +932,7 @@
             <span class="w-white">KAEBISCH</span><span class="w-blue">BLUEPRINT</span>
           </div>
         </div>
-        <div class="athlete-meta" id="header-athlete-meta">Tristan Kaebisch // Lean Hypertrophy</div>
+        <div class="athlete-meta" id="header-athlete-meta">Athlete Portal</div>
       </div>
       <div style="text-align:right;">
         <button type="button" class="ctrl-btn" style="padding:5px 9px;font-size:10px;" onclick="lockPortal()">LOCK</button>
@@ -941,6 +950,15 @@
   </header>
 
   <main>
+    <!-- COACH ALL-CLIENTS ROSTER OVERVIEW GRID -->
+    <div id="admin-roster-overview" class="card" style="display:none;border:1px solid var(--status-yellow);background:#090D1A;">
+      <div class="card-header" style="background:#161F38;border-bottom-color:var(--status-yellow);">
+        <span class="mono-label" style="color:var(--status-yellow);">👑 MASTER CLIENT ROSTER OVERVIEW (TAP ANY ATHLETE TO INSPECT / EDIT)</span>
+        <button type="button" class="ctrl-btn" style="padding:3px 8px;font-size:10px;" onclick="toggleAdminRosterGrid()">HIDE GRID</button>
+      </div>
+      <div id="admin-roster-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;"></div>
+    </div>
+
     <!-- COACH'S WEEKLY DIRECTIVE BANNER -->
     <div class="coach-directive-box">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
@@ -952,7 +970,7 @@
       </div>
     </div>
 
-    <!-- TAB 0: START HERE // CENTERED LOGO HERO, 2x2 METADATA & WEEKLY FLOW BREAKDOWN -->
+    <!-- TAB 0: START HERE -->
     <section id="tab-overview" class="tab-view">
       <div class="hero-brand-card">
         <div class="hero-brand-top">
@@ -971,12 +989,11 @@
         </div>
       </div>
 
-      <!-- 2x2 ATHLETE METADATA GRID -->
       <div class="program-meta-grid">
         <div class="meta-split-card">
           <div class="meta-split-label">CLIENT NAME</div>
           <div class="meta-split-val">
-            <strong id="ov-client-name">Tristan Kaebisch</strong>
+            <strong id="ov-client-name">Athlete</strong>
             <span>Personalized athlete profile & live sheet sync</span>
           </div>
         </div>
@@ -1003,7 +1020,6 @@
         </div>
       </div>
 
-      <!-- PHASE BLOCK PROGRESS BAR -->
       <div class="phase-progress-card">
         <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:11px;">
           <strong style="color:#FFFFFF;" id="ov-block-title">ACTIVE MESOCYCLE BLOCK · 16-WEEK BLUEPRINT</strong>
@@ -1014,7 +1030,6 @@
         </div>
       </div>
 
-      <!-- HOW YOUR WEEK FLOWS -->
       <div class="section-banner">
         <span>HOW YOUR WEEK FLOWS</span>
         <span style="font-family:var(--font-mono);font-size:10px;color:var(--bp-bright);">TAP ANY PILL TO OPEN</span>
@@ -1077,7 +1092,6 @@
 
     <!-- TAB 1: TRAINING BLUEPRINT -->
     <section id="tab-training" class="tab-view active">
-      <!-- "READ BEFORE YOU TRAIN" 6-RULE CHECKLIST GATE -->
       <div class="rules-gate-card">
         <div class="rules-gate-header" onclick="toggleRulesBody()" style="cursor:pointer;">
           <span class="mono-label" style="color:#FFFFFF;" id="rules-header-title">READ BEFORE YOU TRAIN</span>
@@ -1135,7 +1149,6 @@
         </div>
       </div>
 
-      <!-- "HOW THIS PROGRAM IS STRUCTURED" + PROGRESSION LEGEND -->
       <div class="program-structure-box">
         <strong style="color:#FFFFFF;font-family:var(--font-display);">HOW THIS PROGRAM IS STRUCTURED —</strong> Every session starts with an isolation or first movement to lubricate the joints and switch on the target muscle. Perform 1–3 quick ramping feeder sets (not logged), then <strong style="color:#FFFFFF;">ONE TOP SET</strong> at the prescribed effort and <strong style="color:#FFFFFF;">ONE BACK-OFF SET</strong> at ~15% reduced load (or straight working sets where listed). Last week's numbers sit above each exercise—that's the number to beat.
         <div class="prog-legend-row">
@@ -1145,7 +1158,6 @@
         </div>
       </div>
 
-      <!-- LOCKED STATUS BAR -->
       <div id="training-lock-banner" class="locked-banner-bar">
         🔒 LOCKED · CHECK OFF ALL 6 RULES ABOVE TO START LOGGING
       </div>
@@ -1536,7 +1548,7 @@
       </div>
     </section>
 
-    <!-- TAB 6: SUPPLEMENTS (WITH DAILY COMPLIANCE PROGRESS BAR) -->
+    <!-- TAB 6: SUPPLEMENTS -->
     <section id="tab-supplements" class="tab-view">
       <div class="section-banner">
         <span>PRESCRIBED SUPPLEMENT PROTOCOL</span>
@@ -1622,6 +1634,16 @@
 <script>
   const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbynQxTLUC78FS-hCu12r9pSXSvXQLPVpZrIokkD2PniD3cyQQ67W-mF0e8Zfzf054iE/exec";
 
+  // XSS Sanitizer for untrusted strings
+  function escapeHtml(str) {
+    return String(str === undefined || str === null ? "" : str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   // Generate Architectural CAD Browser Tab Favicon & iPhone Home Screen Icon
   (function generateBrowserTabFaviconAndPwaIcon() {
     try {
@@ -1668,7 +1690,7 @@
     } catch (e) {}
   })();
 
-  // --- OFFLINE GYM BASEMENT QUEUE (ZERO LOST SETS) ---
+  // --- OFFLINE GYM BASEMENT QUEUE ---
   function enqueueOfflineAction(action, payload) {
     var queueable = ["saveTrainingSetToSheet", "saveDailyTrackerToSheet", "saveMealItemToSheet", "submitWeeklyCheckIn"];
     if (queueable.indexOf(action) === -1) return;
@@ -1694,8 +1716,16 @@
   }
   window.addEventListener("online", flushOfflineQueue);
 
+  let sessionPinToken = "";
+  let adminMasterRoster = [];
+  let isCoachAdminMode = false;
+
   function callBlueprintBackend(action, payload, onSuccess, onFailure, attempt) {
     var tryNum = attempt || 1;
+    // Attach authenticated session PIN token to every write request so unauthenticated calls are rejected
+    if (payload && typeof payload === "object" && !payload.authPin) {
+      payload.authPin = sessionPinToken || activeAthlete.pin || "";
+    }
 
     if (typeof google !== "undefined" && google.script && google.script.run && typeof google.script.run[action] === "function") {
       var runner = google.script.run;
@@ -1748,137 +1778,30 @@
       { name: "0% Fage Fat Free Greek Yogurt", serving: "170g", cal: 92, p: 18, c: 5, f: 0 },
       { name: "Good Culture 2% Low Fat Cottage Cheese", serving: "110g", cal: 80, p: 14, c: 3, f: 2.5 },
       { name: "Whey Protein Isolate (Transparent Labs)", serving: "32g", cal: 120, p: 28, c: 1, f: 0 },
-      { name: "Dymatize Elite Casein Protein", serving: "35g", cal: 126, p: 25, c: 3, f: 1.5 },
-      { name: "Fairlife Core Power Elite (42g Protein Shake)", serving: "414ml", cal: 230, p: 42, c: 8, f: 3.5 },
       { name: "Chicken Breast (Cooked, Skinless)", serving: "100g", cal: 165, p: 31, c: 0, f: 3.6 },
       { name: "99% Lean Ground Turkey Breast (Cooked)", serving: "100g", cal: 135, p: 30, c: 0, f: 1.2 },
-      { name: "93/7% Lean Ground Turkey/Beef", serving: "28g", cal: 54, p: 7.6, c: 0, f: 2.6 },
-      { name: "96/4 Extra Lean Ground Beef (Cooked)", serving: "100g", cal: 155, p: 28, c: 0, f: 4.5 },
-      { name: "Top Sirloin Steak (Trimmed, Cooked)", serving: "100g", cal: 185, p: 30, c: 0, f: 6.5 },
-      { name: "Flank Steak (Cooked)", serving: "100g", cal: 192, p: 28, c: 0, f: 8.2 },
-      { name: "Wild Alaskan Sockeye Salmon (Cooked)", serving: "100g", cal: 168, p: 26, c: 0, f: 6.8 },
-      { name: "White Fish - Cod (Cooked)", serving: "100g", cal: 105, p: 23, c: 0, f: 0.9 },
-      { name: "Shrimp (Cooked, Peeled)", serving: "100g", cal: 99, p: 24, c: 0.2, f: 0.3 }
+      { name: "93/7% Lean Ground Turkey/Beef", serving: "28g", cal: 54, p: 7.6, c: 0, f: 2.6 }
     ],
     carb: [
       { name: "Cream of Rice (Dry, Granulated)", serving: "45g", cal: 160, p: 3, c: 36, f: 0 },
       { name: "White Rice (cooked)", serving: "100g", cal: 126, p: 2.7, c: 28.2, f: 0.3 },
       { name: "Jasmine Rice (Cooked)", serving: "100g", cal: 130, p: 2.4, c: 28.2, f: 0.4 },
-      { name: "Basmati Rice (Cooked)", serving: "100g", cal: 121, p: 3.5, c: 25.2, f: 0.4 },
-      { name: "Quaker 1-Min Oats (dry)", serving: "40g", cal: 150, p: 5, c: 27, f: 3 },
       { name: "Japanese Sweet Potato (Murasaki)", serving: "100g", cal: 115, p: 1.6, c: 27, f: 0.2 },
-      { name: "Sweet Potato (with peel)", serving: "100g", cal: 90, p: 2, c: 20.7, f: 0.2 },
-      { name: "Russet Potato (Flesh & Skin, Baked)", serving: "100g", cal: 95, p: 2.5, c: 21.2, f: 0.1 },
       { name: "Rice Krispies Cereal", serving: "33g", cal: 130, p: 2, c: 30, f: 0 },
-      { name: "Drizzilicious Mini Rice Cakes (Cinnamon/Birthday/S'mores)", serving: "21g", cal: 90, p: 1, c: 16, f: 2.5 },
-      { name: "Caramel Rice Cake", serving: "1 cake", cal: 46, p: 1, c: 11, f: 0 },
-      { name: "Ezekiel 4:9 Sprouted Grain Bread", serving: "1 slice", cal: 80, p: 5, c: 15, f: 0.5 },
       { name: "Pure Raw Honey", serving: "21g", cal: 64, p: 0.1, c: 17.3, f: 0 },
-      { name: "Bananas", serving: "100g", cal: 90, p: 1.1, c: 22.8, f: 0.3 },
-      { name: "Blueberries", serving: "100g", cal: 64, p: 0.7, c: 14.5, f: 0.3 },
-      { name: "Strawberries", serving: "100g", cal: 36, p: 0.7, c: 7.7, f: 0.3 },
       { name: "Raspberries", serving: "100g", cal: 39, p: 1.2, c: 11.9, f: 0.7 },
       { name: "Karbolyn Hydrating Carbs", serving: "50g", cal: 200, p: 0, c: 50, f: 0 }
     ],
     fat: [
       { name: "Maranatha Creamy Almond Butter", serving: "32g", cal: 200, p: 6, c: 6, f: 16 },
       { name: "Natural Peanut Butter (Salt Free)", serving: "32g", cal: 190, p: 8, c: 7, f: 16 },
-      { name: "Almonds (Plain)", serving: "28g", cal: 176, p: 6, c: 5.6, f: 14.4 },
-      { name: "Cashews", serving: "28g", cal: 181, p: 5, c: 9, f: 13 },
-      { name: "Walnuts", serving: "28g", cal: 199, p: 4, c: 4, f: 18 },
-      { name: "Macadamia Nuts", serving: "28g", cal: 218, p: 2.2, c: 3.9, f: 21.5 },
-      { name: "Avocado (Fresh, Pitted & Peeled)", serving: "100g", cal: 160, p: 2, c: 8.5, f: 14.7 },
       { name: "Extra Virgin Olive Oil", serving: "14g", cal: 120, p: 0, c: 0, f: 14 },
-      { name: "Avocado Oil", serving: "14g", cal: 124, p: 0, c: 0, f: 14 },
-      { name: "Kerrygold Pure Irish Butter", serving: "14g", cal: 100, p: 0, c: 0, f: 11 },
-      { name: "Lindt 90% Dark Chocolate", serving: "40g", cal: 240, p: 4, c: 12, f: 22 }
+      { name: "Avocado Oil", serving: "14g", cal: 124, p: 0, c: 0, f: 14 }
     ]
   };
 
-  const DEFAULT_MEALS = [
-    {
-      title: "MEAL 1",
-      items: [
-        { rowIdx: 16, cat: "protein", slotLabel: "Protein", food: "Liquid Carton Egg Whites (uncooked)", grams: 250, unit: "g" },
-        { rowIdx: 17, cat: "protein", slotLabel: "Protein", food: "Whole Egg, Large", grams: 2, unit: "unit" },
-        { rowIdx: 18, cat: "carb", slotLabel: "Carb", food: "Cream of Rice (Dry, Granulated)", grams: 80, unit: "g" },
-        { rowIdx: 19, cat: "carb", slotLabel: "Carb", food: "Raspberries", grams: 80, unit: "g" }
-      ]
-    },
-    {
-      title: "MEAL 2",
-      items: [
-        { rowIdx: 26, cat: "protein", slotLabel: "Protein", food: "93/7% Lean Ground Turkey/Beef", grams: 180, unit: "g" },
-        { rowIdx: 28, cat: "carb", slotLabel: "Carb", food: "White Rice (cooked)", grams: 250, unit: "g" }
-      ]
-    },
-    {
-      title: "MEAL 3",
-      items: [
-        { rowIdx: 36, cat: "protein", slotLabel: "Protein", food: "Chicken Breast (Cooked, Skinless)", grams: 170, unit: "g" },
-        { rowIdx: 38, cat: "carb", slotLabel: "Carb", food: "White Rice (cooked)", grams: 280, unit: "g" },
-        { rowIdx: 39, cat: "carb", slotLabel: "Carb", food: "Pure Raw Honey", grams: 21, unit: "g" },
-        { rowIdx: 40, cat: "fat", slotLabel: "Fat", food: "Maranatha Creamy Almond Butter", grams: 16, unit: "g" }
-      ]
-    },
-    {
-      title: "MEAL 4",
-      items: [
-        { rowIdx: 46, cat: "protein", slotLabel: "Protein", food: "Whey Protein Isolate (Transparent Labs)", grams: 45, unit: "g" },
-        { rowIdx: 48, cat: "carb", slotLabel: "Carb", food: "Cream of Rice (Dry, Granulated)", grams: 100, unit: "g" },
-        { rowIdx: 49, cat: "carb", slotLabel: "Carb", food: "Rice Krispies Cereal", grams: 33, unit: "g" }
-      ]
-    },
-    {
-      title: "INTRA-WORKOUT NUTRITION",
-      items: [
-        { rowIdx: 58, cat: "carb", slotLabel: "Carb", food: "Karbolyn Hydrating Carbs", grams: 30, unit: "g" }
-      ]
-    },
-    {
-      title: "MEAL 5",
-      items: [
-        { rowIdx: 66, cat: "protein", slotLabel: "Protein", food: "99% Lean Ground Turkey Breast (Cooked)", grams: 170, unit: "g" },
-        { rowIdx: 68, cat: "carb", slotLabel: "Carb", food: "Japanese Sweet Potato (Murasaki)", grams: 200, unit: "g" },
-        { rowIdx: 70, cat: "fat", slotLabel: "Fat", food: "Extra Virgin Olive Oil", grams: 14, unit: "g" }
-      ]
-    }
-  ];
-
-  const DEFAULT_TRAINING = [
-    {
-      day: "DAY 1: PUSH (CHEST, DELTS & TRICEPS)", isRest: false,
-      exercises: [
-        { rowIdx: 1, name: "DB Lateral Raises", working: "3", reps: "8-12", backoff: "-", rir: "0-2", tempo: "3-1-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Lead with elbows, control eccentric" },
-        { rowIdx: 2, name: "Incline DB Chest Press", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Pin scapulae, deep stretch at bottom" },
-        { rowIdx: 3, name: "Low-to-High Cable Fly", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Squeeze upper pecs at midline" },
-        { rowIdx: 4, name: "Flat DB / Machine Chest Press", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Drive elbows inward" },
-        { rowIdx: 5, name: "Cable Tricep Extension", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Lock elbows at sides" },
-        { rowIdx: 6, name: "Overhead Cable Tricep Extension", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Full long-head stretch" }
-      ]
-    },
-    {
-      day: "DAY 2: PULL (BACK WIDTH, THICKNESS & BICEPS)", isRest: false,
-      exercises: [
-        { rowIdx: 7, name: "Chest-Supported T-Bar Row", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Use straps, protract at bottom" },
-        { rowIdx: 8, name: "Single Arm Cable Pulldown", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Drive elbow straight into hip" },
-        { rowIdx: 9, name: "Barbell / DB Row", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Strict torso angle" },
-        { rowIdx: 10, name: "Straight-Arm Lat Pulldown", working: "2", reps: "10-12", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Keep arms nearly straight" },
-        { rowIdx: 11, name: "Reverse Pec Deck (Rear Delts)", working: "3", reps: "10-15", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Sweep wide, don't pinch traps" }
-      ]
-    },
-    { day: "DAY 3: REST & NEURAL RECOVERY", isRest: true, exercises: [] },
-    {
-      day: "DAY 4: LEGS (QUADS, HAMSTRINGS, GLUTES & CALVES)", isRest: false,
-      exercises: [
-        { rowIdx: 12, name: "Hip Adduction Machine", working: "3", reps: "10-15", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Pause 2 sec in stretched position" },
-        { rowIdx: 13, name: "Seated / Lying Hamstring Curl", working: "2", reps: "1x 7-9", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: false, cue: "Lock hips down into pad" },
-        { rowIdx: 14, name: "Hack Squat / Pendulum Squat", working: "2", reps: "1x 6-8", backoff: "1x 10-12", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Full depth, knees over toes" },
-        { rowIdx: 15, name: "Romanian Deadlift (RDL)", working: "2", reps: "8-10", backoff: "-", rir: "0-2", tempo: "3-2-0-1", topLoad: "", topReps: "", topRir: "", backLoad: "", backReps: "", backRir: "", videoCheck: true, cue: "Hinge hips back, neutral spine" }
-      ]
-    }
-  ];
-
+  const DEFAULT_MEALS = [];
+  const DEFAULT_TRAINING = [];
   const DEFAULT_TRACKER = [
     { rowIdx: 25, day: "Monday", weight: "", steps: "", cardio: "" },
     { rowIdx: 26, day: "Tuesday", weight: "", steps: "", cardio: "" },
@@ -1888,63 +1811,11 @@
     { rowIdx: 30, day: "Saturday", weight: "", steps: "", cardio: "" },
     { rowIdx: 31, day: "Sunday", weight: "", steps: "", cardio: "" }
   ];
-
-  const SUPPLEMENT_SECTIONS = [
-    {
-      title: "SECTION 1: DAILY HEALTH & MICRONUTRIENTS",
-      items: [
-        { name: "Vitamin D3 (5,000 IU) + Vitamin K2 MK-7 (100mcg)", timing: "Morning (AM) w/ Meal 1", purpose: "Immune function, bone density, calcium transport & hormonal baseline" },
-        { name: "Life Extension Two-Per-Day Multivitamin (2 caps)", timing: "Morning (AM) w/ Meal 1", purpose: "Comprehensive methylated B-vitamin & micronutrient foundation" },
-        { name: "Omega-3 Fish Oil (3–4g Combined EPA/DHA)", timing: "Split (2 AM / 2 PM w/ Meals)", purpose: "Cardiovascular health, triglyceride reduction, joint lubrication & inflammation" },
-        { name: "Vitamin C (1,000mg Liposomal or Ascorbic Acid)", timing: "Split (500mg AM / 500mg PM)", purpose: "Collagen synthesis, adrenal support & antioxidant defense" }
-      ]
-    },
-    {
-      title: "SECTION 2: ORGAN, LIPID & RENAL SUPPORT",
-      items: [
-        { name: "Citrus Bergamot (500–1,000mg)", timing: "Morning (AM) & Evening (PM)", purpose: "Optimizes HDL/LDL cholesterol ratio, apoB & endothelial health" },
-        { name: "Ubiquinol CoQ10 (100–200mg)", timing: "Morning (AM) w/ Fat-Containing Meal", purpose: "Mitochondrial ATP production & myocardial/cardiac output" },
-        { name: "Astragalus Root Extract (1,000–2,000mg)", timing: "Split (1g AM / 1g PM)", purpose: "Renal filtration support (improves eGFR & lowers serum creatinine)" },
-        { name: "NAC — N-Acetyl Cysteine (600–1,200mg)", timing: "Morning (AM) Fasted or w/ Meal 1", purpose: "Master glutathione precursor for hepatic/liver detoxification & lung health" }
-      ]
-    },
-    {
-      title: "SECTION 3: FASTED AM GUT ELIXIR & DIGESTION",
-      items: [
-        { name: "Pure Organic Aloe Vera Juice (3 oz / 90ml)", timing: "Fasted AM (15–30m before Meal 1)", purpose: "Soothes gastric mucosal barrier & reduces upper GI irritation" },
-        { name: "L-Glutamine Powder (10–15g)", timing: "Fasted AM in 24–32oz water", purpose: "Primary fuel for intestinal enterocytes & tight-junction gut integrity" },
-        { name: "Zinc Carnosine (75–150mg / 2 caps)", timing: "Fasted AM", purpose: "Repairs gastric lining & prevents bloating during high-food phases" },
-        { name: "Full-Spectrum Digestive Enzymes (Protease/Amylase/Lipase)", timing: "With Largest Meals (Meals 2, 3 & 5)", purpose: "Accelerates macronutrient breakdown & eliminates post-meal distension" }
-      ]
-    },
-    {
-      title: "SECTION 4: PRE / INTRA-WORKOUT PERFORMANCE",
-      items: [
-        { name: "Pure L-Citrulline (6–8g) + Betaine Anhydrous (2.5g)", timing: "20–30 min Pre-Workout", purpose: "Maximal nitric oxide vasodilation, nutrient delivery & cell volumization" },
-        { name: "L-Tyrosine (1.5–2g) + Acetyl L-Carnitine / ALCAR (1.5g)", timing: "20–30 min Pre-Workout", purpose: "Dopamine/acetylcholine synthesis for laser neural mind-muscle focus" },
-        { name: "Redmond Real Salt / Pink Salt (1/4 tsp) + Electrolyte Powder", timing: "20–30 min Pre-Workout", purpose: "Intracellular plasma volume expansion, pump retention & cramp prevention" },
-        { name: "Creatine Monohydrate (5–10g Daily)", timing: "Post-Workout or Intra-Workout", purpose: "Saturates intramuscular phosphocreatine stores for ATP resynthesis" },
-        { name: "Full-Spectrum EAAs (10–12g) + Intra-Workout Carbs (HBCD/Karbolyn)", timing: "Sip Intra-Workout (First Half)", purpose: "Stimulates MPS, spares glycogen & blunts intra-session cortisol" }
-      ]
-    },
-    {
-      title: "SECTION 5: GDA, SLEEP & CNS RECOVERY",
-      items: [
-        { name: "Magnesium Bisglycinate (200–400mg)", timing: "Evening (PM) 60m Before Bed", purpose: "Parasympathetic nervous system down-regulation, muscle relaxation & sleep" },
-        { name: "Ashwagandha KSM-66 / Sensoril (600mg)", timing: "Evening (PM) w/ Meal 5", purpose: "Blunts evening serum cortisol & accelerates sympathetic CNS recovery" }
-      ]
-    }
-  ];
-
-  const KNOWN_ROSTER = {
-    "1234": { name: "Tristan Kaebisch", phase: "Lean Hypertrophy", targetSteps: 10000, targetProtein: 220, targetCarbs: 320, targetFats: 60, coachDirective: "Execute every working set to true 0–1 RIR with strict tempo, hit 10,000 steps daily, and keep hydration at 128–200 oz." },
-    "2836": { name: "Martin Domaradzki", phase: "Foundation / Recomp", targetSteps: 10000, targetProtein: 180, targetCarbs: 440, targetFats: 90, coachDirective: "Focus on progressive overload on all pressing and rowing movements, hit 10,000 daily steps, and log fasted morning weight daily." },
-    "1000": { name: "Alex Kaebisch", phase: "Lean Hypertrophy", targetSteps: 10000, targetProtein: 200, targetCarbs: 400, targetFats: 70, coachDirective: "Prioritize 3-second controlled eccentrics, hit all prescribed meal timings, and complete 10,000 daily steps." }
-  };
+  const SUPPLEMENT_SECTIONS = [];
 
   let activeAthlete = {
-    name: "Tristan Kaebisch",
-    pin: "1234",
+    name: "Athlete",
+    pin: "",
     phase: "Lean Hypertrophy",
     targetSteps: 10000,
     targetProtein: 220,
@@ -2000,16 +1871,20 @@
     } catch (e) {}
   }
 
-  // --- LIVE 1-TAP SHEET REFRESH BUTTON ---
   function refreshLiveSheetData() {
     var btn = document.getElementById("live-sync-btn");
-    if (!activeAthlete.pin) return;
+    var pinToUse = sessionPinToken || activeAthlete.pin;
+    if (!pinToUse) return;
     if (btn) btn.textContent = "⏳...";
     flushOfflineQueue();
-    callBlueprintBackend("authenticateClient", { pin: activeAthlete.pin, lastName: "" }, function(res) {
+    var enteredLastName = (document.getElementById("lastname-field").value || "").trim();
+    callBlueprintBackend("authenticateClient", { pin: pinToUse, lastName: enteredLastName }, function(res) {
       if (btn) btn.textContent = "↻ SYNC";
-      if (res && res.success && res.client) {
-        try { localStorage.setItem("kb_auth_cache_" + activeAthlete.pin, JSON.stringify(res.client)); } catch (e) {}
+      if (res && res.success && res.isAdmin && res.roster) {
+        activateCoachAdminPortal(res.roster);
+        triggerSaveToast("👑 Live Roster Synced!");
+      } else if (res && res.success && res.client) {
+        try { localStorage.setItem("kb_auth_cache_" + pinToUse, JSON.stringify(res.client)); } catch (e) {}
         applyLiveSheetUpdates(res.client);
         triggerSaveToast("✓ Latest Coach Plan Synced!");
       }
@@ -2018,7 +1893,6 @@
     });
   }
 
-  // --- BARBELL PLATE CALCULATOR MODAL ---
   function openPlateCalcModal() {
     document.getElementById("plate-calc-modal").classList.add("open");
     calculateBarbellPlates();
@@ -2044,12 +1918,20 @@
     box.innerHTML = out.length ? out.join("") : '<span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);">Empty 45 lb Barbell</span>';
   }
 
-  // --- "READ BEFORE YOU TRAIN" 6-RULE LOCK GATE ---
   function getRulesGateKey() {
     return "kb_rules_ack_" + (activeAthlete.name || "default");
   }
 
   function loadTrainingRulesGate() {
+    if (isCoachAdminMode) {
+      document.getElementById("training-lock-banner").style.display = "none";
+      document.getElementById("training-interactive-zone").classList.remove("workout-locked");
+      document.getElementById("rules-gate-body").style.display = "none";
+      document.getElementById("rules-count-pill").textContent = "6 of 6";
+      document.getElementById("rules-count-pill").classList.add("complete");
+      document.getElementById("rules-header-title").textContent = "✅ COACH ADMIN MODE — LOGGING UNLOCKED";
+      return;
+    }
     var cbs = document.querySelectorAll(".train-rule-cb");
     var alreadyUnlocked = false;
     try {
@@ -2137,76 +2019,138 @@
     processPin(document.getElementById("pin-field").value.trim());
   }
 
+  /**
+   * ZERO-EXPOSURE PIN AUTHENTICATION:
+   * - No PINs or client names are hardcoded in this HTML file.
+   * - Previously authenticated devices unlock in 0.0s from local cache AND re-verify with the server in the background.
+   * - Coach Master PIN is verified strictly on Google's servers (requires Last Name "Kaebisch" + Secret PIN).
+   */
   function processPin(entered) {
     if (!entered) return;
-    activeAthlete.pin = entered;
+    sessionPinToken = entered;
+    var enteredLastName = (document.getElementById("lastname-field").value || "").trim();
 
+    // 1. Check device localStorage cache for 0.0s instant unlock on returning athlete phones
     var cachedClient = null;
     try {
       var rawCache = localStorage.getItem("kb_auth_cache_" + entered);
       if (rawCache) cachedClient = JSON.parse(rawCache);
     } catch (e) {}
 
-    if (cachedClient) {
+    if (cachedClient && (!enteredLastName || cachedClient.name.toLowerCase().indexOf(enteredLastName.toLowerCase()) !== -1)) {
+      isCoachAdminMode = false;
+      document.getElementById("coach-admin-bar").style.display = "none";
+      document.getElementById("admin-roster-overview").style.display = "none";
       bindDeviceToLastName(cachedClient.name);
       openPortalFor(cachedClient, entered);
-      callBlueprintBackend("authenticateClient", { pin: entered, lastName: "" }, function(res) {
-        if (res && res.success && res.client) {
+
+      callBlueprintBackend("authenticateClient", { pin: entered, lastName: enteredLastName }, function(res) {
+        if (res && res.success && res.isAdmin && res.roster) {
+          activateCoachAdminPortal(res.roster);
+        } else if (res && res.success && res.client) {
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
           applyLiveSheetUpdates(res.client);
+        } else if (res && res.success === false) {
+          // PIN was revoked or changed on Clients_Roster! Purge cache and lock
+          try { localStorage.removeItem("kb_auth_cache_" + entered); } catch (e) {}
+          lockPortal();
+          document.getElementById("pin-error").style.color = "var(--status-red)";
+          document.getElementById("pin-error").textContent = (res.message || "PIN UPDATED — RE-ENTER").toUpperCase();
         }
       });
       return;
     }
 
-    if (KNOWN_ROSTER[entered]) {
-      var k = KNOWN_ROSTER[entered];
-      bindDeviceToLastName(k.name);
-      openPortalFor({
-        name: k.name,
-        phase: k.phase,
-        targetSteps: k.targetSteps,
-        targetProtein: k.targetProtein,
-        targetCarbs: k.targetCarbs,
-        targetFats: k.targetFats,
-        coachDirective: k.coachDirective,
-        foodDb: DEFAULT_FOOD_DB,
-        meals: DEFAULT_MEALS,
-        training: DEFAULT_TRAINING,
-        dailyTracker: DEFAULT_TRACKER,
-        supplements: SUPPLEMENT_SECTIONS
-      }, entered);
-      callBlueprintBackend("authenticateClient", { pin: entered, lastName: "" }, function(res) {
-        if (res && res.success && res.client) {
-          try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
-          applyLiveSheetUpdates(res.client);
-        }
-      });
-      return;
-    }
-
+    // 2. Server-Side Verification (Handles 1st-time athlete logins AND Coach Master PIN)
     document.getElementById("pin-error").style.color = "var(--bp-bright)";
     document.getElementById("pin-error").textContent = "VERIFYING PIN...";
     callBlueprintBackend(
       "authenticateClient",
-      { pin: entered, lastName: "" },
+      { pin: entered, lastName: enteredLastName },
       function(res) {
-        if (res && res.success && res.client) {
+        if (res && res.success && res.isAdmin && res.roster && res.roster.length) {
+          isCoachAdminMode = true;
+          bindDeviceToLastName("Kaebisch");
+          activateCoachAdminPortal(res.roster);
+          triggerSaveToast("👑 Coach Admin Unlocked (" + res.roster.length + " Clients)");
+        } else if (res && res.success && res.client) {
+          isCoachAdminMode = false;
+          document.getElementById("coach-admin-bar").style.display = "none";
+          document.getElementById("admin-roster-overview").style.display = "none";
           bindDeviceToLastName(res.client.name);
           try { localStorage.setItem("kb_auth_cache_" + entered, JSON.stringify(res.client)); } catch (e) {}
           openPortalFor(res.client, entered);
         } else {
           document.getElementById("pin-error").style.color = "var(--status-red)";
-          document.getElementById("pin-error").textContent = "INVALID PASSCODE";
+          document.getElementById("pin-error").textContent = (res && res.message) ? res.message.toUpperCase() : "INVALID PASSCODE";
           document.getElementById("pin-field").value = "";
         }
       },
       function() {
         document.getElementById("pin-error").style.color = "var(--status-red)";
-        document.getElementById("pin-error").textContent = "DEPLOY NEW VERSION IN APPS SCRIPT";
+        document.getElementById("pin-error").textContent = "NETWORK ERROR — TRY AGAIN";
         document.getElementById("pin-field").value = "";
       }
     );
+  }
+
+  function activateCoachAdminPortal(rosterList) {
+    adminMasterRoster = rosterList || [];
+    if (!adminMasterRoster.length) return;
+    isCoachAdminMode = true;
+
+    document.getElementById("coach-admin-bar").style.display = "block";
+    document.getElementById("admin-roster-overview").style.display = "block";
+
+    var sel = document.getElementById("admin-client-select");
+    sel.innerHTML = adminMasterRoster.map(function(c, idx) {
+      return '<option value="' + idx + '">' + escapeHtml(c.name) + ' (PIN: ' + escapeHtml(c.pin || "—") + ')</option>';
+    }).join("");
+
+    renderAdminRosterCards(0);
+    openPortalFor(adminMasterRoster[0], adminMasterRoster[0].pin);
+  }
+
+  function renderAdminRosterCards(activeIdx) {
+    var box = document.getElementById("admin-roster-cards");
+    if (!box) return;
+    box.innerHTML = adminMasterRoster.map(function(c, idx) {
+      var weights = (c.dailyTracker || []).map(function(r) { return parseFloat(r.weight); }).filter(function(v) { return !isNaN(v); });
+      var avgW = weights.length ? ((weights.reduce(function(a, b) { return a + b; }, 0) / weights.length).toFixed(1) + " lbs") : "No weigh-ins";
+      var isSelected = idx === activeIdx;
+
+      return (
+        '<div onclick="switchAdminActiveClient(' + idx + ')" style="background:' + (isSelected ? 'rgba(83,88,145,0.32)' : 'var(--bg-card)') + ';border:1px solid ' + (isSelected ? 'var(--status-yellow)' : 'var(--border-cad)') + ';border-radius:10px;padding:10px 12px;cursor:pointer;">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+            '<strong style="font-family:var(--font-display);font-size:13px;color:#fff;">' + escapeHtml(c.name) + '</strong>' +
+            '<span style="font-family:var(--font-mono);font-size:10px;color:var(--status-yellow);">PIN: ' + escapeHtml(c.pin || "—") + '</span>' +
+          </div>' +
+          '<div style="font-size:11px;color:var(--bp-bright);font-family:var(--font-mono);margin:2px 0 6px;">' + escapeHtml(c.phase || "Lean Hypertrophy") + '</div>' +
+          '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);display:flex;justify-content:space-between;">' +
+            '<span>Macros: <strong style="color:#fff;">' + c.targetProtein + 'P/' + c.targetCarbs + 'C/' + c.targetFats + 'F</strong></span>' +
+            '<span>Avg Wt: <strong style="color:var(--status-green);">' + avgW + '</strong></span>' +
+          '</div>' +
+          '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-top:4px;">' +
+            'Last Check-In: <span style="color:#fff;">' + escapeHtml(c.lastCheckIn || "Pending") + '</span>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  function switchAdminActiveClient(idxVal) {
+    var idx = parseInt(idxVal, 10) || 0;
+    var targetClient = adminMasterRoster[idx];
+    if (!targetClient) return;
+    document.getElementById("admin-client-select").value = idx;
+    renderAdminRosterCards(idx);
+    openPortalFor(targetClient, targetClient.pin);
+    triggerSaveToast("👑 Viewing: " + targetClient.name);
+  }
+
+  function toggleAdminRosterGrid() {
+    var g = document.getElementById("admin-roster-overview");
+    if (g) g.style.display = (g.style.display === "none") ? "block" : "none";
   }
 
   function bindDeviceToLastName(fullName) {
@@ -2249,8 +2193,8 @@
     } catch (e) {}
 
     activeAthlete = {
-      name: client.name || "Tristan Kaebisch",
-      pin: usedPin || activeAthlete.pin || "1234",
+      name: client.name || "Athlete",
+      pin: usedPin || client.pin || activeAthlete.pin || "",
       phase: client.phase || "Lean Hypertrophy",
       targetSteps: client.targetSteps || 10000,
       targetProtein: client.targetProtein || 220,
@@ -2311,6 +2255,8 @@
 
   function lockPortal() {
     stopLiveVideoCamera();
+    sessionPinToken = "";
+    isCoachAdminMode = false;
     document.getElementById("pin-field").value = "";
     document.getElementById("portal-view").style.display = "none";
     document.getElementById("login-view").style.display = "flex";
@@ -2363,7 +2309,6 @@
     renderDailyCalorieLog();
   }
 
-  // --- TRAINING BLUEPRINT + PERSISTENT WORKOUT DAY + BIOMECHANICAL CUES ---
   function filterTrainingDay(val) {
     activeAthlete.selectedTrainDayIdx = parseInt(val, 10);
     try { localStorage.setItem(getSavedTrainDayKey(), activeAthlete.selectedTrainDayIdx); } catch (e) {}
@@ -2391,7 +2336,7 @@
   function renderWorkoutSplit() {
     var selEl = document.getElementById("training-day-select");
     selEl.innerHTML = activeAthlete.training.map(function(d, idx) {
-      return '<option value="' + idx + '" ' + (activeAthlete.selectedTrainDayIdx === idx ? "selected" : "") + '>' + d.day + '</option>';
+      return '<option value="' + idx + '" ' + (activeAthlete.selectedTrainDayIdx === idx ? "selected" : "") + '>' + escapeHtml(d.day) + '</option>';
     }).join("") + '<option value="-1" ' + (activeAthlete.selectedTrainDayIdx === -1 ? "selected" : "") + '>SHOW ALL DAYS</option>';
 
     document.getElementById("workout-split-container").innerHTML = activeAthlete.training.map(function(dayObj, dIdx) {
@@ -2402,7 +2347,7 @@
       if (dayObj.isRest) {
         return (
           '<div class="card" style="border-left:4px solid var(--bp-primary);">' +
-            '<div class="card-header"><span class="mono-label">' + dayObj.day + '</span></div>' +
+            '<div class="card-header"><span class="mono-label">' + escapeHtml(dayObj.day) + '</span></div>' +
             '<div style="font-size:12px;color:var(--text-muted);">' +
               '<strong>Complete CNS Recovery:</strong> 10,000 Daily Steps · 128–200 oz Water · 8.0+ Hours Sleep. Zero resistance training; prioritize glycogen replenishment and tissue repair.' +
             '</div>' +
@@ -2416,40 +2361,40 @@
         var videoBadge = ex.videoCheck ? '<span class="video-check-pill">📹 FILM SET</span>' : '';
         var suggestedBackoff = ex.topLoad ? ('~' + Math.round(parseFloat(ex.topLoad) * 0.85) + ' lbs') : 'Lbs (-15%)';
         var lastRefText = (ex.prevLoad || ex.prevReps) ? (' · Last wk: ' + (ex.prevLoad || "—") + ' lbs × ' + (ex.prevReps || "—")) : '';
-        var cueHtml = ex.cue ? ('<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">💡 ' + ex.cue + '</div>') : '';
+        var cueHtml = ex.cue ? ('<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">💡 ' + escapeHtml(ex.cue) + '</div>') : '';
 
         return (
           '<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
             '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">' +
               '<div>' +
                 '<span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-right:6px;">' + (eIdx + 1) + '.</span>' +
-                '<strong style="font-size:14px;color:#fff;font-family:var(--font-display);">' + ex.name + '</strong>' +
+                '<strong style="font-size:14px;color:#fff;font-family:var(--font-display);">' + escapeHtml(ex.name) + '</strong>' +
                 '<span class="role-tag">' + roleLabel + '</span>' +
                 videoBadge +
               '</div>' +
               '<span class="ex-save-badge" id="save-status-' + dIdx + '-' + eIdx + '">' + getProgressionBadgeHtml(ex) + '</span>' +
             '</div>' +
             '<div style="font-family:var(--font-mono);font-size:11px;color:var(--status-yellow);margin:4px 0 4px;">' +
-              'Target: ' + ex.working + ' × ' + ex.reps + (hasBackoff ? ' (Back-Off: ' + ex.backoff + ')' : '') + ' · tempo ' + (ex.tempo || "3-1-0-1") + ' · ' + (ex.rir || "0-2") + ' RIR' + lastRefText +
+              'Target: ' + escapeHtml(ex.working) + ' × ' + escapeHtml(ex.reps) + (hasBackoff ? ' (Back-Off: ' + escapeHtml(ex.backoff) + ')' : '') + ' · tempo ' + escapeHtml(ex.tempo || "3-1-0-1") + ' · ' + escapeHtml(ex.rir || "0-2") + ' RIR' + lastRefText +
             '</div>' +
             cueHtml +
             '<div class="train-set-grid">' +
               '<span style="color:var(--bp-bright);font-weight:700;">TOP SET</span>' +
-              '<input type="number" placeholder="Load (lbs)" id="tl-' + dIdx + '-' + eIdx + '" value="' + (ex.topLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="Reps" id="tr-' + dIdx + '-' + eIdx + '" value="' + (ex.topReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="RIR" id="trir-' + dIdx + '-' + eIdx + '" value="' + (ex.topRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="Load (lbs)" id="tl-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.topLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="Reps" id="tr-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.topReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="RIR" id="trir-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.topRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
             '</div>' +
             '<div class="train-set-grid">' +
               '<span style="color:var(--text-muted);font-weight:600;">BACK-OFF</span>' +
-              '<input type="number" placeholder="' + suggestedBackoff + '" id="bl-' + dIdx + '-' + eIdx + '" value="' + (ex.backLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="Reps" id="br-' + dIdx + '-' + eIdx + '" value="' + (ex.backReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="RIR" id="brir-' + dIdx + '-' + eIdx + '" value="' + (ex.backRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="' + suggestedBackoff + '" id="bl-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="Reps" id="br-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" placeholder="RIR" id="brir-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
             '</div>' +
           '</div>'
         );
       }).join("");
 
-      return '<div class="card"><div class="card-header"><span class="mono-label">' + dayObj.day + '</span></div>' + exHtml + '</div>';
+      return '<div class="card"><div class="card-header"><span class="mono-label">' + escapeHtml(dayObj.day) + '</span></div>' + exHtml + '</div>';
     }).join("");
   }
 
@@ -2507,7 +2452,6 @@
     }, 900);
   }
 
-  // --- MEAL PLAN WITH PER-ITEM MACROS & 1-TAP FULL PLAN COPY ---
   function renderMeals() {
     var db = activeAthlete.foodDb;
     var container = document.getElementById("meals-container");
@@ -2520,7 +2464,7 @@
         var iIdx = meal.items.indexOf(item);
         var list = db[item.cat] || db.protein;
         var options = '<option value="">-- Select Food --</option>' + list.map(function(f) {
-          return '<option value="' + f.name + '" ' + (f.name === item.food ? "selected" : "") + '>' + f.name + '</option>';
+          return '<option value="' + escapeHtml(f.name) + '" ' + (f.name === item.food ? "selected" : "") + '>' + escapeHtml(f.name) + '</option>';
         }).join("");
 
         var foodObj = list.find(function(x) { return x.name === item.food; });
@@ -2543,7 +2487,7 @@
                 options +
               '</select>' +
               '<input type="number" step="1" style="text-align:right;" value="' + (item.grams || 0) + '" onchange="updateMealGrams(' + mIdx + ', ' + iIdx + ', this.value)">' +
-              '<div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center;">' + (item.unit || "g") + '</div>' +
+              '<div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center;">' + escapeHtml(item.unit || "g") + '</div>' +
             '</div>' +
             '<div class="item-macro-strip">' +
               '<span style="color:var(--status-yellow);font-weight:700;">' + ical + ' kcal</span>' +
@@ -2558,7 +2502,7 @@
       return (
         '<div class="card">' +
           '<div class="card-header">' +
-            '<span class="mono-label">' + meal.title + '</span>' +
+            '<span class="mono-label">' + escapeHtml(meal.title) + '</span>' +
             '<button type="button" class="ctrl-btn" style="padding:4px 8px;font-size:10px;" onclick="openCustomFoodModal(' + mIdx + ')">+ CUSTOM FOOD</button>' +
           '</div>' +
           itemsHtml +
@@ -2745,7 +2689,6 @@
     document.getElementById("target-cal-sub").textContent = "Goal: " + targets.cal.toLocaleString();
   }
 
-  // --- DAILY WATER COUNTER + TWO-WAY 7-DAY TRACKER ---
   function getWaterStorageKey() {
     var today = new Date().toISOString().slice(0, 10);
     return "kb_water_" + (activeAthlete.name || "default") + "_" + today;
@@ -2778,13 +2721,13 @@
       return (
         '<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
-            '<strong style="font-family:var(--font-display);font-size:13px;color:var(--bp-bright);">' + rObj.day + '</strong>' +
+            '<strong style="font-family:var(--font-display);font-size:13px;color:var(--bp-bright);">' + escapeHtml(rObj.day) + '</strong>' +
             '<span class="ex-save-badge" id="trk-save-' + idx + '">' + ((rObj.weight || rObj.steps) ? 'Synced ✓' : '') + '</span>' +
           '</div>' +
           '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">' +
-            '<input type="number" step="0.1" class="wt-inp" id="trk-wt-' + idx + '" value="' + (rObj.weight || "") + '" placeholder="Weight (lbs)" oninput="syncDailyTrackerRow(' + idx + ')">' +
-            '<input type="number" class="step-inp" id="trk-st-' + idx + '" value="' + (rObj.steps || "") + '" placeholder="Steps" oninput="syncDailyTrackerRow(' + idx + ')">' +
-            '<input type="number" class="cardio-inp" id="trk-cd-' + idx + '" value="' + (rObj.cardio || "") + '" placeholder="Cardio kcal" oninput="syncDailyTrackerRow(' + idx + ')">' +
+            '<input type="number" step="0.1" class="wt-inp" id="trk-wt-' + idx + '" value="' + escapeHtml(rObj.weight || "") + '" placeholder="Weight (lbs)" oninput="syncDailyTrackerRow(' + idx + ')">' +
+            '<input type="number" class="step-inp" id="trk-st-' + idx + '" value="' + escapeHtml(rObj.steps || "") + '" placeholder="Steps" oninput="syncDailyTrackerRow(' + idx + ')">' +
+            '<input type="number" class="cardio-inp" id="trk-cd-' + idx + '" value="' + escapeHtml(rObj.cardio || "") + '" placeholder="Cardio kcal" oninput="syncDailyTrackerRow(' + idx + ')">' +
           '</div>' +
         '</div>'
       );
@@ -2847,7 +2790,6 @@
     }
   }
 
-  // --- WEEKLY CHECK-IN DRAFT AUTO-SAVER + AUTO-WEIGHT PREFILL ---
   function getCheckInDraftKey() {
     return "kb_ci_draft_" + (activeAthlete.name || "default");
   }
@@ -2874,7 +2816,6 @@
           if (el && draft[id] !== undefined && draft[id] !== "") el.value = draft[id];
         });
       }
-      // Auto-fill Current Weight from latest 7-Day Tracker weigh-in if still empty
       var wtEl = document.getElementById("ci-weight");
       if (wtEl && !wtEl.value) {
         var rows = activeAthlete.dailyTracker || [];
@@ -2945,7 +2886,6 @@
     document.getElementById("whatsapp-modal").classList.remove("open");
   }
 
-  // --- PERSISTENT DAILY CALORIE TRACKER + LIVE VIDEO ZBAR BARCODE SCANNER ---
   function getDailyLogStorageKey() {
     var today = new Date().toISOString().slice(0, 10);
     return "kb_log_" + (activeAthlete.name || "default") + "_" + today;
@@ -2987,7 +2927,7 @@
     }
 
     sel.innerHTML = pool.map(function(f) {
-      return '<option value="' + f.name + '">' + f.name + ' (' + f.serving + ')</option>';
+      return '<option value="' + escapeHtml(f.name) + '">' + escapeHtml(f.name) + ' (' + escapeHtml(f.serving) + ')</option>';
     }).join("");
 
     var firstFood = pool[0];
@@ -3114,8 +3054,8 @@
         return (
           '<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);text-align:left;">' +
             '<div>' +
-              '<strong style="color:#fff;font-size:13px;">' + item.name + '</strong>' +
-              '<div style="font-size:11px;color:var(--text-muted);">Quantity: ' + item.qty + ' (Base: ' + item.serving + ')</div>' +
+              '<strong style="color:#fff;font-size:13px;">' + escapeHtml(item.name) + '</strong>' +
+              '<div style="font-size:11px;color:var(--text-muted);">Quantity: ' + escapeHtml(item.qty) + ' (Base: ' + escapeHtml(item.serving) + ')</div>' +
             '</div>' +
             '<div style="display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11px;">' +
               '<span><strong style="color:var(--status-yellow);">' + item.cal + ' kcal</strong> · ' + Math.round(item.p) + 'P / ' + Math.round(item.c) + 'C / ' + Math.round(item.f) + 'F</span>' +
@@ -3128,7 +3068,7 @@
       groupedHtml += (
         '<div style="background:var(--bg-elevated);border:1px solid var(--border-cad);border-radius:8px;padding:10px 12px;margin-bottom:10px;text-align:left;">' +
           '<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-cad);padding-bottom:6px;margin-bottom:6px;">' +
-            '<span class="mono-label">' + mTitle + '</span>' +
+            '<span class="mono-label">' + escapeHtml(mTitle) + '</span>' +
             '<span style="font-family:var(--font-mono);font-size:11px;color:var(--bp-bright);">' + Math.round(mCal) + ' kcal · ' + Math.round(mP) + 'P / ' + Math.round(mC) + 'C / ' + Math.round(mF) + 'F</span>' +
           '</div>' +
           rowsHtml +
@@ -3435,7 +3375,6 @@
       });
   }
 
-  // --- LIVE SUPPLEMENTS WITH DAILY COMPLIANCE COUNTER ---
   function renderSupplements() {
     var suppSections = (activeAthlete.supplements && activeAthlete.supplements.length)
       ? activeAthlete.supplements
@@ -3446,15 +3385,15 @@
         return (
           '<label style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;">' +
             '<div>' +
-              '<strong style="font-size:13px;color:#fff;font-family:var(--font-display);">' + s.name + '</strong>' +
-              '<div style="font-size:11px;color:var(--bp-bright);font-family:var(--font-mono);margin-top:2px;">' + s.timing + '</div>' +
-              '<div style="font-size:11px;color:var(--text-muted);margin-top:1px;">' + s.purpose + '</div>' +
+              '<strong style="font-size:13px;color:#fff;font-family:var(--font-display);">' + escapeHtml(s.name) + '</strong>' +
+              '<div style="font-size:11px;color:var(--bp-bright);font-family:var(--font-mono);margin-top:2px;">' + escapeHtml(s.timing) + '</div>' +
+              '<div style="font-size:11px;color:var(--text-muted);margin-top:1px;">' + escapeHtml(s.purpose) + '</div>' +
             '</div>' +
             '<input type="checkbox" class="supp-daily-cb" checked style="width:20px;height:20px;margin-top:4px;accent-color:var(--status-green);box-shadow:none;" onchange="updateSuppComplianceCount()">' +
           '</label>'
         );
       }).join("");
-      return '<div class="card"><div class="card-header"><span class="mono-label">' + sec.title + '</span></div>' + itemsHtml + '</div>';
+      return '<div class="card"><div class="card-header"><span class="mono-label">' + escapeHtml(sec.title) + '</span></div>' + itemsHtml + '</div>';
     }).join("");
     updateSuppComplianceCount(true);
   }
