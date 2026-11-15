@@ -184,6 +184,17 @@
     .tab-view { display: none; }
     .tab-view.active { display: block; }
 
+    /* FEATURE 1: COACH'S WEEKLY DIRECTIVE BANNER */
+    .coach-directive-box {
+      background: linear-gradient(135deg, rgba(83, 88, 145, 0.24), rgba(19, 25, 43, 0.95));
+      border: 1px solid var(--bp-primary);
+      border-left: 4px solid var(--bp-bright);
+      border-radius: 10px;
+      padding: 11px 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
     .section-banner {
       background: var(--header-navy);
       border: 1px solid var(--border-cad);
@@ -236,9 +247,7 @@
     }
     .rate-btn.active { background: var(--bp-primary); color: #fff; border-color: #fff; }
 
-    /* ============================================================================
-       UPGRADED INPUT TYPOGRAPHY (CRISP MONO NUMBERS + SMOOTH SANS TEXTAREAS)
-       ============================================================================ */
+    /* UPGRADED INPUT TYPOGRAPHY */
     input, select, textarea {
       width: 100%;
       background: var(--bg-input);
@@ -246,7 +255,7 @@
       color: #FFFFFF;
       padding: 10px 12px;
       border-radius: 8px;
-      font-size: 16px; /* Prevents iOS Safari zoom on tap */
+      font-size: 16px;
       font-family: var(--font-sans);
       font-weight: 600;
       letter-spacing: 0.01em;
@@ -255,7 +264,6 @@
       transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
     }
 
-    /* All numeric inputs (Weights, Reps, RIR, Grams, Steps) use bold athletic monospace */
     input[type="number"] {
       font-family: var(--font-mono);
       font-weight: 700;
@@ -263,14 +271,12 @@
       color: #FFFFFF;
     }
 
-    /* Select dropdowns use clean Space Grotesk / Inter bold styling */
     select {
       font-family: var(--font-sans);
       font-weight: 700;
       color: #F8FAFC;
     }
 
-    /* Check-in textareas use smooth readable Inter medium with generous line spacing */
     textarea {
       font-family: var(--font-sans);
       font-weight: 500;
@@ -327,7 +333,7 @@
       padding: 7px 11px; border-radius: 6px; cursor: pointer;
     }
 
-    /* MEAL PLAN ROWS WITH PER-ITEM HORIZONTAL MACRO STRIP */
+    /* MEAL PLAN ROWS */
     .meal-row-wrap {
       padding: 10px 0;
       border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -344,7 +350,7 @@
     }
     .item-macro-strip::-webkit-scrollbar { display: none; }
 
-    /* DECLUTTERED TRAINING INPUT GRID */
+    /* TRAINING INPUT GRID & PR BADGE */
     .train-set-grid {
       display: grid; grid-template-columns: 68px 1fr 1fr 64px; gap: 6px;
       align-items: center; margin-top: 6px; font-family: var(--font-mono); font-size: 11px;
@@ -358,6 +364,39 @@
       transition: color 0.2s;
     }
     .ex-save-badge.saved { color: var(--status-green); font-weight: 700; }
+    .ex-save-badge.pr-hit {
+      color: var(--status-yellow);
+      font-weight: 800;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--status-yellow);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* WATER HYDRATION BAR */
+    .water-bar-bg {
+      width: 100%; height: 10px; background: var(--bg-input);
+      border: 1px solid var(--border-cad); border-radius: 99px; overflow: hidden; margin: 8px 0;
+    }
+    .water-bar-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--bp-primary), #38BDF8);
+      transition: width 0.25s ease;
+    }
+
+    /* CHECK-IN POSE CHECKLIST */
+    .pose-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px;
+    }
+    .pose-check-item {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg-input); border: 1px solid var(--border-cad);
+      padding: 9px 10px; border-radius: 8px; cursor: pointer;
+      font-family: var(--font-mono); font-size: 11px; color: #fff;
+    }
+    .pose-check-item input[type="checkbox"] {
+      width: 18px; height: 18px; margin: 0; accent-color: var(--status-green); box-shadow: none;
+    }
 
     #live-video-scanner-box {
       display: none;
@@ -519,12 +558,23 @@
   </header>
 
   <main>
+    <!-- FEATURE 1: COACH'S WEEKLY DIRECTIVE BANNER -->
+    <div class="coach-directive-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
+        <span class="mono-label" style="color:#fff;">📋 COACH'S WEEKLY DIRECTIVE</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--bp-bright);">ACTIVE FOCUS</span>
+      </div>
+      <div id="coach-directive-text" style="font-size:12px;color:#E2E8F0;line-height:1.45;">
+        Execute every working set to true 0–1 RIR with strict tempo, hit 10,000 steps daily, and keep hydration at 128–200 oz.
+      </div>
+    </div>
+
     <!-- TAB 1: TRAINING BLUEPRINT -->
     <section id="tab-training" class="tab-view active">
       <div class="card" style="padding:12px 14px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <span class="mono-label">SELECT WORKOUT DAY</span>
-          <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">AUTO-SAVES TO SHEET</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">AUTO-SAVES + PR TRACKER</span>
         </div>
         <select id="training-day-select" onchange="filterTrainingDay(this.value)"></select>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
@@ -568,11 +618,38 @@
         </div>
       </div>
 
+      <!-- FEATURE 4: 1-TAP LOG FULL MEAL PLAN BUTTON -->
+      <div style="margin-bottom:12px;">
+        <button type="button" class="btn-secondary" onclick="copyFullMealPlanToDailyLog()">
+          ✓ FOLLOWED MEAL PLAN 100% TODAY (LOG ALL MEALS TO TRACKER)
+        </button>
+      </div>
+
       <div id="meals-container"></div>
     </section>
 
-    <!-- TAB 3: DAILY TRACKER (TWO-WAY SHEET SYNC WITH SECTION 3) -->
+    <!-- TAB 3: DAILY TRACKER (WITH INTERACTIVE WATER COUNTER & 2-WAY SHEET SYNC) -->
     <section id="tab-tracker" class="tab-view">
+      <!-- FEATURE 5: INTERACTIVE DAILY WATER HYDRATION COUNTER -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <span class="mono-label">💧 TODAY'S HYDRATION TRACKER</span>
+            <div style="font-family:var(--font-mono);font-size:18px;font-weight:800;color:#fff;margin-top:2px;">
+              <span id="water-oz-val">0</span> <span style="font-size:12px;color:var(--text-muted);">/ 160 oz Baseline Goal</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button type="button" class="ctrl-btn" onclick="addWaterOz(16)">+16 oz</button>
+            <button type="button" class="ctrl-btn" onclick="addWaterOz(32)">+32 oz</button>
+            <button type="button" class="ctrl-btn" style="color:var(--text-muted);" onclick="addWaterOz(-999)">CLR</button>
+          </div>
+        </div>
+        <div class="water-bar-bg">
+          <div class="water-bar-fill" id="water-bar-fill"></div>
+        </div>
+      </div>
+
       <div class="kpi-grid">
         <div class="kpi-card">
           <div class="mono-label">AVG FASTED WEIGHT</div>
@@ -717,6 +794,20 @@
 
         <div class="q-card"><label class="q-title">1 big win you had this week:</label><textarea id="ci-win-ans" rows="2" placeholder="Answer:"></textarea></div>
         <div class="q-card"><label class="q-title">Additional notes for coach:</label><textarea id="ci-notes-ans" rows="2" placeholder="Answer:"></textarea></div>
+
+        <!-- FEATURE 3: CHECK-IN PHOTO POSE & VIDEO CHECKLIST -->
+        <div class="q-card" style="border-left:3px solid var(--status-green);">
+          <label class="q-title" style="color:var(--status-green);">📸 Pre-Submission Media Checklist (Verify Ready for WhatsApp):</label>
+          <div class="pose-grid">
+            <label class="pose-check-item"><input type="checkbox" checked> Front Fasted Pose</label>
+            <label class="pose-check-item"><input type="checkbox" checked> Back Fasted Pose</label>
+            <label class="pose-check-item"><input type="checkbox" checked> Left Side Pose</label>
+            <label class="pose-check-item"><input type="checkbox" checked> Right Side Pose</label>
+          </div>
+          <label class="pose-check-item" style="margin-top:8px;">
+            <input type="checkbox" checked> 4–6 Working Set Training Videos Ready to Attach
+          </label>
+        </div>
 
         <button type="button" class="btn-primary" onclick="handleCheckInSubmit()">SUBMIT WEEKLY CHECK-IN & OPEN WHATSAPP →</button>
       </div>
@@ -1198,9 +1289,9 @@
   ];
 
   const KNOWN_ROSTER = {
-    "1234": { name: "Tristan Kaebisch", phase: "Lean Hypertrophy", targetSteps: 10000, targetProtein: 220, targetCarbs: 320, targetFats: 60 },
-    "2838": { name: "Martin Domaradzki", phase: "Foundation / Recomp", targetSteps: 10000, targetProtein: 180, targetCarbs: 440, targetFats: 90 },
-    "1000": { name: "Alex Kaebisch", phase: "Lean Hypertrophy", targetSteps: 10000, targetProtein: 200, targetCarbs: 400, targetFats: 70 }
+    "1234": { name: "Tristan Kaebisch", phase: "Lean Hypertrophy", targetSteps: 10000, targetProtein: 220, targetCarbs: 320, targetFats: 60, coachDirective: "Execute every working set to true 0–1 RIR with strict tempo, hit 10,000 steps daily, and keep hydration at 128–200 oz." },
+    "2838": { name: "Martin Domaradzki", phase: "Foundation / Recomp", targetSteps: 10000, targetProtein: 180, targetCarbs: 440, targetFats: 90, coachDirective: "Focus on progressive overload on all pressing and rowing movements, hit 10,000 daily steps, and log fasted morning weight daily." },
+    "1000": { name: "Alex Kaebisch", phase: "Lean Hypertrophy", targetSteps: 10000, targetProtein: 200, targetCarbs: 400, targetFats: 70, coachDirective: "Prioritize 3-second controlled eccentrics, hit all prescribed meal timings, and complete 10,000 daily steps." }
   };
 
   let activeAthlete = {
@@ -1210,6 +1301,7 @@
     targetProtein: 220,
     targetCarbs: 320,
     targetFats: 60,
+    coachDirective: "Execute every working set to true 0–1 RIR with strict tempo, hit 10,000 steps daily, and keep hydration at 128–200 oz.",
     dayMode: "TD",
     selectedTrainDayIdx: 0,
     foodDb: DEFAULT_FOOD_DB,
@@ -1219,6 +1311,7 @@
   };
 
   let dailyCalorieLog = [];
+  let dailyWaterOz = 0;
   let currentScannedFood = null;
   let liveVideoStream = null;
   let liveVideoLoopTimer = null;
@@ -1318,6 +1411,7 @@
         targetProtein: KNOWN_ROSTER[entered].targetProtein,
         targetCarbs: KNOWN_ROSTER[entered].targetCarbs,
         targetFats: KNOWN_ROSTER[entered].targetFats,
+        coachDirective: KNOWN_ROSTER[entered].coachDirective,
         foodDb: DEFAULT_FOOD_DB,
         meals: DEFAULT_MEALS,
         training: DEFAULT_TRAINING,
@@ -1365,6 +1459,15 @@
     } catch (e) {}
   }
 
+  function snapshotPreviousLifts(trainingList) {
+    (trainingList || []).forEach(function(dayObj) {
+      (dayObj.exercises || []).forEach(function(ex) {
+        if (ex.prevLoad === undefined) ex.prevLoad = parseFloat(ex.topLoad) || 0;
+        if (ex.prevReps === undefined) ex.prevReps = parseFloat(ex.topReps) || 0;
+      });
+    });
+  }
+
   function openPortalFor(client) {
     activeAthlete = {
       name: client.name || "Tristan Kaebisch",
@@ -1373,6 +1476,7 @@
       targetProtein: client.targetProtein || 220,
       targetCarbs: client.targetCarbs || 320,
       targetFats: client.targetFats || 65,
+      coachDirective: client.coachDirective || "Execute every working set to true 0–1 RIR with strict tempo, hit 10,000 steps daily, and keep hydration at 128–200 oz.",
       dayMode: "TD",
       selectedTrainDayIdx: 0,
       foodDb: (client.foodDb && client.foodDb.protein && client.foodDb.protein.length) ? client.foodDb : DEFAULT_FOOD_DB,
@@ -1380,10 +1484,13 @@
       training: (client.training && client.training.length) ? client.training : JSON.parse(JSON.stringify(DEFAULT_TRAINING)),
       dailyTracker: (client.dailyTracker && client.dailyTracker.length) ? client.dailyTracker : JSON.parse(JSON.stringify(DEFAULT_TRACKER))
     };
+    snapshotPreviousLifts(activeAthlete.training);
     document.getElementById("login-view").style.display = "none";
     document.getElementById("portal-view").style.display = "block";
     document.getElementById("header-athlete-meta").textContent = activeAthlete.name + " // " + activeAthlete.phase;
+    document.getElementById("coach-directive-text").textContent = activeAthlete.coachDirective;
     loadPersistentDailyLog();
+    loadPersistentWater();
     renderWorkoutSplit();
     renderMeals();
     populateScannerDropdown();
@@ -1394,12 +1501,19 @@
 
   function applyLiveSheetUpdates(client) {
     if (client.meals && client.meals.length) activeAthlete.meals = client.meals;
-    if (client.training && client.training.length) activeAthlete.training = client.training;
+    if (client.training && client.training.length) {
+      snapshotPreviousLifts(client.training);
+      activeAthlete.training = client.training;
+    }
     if (client.dailyTracker && client.dailyTracker.length) activeAthlete.dailyTracker = client.dailyTracker;
     if (client.foodDb && client.foodDb.protein && client.foodDb.protein.length) activeAthlete.foodDb = client.foodDb;
     if (client.targetProtein) activeAthlete.targetProtein = client.targetProtein;
     if (client.targetCarbs) activeAthlete.targetCarbs = client.targetCarbs;
     if (client.targetFats) activeAthlete.targetFats = client.targetFats;
+    if (client.coachDirective) {
+      activeAthlete.coachDirective = client.coachDirective;
+      document.getElementById("coach-directive-text").textContent = client.coachDirective;
+    }
     renderWorkoutSplit();
     renderMeals();
     populateScannerDropdown();
@@ -1430,11 +1544,12 @@
     btn.classList.add("active");
   }
 
-  function triggerSaveToast() {
+  function triggerSaveToast(customMsg) {
     var toast = document.getElementById("save-toast");
+    toast.textContent = customMsg || "Synced ✓";
     toast.classList.add("show");
     clearTimeout(window.toastTimer);
-    window.toastTimer = setTimeout(function() { toast.classList.remove("show"); }, 1600);
+    window.toastTimer = setTimeout(function() { toast.classList.remove("show"); }, 1800);
   }
 
   function getActiveMacroTargets() {
@@ -1453,7 +1568,7 @@
     renderDailyCalorieLog();
   }
 
-  // --- DECLUTTERED TRAINING BLUEPRINT WITH 900MS DEBOUNCE AUTO-SAVE ---
+  // --- FEATURE 2: PROGRESSIVE OVERLOAD PR DETECTOR + TRAINING BLUEPRINT ---
   function filterTrainingDay(val) {
     activeAthlete.selectedTrainDayIdx = parseInt(val, 10);
     renderWorkoutSplit();
@@ -1484,7 +1599,7 @@
       var exHtml = dayObj.exercises.map(function(ex, eIdx) {
         var customTempoTag = (ex.tempo && ex.tempo !== "3-1-0-1" && ex.tempo !== "3-2-0-1") ? (' · TEMPO: ' + ex.tempo) : '';
         var customRirTag = (ex.rir && ex.rir !== "0-2") ? (' · RIR: ' + ex.rir) : '';
-        var lastTopBadge = (ex.topLoad || ex.topReps) ? ('Last: ' + (ex.topLoad || "—") + ' lbs × ' + (ex.topReps || "—")) : '';
+        var lastTopBadge = (ex.prevLoad || ex.prevReps) ? ('Last: ' + (ex.prevLoad || "—") + ' lbs × ' + (ex.prevReps || "—")) : '';
 
         return (
           '<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
@@ -1525,10 +1640,16 @@
     ex.backReps = document.getElementById("br-" + dIdx + "-" + eIdx).value;
     ex.backRir = document.getElementById("brir-" + dIdx + "-" + eIdx).value;
 
+    var curLoad = parseFloat(ex.topLoad) || 0;
+    var curReps = parseFloat(ex.topReps) || 0;
+    var baseLoad = parseFloat(ex.prevLoad) || 0;
+    var baseReps = parseFloat(ex.prevReps) || 0;
+    var isPr = (baseLoad > 0 && curLoad > 0 && ((curLoad > baseLoad && curReps >= Math.max(1, baseReps - 1)) || (curLoad === baseLoad && curReps > baseReps)));
+
     var statusBadge = document.getElementById("save-status-" + dIdx + "-" + eIdx);
     if (statusBadge) {
       statusBadge.textContent = "Saving...";
-      statusBadge.classList.remove("saved");
+      statusBadge.classList.remove("saved", "pr-hit");
     }
 
     var timerKey = dIdx + "_" + eIdx;
@@ -1550,15 +1671,20 @@
 
       callBlueprintBackend("saveTrainingSetToSheet", payload, function() {
         if (statusBadge) {
-          statusBadge.textContent = "✓ Saved to Sheet";
-          statusBadge.classList.add("saved");
+          if (isPr) {
+            statusBadge.textContent = "🔥 PR! ✓ Saved";
+            statusBadge.classList.add("pr-hit");
+          } else {
+            statusBadge.textContent = "✓ Saved to Sheet";
+            statusBadge.classList.add("saved");
+          }
         }
-        triggerSaveToast();
+        triggerSaveToast(isPr ? "🔥 New PR Logged!" : "Synced ✓");
       });
     }, 900);
   }
 
-  // --- MEAL PLAN WITH PER-ITEM MACROS & CUSTOM FOOD ADDER ---
+  // --- MEAL PLAN WITH PER-ITEM MACROS & 1-TAP FULL PLAN COPY ---
   function renderMeals() {
     var db = activeAthlete.foodDb;
     var container = document.getElementById("meals-container");
@@ -1617,6 +1743,47 @@
       );
     }).join("");
     recalcMacros();
+  }
+
+  // FEATURE 4: 1-TAP COPY ENTIRE MEAL PLAN TO DAILY CALORIE TRACKER
+  function copyFullMealPlanToDailyLog() {
+    var db = activeAthlete.foodDb;
+    dailyCalorieLog = [];
+
+    activeAthlete.meals.forEach(function(meal) {
+      meal.items.forEach(function(item) {
+        if (!item.food || !item.grams) return;
+        var list = db[item.cat] || [];
+        var foodObj = list.find(function(x) { return x.name === item.food; });
+        var ip = 0, ic = 0, ifat = 0, ical = 0, srv = "100g";
+        if (foodObj) {
+          srv = foodObj.serving || "100g";
+          var baseG = parseFloat(srv) || 100;
+          var ratio = item.grams / baseG;
+          ip = Math.round(foodObj.p * ratio * 10) / 10;
+          ic = Math.round(foodObj.c * ratio * 10) / 10;
+          ifat = Math.round(foodObj.f * ratio * 10) / 10;
+          ical = Math.round(foodObj.cal * ratio);
+        } else {
+          ip = item.p || 0; ic = item.c || 0; ifat = item.f || 0; ical = item.cal || 0;
+        }
+        dailyCalorieLog.push({
+          meal: meal.title.indexOf("INTRA") !== -1 ? "INTRA-WORKOUT NUTRITION (SIP DURING FIRST HALF OF SESSION)" : meal.title,
+          name: item.food,
+          cat: item.cat || "protein",
+          qty: item.grams,
+          serving: srv,
+          cal: ical,
+          p: ip,
+          c: ic,
+          f: ifat
+        });
+      });
+    });
+
+    savePersistentDailyLog();
+    renderDailyCalorieLog();
+    triggerSaveToast("✓ Full Meal Plan Logged!");
   }
 
   function openCustomFoodModal(mIdx) {
@@ -1756,7 +1923,33 @@
     document.getElementById("target-cal-sub").textContent = "Goal: " + targets.cal.toLocaleString();
   }
 
-  // --- TWO-WAY 7-DAY DAILY TRACKER SYNC ---
+  // --- FEATURE 5: DAILY WATER COUNTER + TWO-WAY 7-DAY TRACKER ---
+  function getWaterStorageKey() {
+    var today = new Date().toISOString().slice(0, 10);
+    return "kb_water_" + (activeAthlete.name || "default") + "_" + today;
+  }
+
+  function loadPersistentWater() {
+    try {
+      dailyWaterOz = parseInt(localStorage.getItem(getWaterStorageKey()), 10) || 0;
+    } catch (e) { dailyWaterOz = 0; }
+    updateWaterUI();
+  }
+
+  function addWaterOz(delta) {
+    if (delta < 0) dailyWaterOz = 0;
+    else dailyWaterOz += delta;
+    try { localStorage.setItem(getWaterStorageKey(), dailyWaterOz); } catch (e) {}
+    updateWaterUI();
+    triggerSaveToast("💧 " + dailyWaterOz + " oz Logged");
+  }
+
+  function updateWaterUI() {
+    document.getElementById("water-oz-val").textContent = dailyWaterOz;
+    var pct = Math.min(100, Math.round((dailyWaterOz / 160) * 100));
+    document.getElementById("water-bar-fill").style.width = pct + "%";
+  }
+
   function renderDailyTracker() {
     var rows = activeAthlete.dailyTracker || DEFAULT_TRACKER;
     document.getElementById("daily-rows-container").innerHTML = rows.map(function(rObj, idx) {
@@ -2380,7 +2573,7 @@
               '<div style="font-size:11px;color:var(--bp-bright);margin-top:2px;">' + s.timing + '</div>' +
               '<div style="font-size:11px;color:var(--text-muted);">' + s.purpose + '</div>' +
             '</div>' +
-            '<input type="checkbox" checked style="width:18px;height:18px;margin-top:4px;accent-color:var(--bp-primary);" onchange="triggerSaveToast()">' +
+            '<input type="checkbox" checked style="width:18px;height:18px;margin-top:4px;accent-color:var(--bp-primary);box-shadow:none;" onchange="triggerSaveToast()">' +
           '</label>'
         );
       }).join("");
