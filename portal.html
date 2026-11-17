@@ -664,8 +664,13 @@
     .item-macro-strip::-webkit-scrollbar { display: none; }
 
     .train-set-grid {
-      display: grid; grid-template-columns: 68px 1fr 1fr 64px; gap: 6px;
+      display: grid; grid-template-columns: 138px 1fr 1fr 64px; gap: 6px;
       align-items: center; margin-top: 6px; font-family: var(--font-mono); font-size: 11px;
+    }
+    @media (max-width: 480px) {
+      .train-set-grid {
+        grid-template-columns: 114px 1fr 1fr 56px;
+      }
     }
     .train-set-grid input {
       text-align: center;
@@ -706,6 +711,28 @@
       height: 100%; width: 0%;
       background: linear-gradient(90deg, var(--bp-primary), #38BDF8);
       transition: width 0.25s ease;
+    }
+    .water-preset-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .water-preset-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-cad);
+      color: #CBD5E1;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .water-preset-btn.active, .water-preset-btn:hover {
+      background: var(--bp-primary);
+      border-color: var(--bp-bright);
+      color: #FFFFFF;
     }
 
     .pose-grid {
@@ -807,6 +834,18 @@
   </style>
 </head>
 <body>
+
+<!-- GLOBAL WATER PRESETS DATALIST FOR TYPING OR SELECTING WATER AMOUNTS -->
+<datalist id="water-oz-options">
+  <option value="100">100 oz</option>
+  <option value="120">120 oz (Baseline Min)</option>
+  <option value="128">128 oz (1 Gallon)</option>
+  <option value="140">140 oz</option>
+  <option value="150">150 oz</option>
+  <option value="160">160 oz (1.25 Gallons)</option>
+  <option value="180">180 oz</option>
+  <option value="200">200 oz (High Output Target)</option>
+</datalist>
 
 <!-- REUSABLE ARCHITECTURAL CAD "K" LOGO DEFINITION -->
 <svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
@@ -993,7 +1032,7 @@
           <div class="meta-split-label">DAILY TARGETS</div>
           <div class="meta-split-val">
             <strong id="ov-macro-summary">220P / 320C / 60F</strong>
-            <span id="ov-steps-summary">10,000 Daily Steps · 160 oz Water</span>
+            <span id="ov-steps-summary">10,000 Daily Steps · 128–200 oz Water</span>
           </div>
         </div>
         <div class="meta-split-card">
@@ -1042,7 +1081,7 @@
         <div>
           <strong style="font-family:var(--font-display);font-size:13px;color:#fff;">TRAINING DAYS</strong>
           <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">
-            Open <span class="flow-jump-pill" onclick="jumpToTab('training')">TRAINING</span> and select today's session from the dropdown. Perform 1–2 low-fatigue feeder sets, then log your exact load, reps, and RIR for your Top Set and Back-Off Set (auto-saves to your sheet).
+            Open <span class="flow-jump-pill" onclick="jumpToTab('training')">TRAINING</span> and select today's session from the dropdown. Perform 1–2 low-fatigue feeder sets, then log your exact load, reps, and RIR for each Working / Top Set and Back-Off Set (auto-saves to your sheet).
           </div>
         </div>
       </div>
@@ -1093,8 +1132,8 @@
           <label class="rule-item-row">
             <span class="rule-num">1</span>
             <div>
-              <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">TOP SET</strong>
-              <div style="font-size:11px;color:var(--text-muted);">One all-out working set at the reps and RIR in the Target column. Use the heaviest weight you can handle with strict form.</div>
+              <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">WORKING / TOP SETS</strong>
+              <div style="font-size:11px;color:var(--text-muted);">All-out working set(s) at the reps and RIR in the Target column. Use the heaviest weight you can handle with strict form.</div>
             </div>
             <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
           </label>
@@ -1102,7 +1141,7 @@
             <span class="rule-num">2</span>
             <div>
               <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">BACK-OFF SET</strong>
-              <div style="font-size:11px;color:var(--text-muted);">Right after the top set, drop the weight by ~15% and push for 10–15 reps with the same proximity to failure (0–2 RIR).</div>
+              <div style="font-size:11px;color:var(--text-muted);">Right after your top set(s), drop the weight by ~15% and push for the prescribed back-off reps with the same proximity to failure (0–2 RIR).</div>
             </div>
             <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
           </label>
@@ -1110,7 +1149,7 @@
             <span class="rule-num">3</span>
             <div>
               <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">WARM-UPS & FEEDER SETS</strong>
-              <div style="font-size:11px;color:var(--text-muted);">Ramp up with 1–3 feeder sets, keeping reps low (no more than 6–8, and your last 1–2 warm-ups at 1–3 reps). Never tire yourself out before the top set.</div>
+              <div style="font-size:11px;color:var(--text-muted);">Ramp up with 1–3 feeder sets, keeping reps low (no more than 6–8, and your last 1–2 warm-ups at 1–3 reps). Never tire yourself out before the working/top set.</div>
             </div>
             <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
           </label>
@@ -1118,7 +1157,7 @@
             <span class="rule-num">4</span>
             <div>
               <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">LOG EVERY SET</strong>
-              <div style="font-size:11px;color:var(--text-muted);">Write load and reps every week, plus RIR (how many more reps you could have done). This is non-negotiable.</div>
+              <div style="font-size:11px;color:var(--text-muted);">Write load and reps every week for every prescribed working/top set, plus RIR (how many more reps you could have done). This is non-negotiable.</div>
             </div>
             <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
           </label>
@@ -1142,7 +1181,7 @@
       </div>
 
       <div class="program-structure-box">
-        <strong style="color:#FFFFFF;font-family:var(--font-display);">HOW THIS PROGRAM IS STRUCTURED —</strong> Every session starts with an isolation or first movement to lubricate the joints and switch on the target muscle. Perform 1–3 quick ramping feeder sets (not logged), then <strong style="color:#FFFFFF;">ONE TOP SET</strong> at the prescribed effort and <strong style="color:#FFFFFF;">ONE BACK-OFF SET</strong> at ~15% reduced load (or straight working sets where listed). Last week's numbers sit above each exercise—that's the number to beat.
+        <strong style="color:#FFFFFF;font-family:var(--font-display);">HOW THIS PROGRAM IS STRUCTURED —</strong> Every session starts with an isolation or first movement to lubricate the joints and switch on the target muscle. Perform 1–3 quick ramping feeder sets (not logged), then log each prescribed <strong style="color:#FFFFFF;">WORKING / TOP SET</strong> at the prescribed effort and <strong style="color:#FFFFFF;">BACK-OFF SET</strong> at ~15% reduced load. Last week's numbers sit above each exercise—that's the number to beat.
         <div class="prog-legend-row">
           <span><span class="prog-badge up">▲ Progress</span> More weight, or same weight + more reps</span>
           <span><span class="prog-badge same">= Matched</span> Matched last week</span>
@@ -1157,7 +1196,7 @@
       <div id="training-interactive-zone" class="workout-locked">
         <div class="card" style="padding:12px 14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-            <span class="mono-label">SELECT WORKOUT DAY</span>
+            <span class="mono-label">SELECT WORKOUT DAY (<span id="total-days-count">ALL</span>)</span>
             <div style="display:flex;align-items:center;gap:8px;">
               <button type="button" class="ctrl-btn" style="padding:4px 9px;font-size:10px;border-color:var(--bp-bright);" onclick="openPlateCalcModal()">🏋️ PLATE CALC</button>
               <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">AUTO-SAVES</span>
@@ -1215,11 +1254,11 @@
     <!-- TAB 3: DAILY TRACKER -->
     <section id="tab-tracker" class="tab-view">
       <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
           <div>
-            <span class="mono-label">💧 TODAY'S HYDRATION TRACKER</span>
+            <span class="mono-label">💧 DAILY WATER INTAKE (OZ) — SHEET SYNCED</span>
             <div style="font-family:var(--font-mono);font-size:18px;font-weight:800;color:#fff;margin-top:2px;">
-              <span id="water-oz-val">0</span> <span style="font-size:12px;color:var(--text-muted);">/ 160 oz Baseline Goal</span>
+              <span id="water-oz-val">0</span> <span style="font-size:12px;color:var(--text-muted);" id="water-target-label">/ 128 oz Prescribed Target (120–200 oz)</span>
             </div>
           </div>
           <div style="display:flex;gap:6px;">
@@ -1228,8 +1267,40 @@
             <button type="button" class="ctrl-btn" style="color:var(--text-muted);" onclick="addWaterOz(-999)">CLR</button>
           </div>
         </div>
+
         <div class="water-bar-bg">
           <div class="water-bar-fill" id="water-bar-fill"></div>
+        </div>
+
+        <!-- TYPE ANY WATER AMOUNT OR SELECT FROM DROPDOWN OPTIONS -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">
+          <div>
+            <label class="q-title" style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Type Custom Water (oz) or Pick Option:</label>
+            <input type="text" inputmode="decimal" id="water-custom-input" list="water-oz-options" placeholder="Type oz (e.g. 140) or select..." onchange="setExactWaterOz(this.value)" oninput="previewWaterInput(this.value)">
+          </div>
+          <div>
+            <label class="q-title" style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Quick Select Water Preset:</label>
+            <select id="water-preset-select" onchange="if(this.value) setExactWaterOz(this.value)">
+              <option value="">-- Select Preset (oz) --</option>
+              <option value="100">100 oz</option>
+              <option value="120">120 oz (Baseline Min)</option>
+              <option value="128">128 oz (1 Gallon Target)</option>
+              <option value="140">140 oz</option>
+              <option value="150">150 oz</option>
+              <option value="160">160 oz (1.25 Gallons)</option>
+              <option value="180">180 oz</option>
+              <option value="200">200 oz (Max Target)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="water-preset-row">
+          <button type="button" class="water-preset-btn" onclick="setExactWaterOz(120)">120 oz</button>
+          <button type="button" class="water-preset-btn" onclick="setExactWaterOz(128)">128 oz (1 Gal)</button>
+          <button type="button" class="water-preset-btn" onclick="setExactWaterOz(150)">150 oz</button>
+          <button type="button" class="water-preset-btn" onclick="setExactWaterOz(160)">160 oz</button>
+          <button type="button" class="water-preset-btn" onclick="setExactWaterOz(180)">180 oz</button>
+          <button type="button" class="water-preset-btn" onclick="setExactWaterOz(200)">200 oz</button>
         </div>
       </div>
 
@@ -1248,7 +1319,7 @@
 
       <div class="card">
         <div class="card-header">
-          <span class="mono-label">7-DAY WEIGHT, STEPS & CARDIO LOG</span>
+          <span class="mono-label">7-DAY WEIGHT, STEPS, CARDIO & WATER LOG</span>
           <span style="font-family:var(--font-mono);font-size:10px;color:var(--status-green);">2-WAY SHEET SYNC</span>
         </div>
         <div id="daily-rows-container"></div>
@@ -1674,7 +1745,7 @@
   })();
 
   function enqueueOfflineAction(action, payload) {
-    var queueable = ["saveTrainingSetToSheet", "saveDailyTrackerToSheet", "saveMealItemToSheet", "submitWeeklyCheckIn"];
+    var queueable = ["saveTrainingSetToSheet", "saveDailyTrackerToSheet", "saveWaterToSheet", "saveMealItemToSheet", "submitWeeklyCheckIn"];
     if (queueable.indexOf(action) === -1) return;
     try {
       var q = JSON.parse(localStorage.getItem("kb_offline_queue") || "[]");
@@ -1765,13 +1836,13 @@
   const DEFAULT_MEALS = [];
   const DEFAULT_TRAINING = [];
   const DEFAULT_TRACKER = [
-    { rowIdx: 25, day: "Monday", weight: "", steps: "", cardio: "" },
-    { rowIdx: 26, day: "Tuesday", weight: "", steps: "", cardio: "" },
-    { rowIdx: 27, day: "Wednesday", weight: "", steps: "", cardio: "" },
-    { rowIdx: 28, day: "Thursday", weight: "", steps: "", cardio: "" },
-    { rowIdx: 29, day: "Friday", weight: "", steps: "", cardio: "" },
-    { rowIdx: 30, day: "Saturday", weight: "", steps: "", cardio: "" },
-    { rowIdx: 31, day: "Sunday", weight: "", steps: "", cardio: "" }
+    { rowIdx: 26, day: "Monday", weight: "", steps: "", cardio: "", water: "" },
+    { rowIdx: 27, day: "Tuesday", weight: "", steps: "", cardio: "", water: "" },
+    { rowIdx: 28, day: "Wednesday", weight: "", steps: "", cardio: "", water: "" },
+    { rowIdx: 29, day: "Thursday", weight: "", steps: "", cardio: "", water: "" },
+    { rowIdx: 30, day: "Friday", weight: "", steps: "", cardio: "", water: "" },
+    { rowIdx: 31, day: "Saturday", weight: "", steps: "", cardio: "", water: "" },
+    { rowIdx: 32, day: "Sunday", weight: "", steps: "", cardio: "", water: "" }
   ];
   const SUPPLEMENT_SECTIONS = [];
 
@@ -1783,9 +1854,12 @@
     targetProtein: 220,
     targetCarbs: 320,
     targetFats: 60,
+    waterTarget: "120 - 200 oz",
+    waterGoalOz: 128,
+    waterLoggedOz: 0,
     coachDirective: "Execute every working set to true 0–1 RIR with strict tempo, hit 10,000 steps daily, and keep hydration at 128–200 oz.",
     dayMode: "TD",
-    selectedTrainDayIdx: 0,
+    selectedTrainDayIdx: -1,
     foodDb: DEFAULT_FOOD_DB,
     meals: DEFAULT_MEALS,
     training: DEFAULT_TRAINING,
@@ -1800,6 +1874,7 @@
   let liveVideoLoopTimer = null;
   let setDebounceTimers = {};
   let trackerDebounceTimers = {};
+  let waterSyncTimer = null;
 
   function initDeviceBindingUI() {
     try {
@@ -1813,7 +1888,6 @@
     } catch (e) {}
     updateSundayCountdownBadge();
 
-    // Pre-warm Google Apps Script container on page load so PIN verification is fast
     fetch(APPS_SCRIPT_API_URL + "?action=ping", { method: "GET", mode: "no-cors" }).catch(function() {});
   }
   window.addEventListener("DOMContentLoaded", initDeviceBindingUI);
@@ -2144,11 +2218,39 @@
     } catch (e) {}
   }
 
-  function snapshotPreviousLifts(trainingList) {
+  /**
+   * Ensures every exercise has an initialized `workingSets` array matching `workingCount` (1, 2, 3, etc.)
+   */
+  function normalizeExerciseWorkingSets(trainingList) {
     (trainingList || []).forEach(function(dayObj) {
       (dayObj.exercises || []).forEach(function(ex) {
-        if (ex.prevLoad === undefined) ex.prevLoad = parseFloat(ex.topLoad) || 0;
-        if (ex.prevReps === undefined) ex.prevReps = parseFloat(ex.topReps) || 0;
+        var rawW = parseInt(ex.working, 10);
+        if (isNaN(rawW) || rawW < 1) rawW = 1;
+        var repsMatch = String(ex.reps || "").match(/^(\d+)\s*x\s*/i);
+        if (repsMatch) {
+          var pref = parseInt(repsMatch[1], 10);
+          if (!isNaN(pref) && pref > 0) rawW = Math.max(rawW, pref);
+        }
+        var setCount = Math.max(1, Math.min(Number(ex.workingCount) || rawW, 6));
+        ex.workingCount = setCount;
+
+        var loads = String(ex.topLoad || "").split(/\s*\/\s*|\s*,\s*/);
+        var reps = String(ex.topReps || "").split(/\s*\/\s*|\s*,\s*/);
+        var rirs = String(ex.topRir || "").split(/\s*\/\s*|\s*,\s*/);
+
+        if (!Array.isArray(ex.workingSets) || ex.workingSets.length !== setCount) {
+          ex.workingSets = [];
+          for (var s = 0; s < setCount; s++) {
+            ex.workingSets.push({
+              load: loads[s] || "",
+              reps: reps[s] || "",
+              rir: rirs[s] || ""
+            });
+          }
+        }
+
+        if (ex.prevLoad === undefined) ex.prevLoad = parseFloat(loads[0]) || 0;
+        if (ex.prevReps === undefined) ex.prevReps = parseFloat(reps[0]) || 0;
       });
     });
   }
@@ -2160,7 +2262,7 @@
     document.getElementById("ov-client-name").textContent = activeAthlete.name;
     document.getElementById("ov-phase-name").textContent = activeAthlete.phase;
     document.getElementById("ov-macro-summary").textContent = activeAthlete.targetProtein + "g P · " + activeAthlete.targetCarbs + "g C · " + activeAthlete.targetFats + "g F";
-    document.getElementById("ov-steps-summary").textContent = activeAthlete.targetSteps.toLocaleString() + " Daily Steps · 160 oz Water";
+    document.getElementById("ov-steps-summary").textContent = activeAthlete.targetSteps.toLocaleString() + " Daily Steps · " + (activeAthlete.waterTarget || "128–200 oz") + " Water";
   }
 
   function getSavedTrainDayKey() {
@@ -2168,10 +2270,11 @@
   }
 
   function openPortalFor(client, usedPin) {
-    var savedDayIdx = 0;
+    var savedDayIdx = -1;
     try {
       var rawDay = localStorage.getItem("kb_last_train_day_" + (client.name || "default"));
-      if (rawDay !== null) savedDayIdx = parseInt(rawDay, 10) || 0;
+      if (rawDay !== null) savedDayIdx = parseInt(rawDay, 10);
+      if (isNaN(savedDayIdx)) savedDayIdx = -1;
     } catch (e) {}
 
     activeAthlete = {
@@ -2182,6 +2285,9 @@
       targetProtein: client.targetProtein || 220,
       targetCarbs: client.targetCarbs || 320,
       targetFats: client.targetFats || 65,
+      waterTarget: client.waterTarget || "120 - 200 oz",
+      waterGoalOz: client.waterGoalOz || 128,
+      waterLoggedOz: client.waterLoggedOz || 0,
       coachDirective: client.coachDirective || "Execute every working set to true 0–1 RIR with strict tempo, hit 10,000 steps daily, and keep hydration at 128–200 oz.",
       dayMode: "TD",
       selectedTrainDayIdx: savedDayIdx,
@@ -2192,10 +2298,10 @@
       supplements: (client.supplements && client.supplements.length) ? client.supplements : JSON.parse(JSON.stringify(SUPPLEMENT_SECTIONS))
     };
     if (activeAthlete.selectedTrainDayIdx >= activeAthlete.training.length) {
-      activeAthlete.selectedTrainDayIdx = 0;
+      activeAthlete.selectedTrainDayIdx = -1;
     }
 
-    snapshotPreviousLifts(activeAthlete.training);
+    normalizeExerciseWorkingSets(activeAthlete.training);
     document.getElementById("login-view").style.display = "none";
     document.getElementById("portal-view").style.display = "block";
     populateOverviewMetadata();
@@ -2215,8 +2321,11 @@
   function applyLiveSheetUpdates(client) {
     if (client.meals && client.meals.length) activeAthlete.meals = client.meals;
     if (client.training && client.training.length) {
-      snapshotPreviousLifts(client.training);
+      normalizeExerciseWorkingSets(client.training);
       activeAthlete.training = client.training;
+      if (activeAthlete.selectedTrainDayIdx >= activeAthlete.training.length) {
+        activeAthlete.selectedTrainDayIdx = -1;
+      }
     }
     if (client.dailyTracker && client.dailyTracker.length) activeAthlete.dailyTracker = client.dailyTracker;
     if (client.supplements && client.supplements.length) activeAthlete.supplements = client.supplements;
@@ -2224,8 +2333,15 @@
     if (client.targetProtein) activeAthlete.targetProtein = client.targetProtein;
     if (client.targetCarbs) activeAthlete.targetCarbs = client.targetCarbs;
     if (client.targetFats) activeAthlete.targetFats = client.targetFats;
+    if (client.targetSteps) activeAthlete.targetSteps = client.targetSteps;
+    if (client.phase) activeAthlete.phase = client.phase;
+    if (client.waterTarget) activeAthlete.waterTarget = client.waterTarget;
+    if (client.waterGoalOz) activeAthlete.waterGoalOz = client.waterGoalOz;
+    if (client.waterLoggedOz) activeAthlete.waterLoggedOz = client.waterLoggedOz;
     if (client.coachDirective) activeAthlete.coachDirective = client.coachDirective;
+
     populateOverviewMetadata();
+    loadPersistentWater();
     renderWorkoutSplit();
     renderMeals();
     populateScannerDropdown();
@@ -2298,8 +2414,9 @@
   }
 
   function getProgressionBadgeHtml(ex) {
-    var curLoad = parseFloat(ex.topLoad) || 0;
-    var curReps = parseFloat(ex.topReps) || 0;
+    var firstSet = (ex.workingSets && ex.workingSets[0]) ? ex.workingSets[0] : { load: ex.topLoad, reps: ex.topReps };
+    var curLoad = parseFloat(firstSet.load) || parseFloat(ex.topLoad) || 0;
+    var curReps = parseFloat(firstSet.reps) || parseFloat(ex.topReps) || 0;
     var baseLoad = parseFloat(ex.prevLoad) || 0;
     var baseReps = parseFloat(ex.prevReps) || 0;
 
@@ -2315,35 +2432,70 @@
     return '<span class="prog-badge down">▼ Dropped</span>';
   }
 
+  /**
+   * Dynamically renders ALL training days from the athlete's training plan (5, 10, 14+ days)
+   * and generates 1, 2, 3+ WORKING / TOP SET input rows per exercise based on prescribed working sets!
+   */
   function renderWorkoutSplit() {
     var selEl = document.getElementById("training-day-select");
-    selEl.innerHTML = activeAthlete.training.map(function(d, idx) {
-      return '<option value="' + idx + '" ' + (activeAthlete.selectedTrainDayIdx === idx ? "selected" : "") + '>' + escapeHtml(d.day) + '</option>';
-    }).join("") + '<option value="-1" ' + (activeAthlete.selectedTrainDayIdx === -1 ? "selected" : "") + '>SHOW ALL DAYS</option>';
+    var daysList = activeAthlete.training || [];
+    var countEl = document.getElementById("total-days-count");
+    if (countEl) countEl.textContent = daysList.length + " DAYS";
 
-    document.getElementById("workout-split-container").innerHTML = activeAthlete.training.map(function(dayObj, dIdx) {
+    selEl.innerHTML =
+      '<option value="-1" ' + (activeAthlete.selectedTrainDayIdx === -1 ? "selected" : "") + '>SHOW ALL DAYS (' + daysList.length + ')</option>' +
+      daysList.map(function(d, idx) {
+        return '<option value="' + idx + '" ' + (activeAthlete.selectedTrainDayIdx === idx ? "selected" : "") + '>' + escapeHtml(d.day) + '</option>';
+      }).join("");
+
+    document.getElementById("workout-split-container").innerHTML = daysList.map(function(dayObj, dIdx) {
       if (activeAthlete.selectedTrainDayIdx !== -1 && activeAthlete.selectedTrainDayIdx !== dIdx) {
         return "";
       }
 
       if (dayObj.isRest) {
+        var focusTitle = dayObj.protocolFocus || "Complete CNS Recovery";
+        var stepText = dayObj.dailySteps || "10,000 Steps";
+        var cardioText = dayObj.cardioSession || "200 kcal (if scheduled)";
+        var waterText = dayObj.hydration || "128 - 200 oz";
+        var sleepText = dayObj.sleepTarget || "8.0+ Hours";
+        var noteText = dayObj.notes || "Zero resistance training; prioritize glycogen replenishment and tissue repair.";
         return (
           '<div class="card" style="border-left:4px solid var(--bp-primary);">' +
             '<div class="card-header"><span class="mono-label">' + escapeHtml(dayObj.day) + '</span></div>' +
-            '<div style="font-size:12px;color:var(--text-muted);">' +
-              '<strong>Complete CNS Recovery:</strong> 10,000 Daily Steps · 128–200 oz Water · 8.0+ Hours Sleep. Zero resistance training; prioritize glycogen replenishment and tissue repair.' +
+            '<div style="font-size:12px;color:var(--text-muted);line-height:1.55;">' +
+              '<strong style="color:#fff;">' + escapeHtml(focusTitle) + ':</strong> ' +
+              escapeHtml(stepText) + ' · Cardio: ' + escapeHtml(cardioText) + ' · Water: ' + escapeHtml(waterText) + ' · Sleep: ' + escapeHtml(sleepText) +
+              '<div style="margin-top:4px;">' + escapeHtml(noteText) + '</div>' +
             '</div>' +
           '</div>'
         );
       }
 
-      var exHtml = dayObj.exercises.map(function(ex, eIdx) {
-        var hasBackoff = ex.backoff && ex.backoff !== "-";
-        var roleLabel = hasBackoff ? "TOP + BACK-OFF" : "ACCESSORY";
+      var exHtml = (dayObj.exercises || []).map(function(ex, eIdx) {
+        var hasBackoff = Boolean(ex.backoff && ex.backoff !== "-" && ex.backoff !== "—");
+        var setCount = Math.max(1, Math.min(Number(ex.workingCount) || 1, 6));
+        var roleLabel = hasBackoff ? "WORKING/TOP + BACK-OFF" : (setCount + " WORKING / TOP SET" + (setCount > 1 ? "S" : ""));
         var videoBadge = ex.videoCheck ? '<span class="video-check-pill">📹 FILM SET</span>' : '';
-        var suggestedBackoff = ex.topLoad ? ('~' + Math.round(parseFloat(ex.topLoad) * 0.85) + ' lbs') : 'Lbs (-15%)';
+        var firstLoadVal = (ex.workingSets && ex.workingSets[0] && ex.workingSets[0].load) ? ex.workingSets[0].load : ex.topLoad;
+        var suggestedBackoff = firstLoadVal ? ('~' + Math.round(parseFloat(firstLoadVal) * 0.85) + ' lbs') : 'Lbs (-15%)';
         var lastRefText = (ex.prevLoad || ex.prevReps) ? (' · Last wk: ' + (ex.prevLoad || "—") + ' lbs × ' + (ex.prevReps || "—")) : '';
         var cueHtml = ex.cue ? ('<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">💡 ' + escapeHtml(ex.cue) + '</div>') : '';
+
+        // Generate 1, 2, 3+ WORKING / TOP SET input rows dynamically
+        var workingSetRowsHtml = "";
+        for (var s = 0; s < setCount; s++) {
+          var sData = (ex.workingSets && ex.workingSets[s]) ? ex.workingSets[s] : { load: "", reps: "", rir: "" };
+          var rowLabel = setCount > 1 ? ("WORKING/TOP SET " + (s + 1)) : "WORKING/TOP SET";
+          workingSetRowsHtml += (
+            '<div class="train-set-grid">' +
+              '<span style="color:var(--bp-bright);font-weight:700;">' + rowLabel + '</span>' +
+              '<input type="number" step="0.5" placeholder="Load (lbs)" id="tl-' + dIdx + '-' + eIdx + '-' + s + '" value="' + escapeHtml(sData.load || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" step="1" placeholder="Reps" id="tr-' + dIdx + '-' + eIdx + '-' + s + '" value="' + escapeHtml(sData.reps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" step="0.5" placeholder="RIR" id="trir-' + dIdx + '-' + eIdx + '-' + s + '" value="' + escapeHtml(sData.rir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+            '</div>'
+          );
+        }
 
         return (
           '<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
@@ -2360,17 +2512,12 @@
               'Target: ' + escapeHtml(ex.working) + ' × ' + escapeHtml(ex.reps) + (hasBackoff ? ' (Back-Off: ' + escapeHtml(ex.backoff) + ')' : '') + ' · tempo ' + escapeHtml(ex.tempo || "3-1-0-1") + ' · ' + escapeHtml(ex.rir || "0-2") + ' RIR' + lastRefText +
             '</div>' +
             cueHtml +
-            '<div class="train-set-grid">' +
-              '<span style="color:var(--bp-bright);font-weight:700;">TOP SET</span>' +
-              '<input type="number" placeholder="Load (lbs)" id="tl-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.topLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="Reps" id="tr-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.topReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="RIR" id="trir-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.topRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-            '</div>' +
+            workingSetRowsHtml +
             '<div class="train-set-grid">' +
               '<span style="color:var(--text-muted);font-weight:600;">BACK-OFF</span>' +
-              '<input type="number" placeholder="' + suggestedBackoff + '" id="bl-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="Reps" id="br-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" placeholder="RIR" id="brir-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" step="0.5" placeholder="' + suggestedBackoff + '" id="bl-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" step="1" placeholder="Reps" id="br-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+              '<input type="number" step="0.5" placeholder="RIR" id="brir-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
             '</div>' +
           '</div>'
         );
@@ -2383,15 +2530,35 @@
   function syncSet(dIdx, eIdx) {
     var dayObj = activeAthlete.training[dIdx];
     var ex = dayObj.exercises[eIdx];
-    ex.topLoad = document.getElementById("tl-" + dIdx + "-" + eIdx).value;
-    ex.topReps = document.getElementById("tr-" + dIdx + "-" + eIdx).value;
-    ex.topRir = document.getElementById("trir-" + dIdx + "-" + eIdx).value;
+    var setCount = Math.max(1, Math.min(Number(ex.workingCount) || 1, 6));
+    var updatedSets = [];
+
+    for (var s = 0; s < setCount; s++) {
+      var lEl = document.getElementById("tl-" + dIdx + "-" + eIdx + "-" + s);
+      var rEl = document.getElementById("tr-" + dIdx + "-" + eIdx + "-" + s);
+      var rirEl = document.getElementById("trir-" + dIdx + "-" + eIdx + "-" + s);
+      updatedSets.push({
+        load: lEl ? lEl.value.trim() : "",
+        reps: rEl ? rEl.value.trim() : "",
+        rir: rirEl ? rirEl.value.trim() : ""
+      });
+    }
+
+    ex.workingSets = updatedSets;
+    var hasAnyLoad = updatedSets.some(function(x) { return x.load !== ""; });
+    var hasAnyReps = updatedSets.some(function(x) { return x.reps !== ""; });
+    var hasAnyRir = updatedSets.some(function(x) { return x.rir !== ""; });
+
+    ex.topLoad = hasAnyLoad ? updatedSets.map(function(x) { return x.load; }).join(" / ") : "";
+    ex.topReps = hasAnyReps ? updatedSets.map(function(x) { return x.reps; }).join(" / ") : "";
+    ex.topRir = hasAnyRir ? updatedSets.map(function(x) { return x.rir; }).join(" / ") : "";
+
     ex.backLoad = document.getElementById("bl-" + dIdx + "-" + eIdx).value;
     ex.backReps = document.getElementById("br-" + dIdx + "-" + eIdx).value;
     ex.backRir = document.getElementById("brir-" + dIdx + "-" + eIdx).value;
 
     var backLoadInput = document.getElementById("bl-" + dIdx + "-" + eIdx);
-    var curLoad = parseFloat(ex.topLoad) || 0;
+    var curLoad = parseFloat(updatedSets[0] ? updatedSets[0].load : ex.topLoad) || 0;
     if (backLoadInput && curLoad > 0) {
       backLoadInput.placeholder = "~" + Math.round(curLoad * 0.85) + " lbs";
     }
@@ -2411,6 +2578,7 @@
         dayName: dayObj.day,
         exerciseName: ex.name,
         rowIdx: ex.rowIdx,
+        workingSets: ex.workingSets,
         topLoad: ex.topLoad,
         topReps: ex.topReps,
         topRir: ex.topRir,
@@ -2677,24 +2845,86 @@
   }
 
   function loadPersistentWater() {
+    var stored = 0;
     try {
-      dailyWaterOz = parseInt(localStorage.getItem(getWaterStorageKey()), 10) || 0;
-    } catch (e) { dailyWaterOz = 0; }
+      stored = parseFloat(localStorage.getItem(getWaterStorageKey())) || 0;
+    } catch (e) { stored = 0; }
+    dailyWaterOz = stored || Number(activeAthlete.waterLoggedOz) || 0;
     updateWaterUI();
   }
 
   function addWaterOz(delta) {
     if (delta < 0) dailyWaterOz = 0;
     else dailyWaterOz += delta;
-    try { localStorage.setItem(getWaterStorageKey(), dailyWaterOz); } catch (e) {}
-    updateWaterUI();
-    triggerSaveToast("💧 " + dailyWaterOz + " oz Logged");
+    saveAndSyncWater(dailyWaterOz);
   }
 
-  function updateWaterUI() {
+  function previewWaterInput(rawVal) {
+    var num = parseFloat(String(rawVal || "").replace(/[^0-9.]/g, ""));
+    if (!isNaN(num) && num >= 0) {
+      dailyWaterOz = num;
+      updateWaterUI(true);
+    }
+  }
+
+  function setExactWaterOz(rawVal) {
+    var num = parseFloat(String(rawVal || "").replace(/[^0-9.]/g, ""));
+    dailyWaterOz = (!isNaN(num) && num >= 0) ? num : 0;
+    saveAndSyncWater(dailyWaterOz);
+  }
+
+  function saveAndSyncWater(ozVal) {
+    dailyWaterOz = ozVal;
+    try { localStorage.setItem(getWaterStorageKey(), dailyWaterOz); } catch (e) {}
+    updateWaterUI();
+
+    // Also update today's water field in the 7-Day Daily Tracker if present
+    var rows = activeAthlete.dailyTracker || [];
+    var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var todayName = dayNames[new Date().getDay()];
+    var todayIdx = rows.findIndex(function(r) { return r.day === todayName; });
+    if (todayIdx === -1 && rows.length) todayIdx = 0;
+    if (todayIdx > -1) {
+      rows[todayIdx].water = dailyWaterOz ? String(dailyWaterOz) : "";
+      var rowInput = document.getElementById("trk-wt-oz-" + todayIdx);
+      if (rowInput) rowInput.value = rows[todayIdx].water;
+    }
+
+    clearTimeout(waterSyncTimer);
+    waterSyncTimer = setTimeout(function() {
+      callBlueprintBackend("saveWaterToSheet", {
+        clientName: activeAthlete.name,
+        rowIdx: (todayIdx > -1 && rows[todayIdx]) ? rows[todayIdx].rowIdx : 0,
+        water: dailyWaterOz
+      }, function() {
+        triggerSaveToast("💧 " + dailyWaterOz + " oz Synced to Sheet ✓");
+      });
+    }, 650);
+  }
+
+  function updateWaterUI(skipInputUpdate) {
+    var goalOz = Number(activeAthlete.waterGoalOz) || 128;
+    var rangeText = activeAthlete.waterTarget || "120 - 200 oz";
     document.getElementById("water-oz-val").textContent = dailyWaterOz;
-    var pct = Math.min(100, Math.round((dailyWaterOz / 160) * 100));
+    var lbl = document.getElementById("water-target-label");
+    if (lbl) lbl.textContent = "/ " + goalOz + " oz Prescribed (" + rangeText + ")";
+
+    var pct = Math.min(100, Math.round((dailyWaterOz / goalOz) * 100));
     document.getElementById("water-bar-fill").style.width = pct + "%";
+
+    if (!skipInputUpdate) {
+      var customInp = document.getElementById("water-custom-input");
+      if (customInp) customInp.value = dailyWaterOz > 0 ? dailyWaterOz : "";
+      var presetSel = document.getElementById("water-preset-select");
+      if (presetSel) {
+        var matchOpt = [].slice.call(presetSel.options).some(function(o) { return o.value === String(dailyWaterOz); });
+        presetSel.value = matchOpt ? String(dailyWaterOz) : "";
+      }
+    }
+
+    document.querySelectorAll(".water-preset-btn").forEach(function(btn) {
+      btn.classList.toggle("active", btn.textContent.indexOf(String(dailyWaterOz) + " oz") === 0);
+    });
   }
 
   function renderDailyTracker() {
@@ -2703,13 +2933,14 @@
       return (
         '<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
-            '<strong style="font-family:var(--font-display);font-size:13px;color:var(--bp-bright);">' + escapeHtml(rObj.day) + '</strong>' +
-            '<span class="ex-save-badge" id="trk-save-' + idx + '">' + ((rObj.weight || rObj.steps) ? 'Synced ✓' : '') + '</span>' +
+            '<strong style="font-family:var(--font-display);font-size:13px;color:var(--bp-bright);">' + escapeHtml(rObj.day) + (rObj.date ? ' <span style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);">(' + escapeHtml(rObj.date) + ')</span>' : '') + '</strong>' +
+            '<span class="ex-save-badge" id="trk-save-' + idx + '">' + ((rObj.weight || rObj.steps || rObj.water) ? 'Synced ✓' : '') + '</span>' +
           '</div>' +
-          '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">' +
+          '<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;">' +
             '<input type="number" step="0.1" class="wt-inp" id="trk-wt-' + idx + '" value="' + escapeHtml(rObj.weight || "") + '" placeholder="Weight (lbs)" oninput="syncDailyTrackerRow(' + idx + ')">' +
             '<input type="number" class="step-inp" id="trk-st-' + idx + '" value="' + escapeHtml(rObj.steps || "") + '" placeholder="Steps" oninput="syncDailyTrackerRow(' + idx + ')">' +
             '<input type="number" class="cardio-inp" id="trk-cd-' + idx + '" value="' + escapeHtml(rObj.cardio || "") + '" placeholder="Cardio kcal" oninput="syncDailyTrackerRow(' + idx + ')">' +
+            '<input type="text" inputmode="decimal" list="water-oz-options" class="water-inp" id="trk-wt-oz-' + idx + '" value="' + escapeHtml(rObj.water || "") + '" placeholder="Water (oz)" oninput="syncDailyTrackerRow(' + idx + ')" onchange="syncDailyTrackerRow(' + idx + ')">' +
           '</div>' +
         '</div>'
       );
@@ -2723,6 +2954,13 @@
     rObj.weight = document.getElementById("trk-wt-" + idx).value;
     rObj.steps = document.getElementById("trk-st-" + idx).value;
     rObj.cardio = document.getElementById("trk-cd-" + idx).value;
+    var wEl = document.getElementById("trk-wt-oz-" + idx);
+    rObj.water = wEl ? wEl.value.replace(/[^0-9.]/g, "") : "";
+
+    if (rObj.water) {
+      dailyWaterOz = parseFloat(rObj.water) || dailyWaterOz;
+      updateWaterUI();
+    }
 
     recalcTracker();
 
@@ -2736,10 +2974,11 @@
     trackerDebounceTimers[idx] = setTimeout(function() {
       callBlueprintBackend("saveDailyTrackerToSheet", {
         clientName: activeAthlete.name,
-        rowIdx: rObj.rowIdx || (25 + idx),
+        rowIdx: rObj.rowIdx || (26 + idx),
         weight: rObj.weight,
         steps: rObj.steps,
-        cardio: rObj.cardio
+        cardio: rObj.cardio,
+        water: rObj.water
       }, function() {
         if (badge) {
           badge.textContent = "✓ Saved";
