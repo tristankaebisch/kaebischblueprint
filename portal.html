@@ -1141,7 +1141,7 @@
             <span class="rule-num">2</span>
             <div>
               <strong style="font-size:12px;color:#fff;font-family:var(--font-display);">BACK-OFF SET</strong>
-              <div style="font-size:11px;color:var(--text-muted);">Right after your top set(s), drop the weight by ~15% and push for the prescribed back-off reps with the same proximity to failure (0–2 RIR).</div>
+              <div style="font-size:11px;color:var(--text-muted);">When a Back-Off set is prescribed, drop the weight by ~15% right after your top set(s) and push for the target back-off reps with the same proximity to failure (0–2 RIR).</div>
             </div>
             <div class="rule-got-it"><input type="checkbox" class="train-rule-cb" onchange="updateTrainingRulesGate()"> GOT IT</div>
           </label>
@@ -1181,7 +1181,7 @@
       </div>
 
       <div class="program-structure-box">
-        <strong style="color:#FFFFFF;font-family:var(--font-display);">HOW THIS PROGRAM IS STRUCTURED —</strong> Every session starts with an isolation or first movement to lubricate the joints and switch on the target muscle. Perform 1–3 quick ramping feeder sets (not logged), then log each prescribed <strong style="color:#FFFFFF;">WORKING / TOP SET</strong> at the prescribed effort and <strong style="color:#FFFFFF;">BACK-OFF SET</strong> at ~15% reduced load. Last week's numbers sit above each exercise—that's the number to beat.
+        <strong style="color:#FFFFFF;font-family:var(--font-display);">HOW THIS PROGRAM IS STRUCTURED —</strong> Every session starts with an isolation or first movement to lubricate the joints and switch on the target muscle. Perform 1–3 quick ramping feeder sets (not logged), then log each prescribed <strong style="color:#FFFFFF;">WORKING / TOP SET</strong> at the prescribed effort (and <strong style="color:#FFFFFF;">BACK-OFF SET</strong> when listed). Last week's numbers sit above each exercise—that's the number to beat.
         <div class="prog-legend-row">
           <span><span class="prog-badge up">▲ Progress</span> More weight, or same weight + more reps</span>
           <span><span class="prog-badge same">= Matched</span> Matched last week</span>
@@ -2220,18 +2220,36 @@
 
   /**
    * Ensures every exercise has an initialized `workingSets` array matching `workingCount` (1, 2, 3, etc.)
+   * and respects explicit Top Set counts (e.g., "2x 7-9" with a Back-Off set = 2 Working/Top Sets + 1 Back-Off Set)
    */
   function normalizeExerciseWorkingSets(trainingList) {
     (trainingList || []).forEach(function(dayObj) {
       (dayObj.exercises || []).forEach(function(ex) {
+        var backoffClean = String(ex.backoff || "").trim();
+        var hasBackoff = Boolean(
+          backoffClean &&
+          backoffClean !== "-" &&
+          backoffClean !== "—" &&
+          backoffClean !== "–" &&
+          backoffClean.toLowerCase() !== "none" &&
+          backoffClean.toLowerCase() !== "n/a"
+        );
+        ex.hasBackoff = hasBackoff;
+
         var rawW = parseInt(ex.working, 10);
         if (isNaN(rawW) || rawW < 1) rawW = 1;
+
         var repsMatch = String(ex.reps || "").match(/^(\d+)\s*x\s*/i);
+        var setCount = rawW;
+
         if (repsMatch) {
-          var pref = parseInt(repsMatch[1], 10);
-          if (!isNaN(pref) && pref > 0) rawW = Math.max(rawW, pref);
+          var explicitTopSets = parseInt(repsMatch[1], 10);
+          if (!isNaN(explicitTopSets) && explicitTopSets > 0) {
+            setCount = explicitTopSets;
+          }
         }
-        var setCount = Math.max(1, Math.min(Number(ex.workingCount) || rawW, 6));
+
+        setCount = Math.max(1, Math.min(setCount, 6));
         ex.workingCount = setCount;
 
         var loads = String(ex.topLoad || "").split(/\s*\/\s*|\s*,\s*/);
@@ -2433,8 +2451,9 @@
   }
 
   /**
-   * Dynamically renders ALL training days from the athlete's training plan (5, 10, 14+ days)
-   * and generates 1, 2, 3+ WORKING / TOP SET input rows per exercise based on prescribed working sets!
+   * Dynamically renders ALL training days from the athlete's training plan (5, 10, 14+ days),
+   * generates 1, 2, 3+ WORKING / TOP SET input rows per exercise, and ONLY renders the BACK-OFF row
+   * if Back Off Set is NOT "-" or empty!
    */
   function renderWorkoutSplit() {
     var selEl = document.getElementById("training-day-select");
@@ -2473,7 +2492,15 @@
       }
 
       var exHtml = (dayObj.exercises || []).map(function(ex, eIdx) {
-        var hasBackoff = Boolean(ex.backoff && ex.backoff !== "-" && ex.backoff !== "—");
+        var backoffClean = String(ex.backoff || "").trim();
+        var hasBackoff = Boolean(
+          backoffClean &&
+          backoffClean !== "-" &&
+          backoffClean !== "—" &&
+          backoffClean !== "–" &&
+          backoffClean.toLowerCase() !== "none" &&
+          backoffClean.toLowerCase() !== "n/a"
+        );
         var setCount = Math.max(1, Math.min(Number(ex.workingCount) || 1, 6));
         var roleLabel = hasBackoff ? "WORKING/TOP + BACK-OFF" : (setCount + " WORKING / TOP SET" + (setCount > 1 ? "S" : ""));
         var videoBadge = ex.videoCheck ? '<span class="video-check-pill">📹 FILM SET</span>' : '';
@@ -2497,6 +2524,16 @@
           );
         }
 
+        // ONLY render BACK-OFF row if Back Off Set is NOT "-" or empty!
+        var backoffRowHtml = hasBackoff ? (
+          '<div class="train-set-grid">' +
+            '<span style="color:var(--text-muted);font-weight:600;">BACK-OFF</span>' +
+            '<input type="number" step="0.5" placeholder="' + suggestedBackoff + '" id="bl-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+            '<input type="number" step="1" placeholder="Reps (' + escapeHtml(backoffClean) + ')" id="br-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+            '<input type="number" step="0.5" placeholder="RIR" id="brir-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
+          '</div>'
+        ) : '';
+
         return (
           '<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);">' +
             '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">' +
@@ -2509,16 +2546,11 @@
               '<span class="ex-save-badge" id="save-status-' + dIdx + '-' + eIdx + '">' + getProgressionBadgeHtml(ex) + '</span>' +
             '</div>' +
             '<div style="font-family:var(--font-mono);font-size:11px;color:var(--status-yellow);margin:4px 0 4px;">' +
-              'Target: ' + escapeHtml(ex.working) + ' × ' + escapeHtml(ex.reps) + (hasBackoff ? ' (Back-Off: ' + escapeHtml(ex.backoff) + ')' : '') + ' · tempo ' + escapeHtml(ex.tempo || "3-1-0-1") + ' · ' + escapeHtml(ex.rir || "0-2") + ' RIR' + lastRefText +
+              'Target: ' + escapeHtml(ex.working) + ' × ' + escapeHtml(ex.reps) + (hasBackoff ? ' (Back-Off: ' + escapeHtml(backoffClean) + ')' : '') + ' · tempo ' + escapeHtml(ex.tempo || "3-1-0-1") + ' · ' + escapeHtml(ex.rir || "0-2") + ' RIR' + lastRefText +
             '</div>' +
             cueHtml +
             workingSetRowsHtml +
-            '<div class="train-set-grid">' +
-              '<span style="color:var(--text-muted);font-weight:600;">BACK-OFF</span>' +
-              '<input type="number" step="0.5" placeholder="' + suggestedBackoff + '" id="bl-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backLoad || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" step="1" placeholder="Reps" id="br-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backReps || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-              '<input type="number" step="0.5" placeholder="RIR" id="brir-' + dIdx + '-' + eIdx + '" value="' + escapeHtml(ex.backRir || "") + '" oninput="syncSet(' + dIdx + ',' + eIdx + ')">' +
-            '</div>' +
+            backoffRowHtml +
           '</div>'
         );
       }).join("");
@@ -2553,14 +2585,17 @@
     ex.topReps = hasAnyReps ? updatedSets.map(function(x) { return x.reps; }).join(" / ") : "";
     ex.topRir = hasAnyRir ? updatedSets.map(function(x) { return x.rir; }).join(" / ") : "";
 
-    ex.backLoad = document.getElementById("bl-" + dIdx + "-" + eIdx).value;
-    ex.backReps = document.getElementById("br-" + dIdx + "-" + eIdx).value;
-    ex.backRir = document.getElementById("brir-" + dIdx + "-" + eIdx).value;
+    var blEl = document.getElementById("bl-" + dIdx + "-" + eIdx);
+    var brEl = document.getElementById("br-" + dIdx + "-" + eIdx);
+    var brirEl = document.getElementById("brir-" + dIdx + "-" + eIdx);
 
-    var backLoadInput = document.getElementById("bl-" + dIdx + "-" + eIdx);
+    ex.backLoad = blEl ? blEl.value : "";
+    ex.backReps = brEl ? brEl.value : "";
+    ex.backRir = brirEl ? brirEl.value : "";
+
     var curLoad = parseFloat(updatedSets[0] ? updatedSets[0].load : ex.topLoad) || 0;
-    if (backLoadInput && curLoad > 0) {
-      backLoadInput.placeholder = "~" + Math.round(curLoad * 0.85) + " lbs";
+    if (blEl && curLoad > 0) {
+      blEl.placeholder = "~" + Math.round(curLoad * 0.85) + " lbs";
     }
 
     var statusBadge = document.getElementById("save-status-" + dIdx + "-" + eIdx);
@@ -2878,7 +2913,6 @@
     try { localStorage.setItem(getWaterStorageKey(), dailyWaterOz); } catch (e) {}
     updateWaterUI();
 
-    // Also update today's water field in the 7-Day Daily Tracker if present
     var rows = activeAthlete.dailyTracker || [];
     var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var todayName = dayNames[new Date().getDay()];
